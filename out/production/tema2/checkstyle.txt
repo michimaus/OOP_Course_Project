@@ -1,0 +1,17 @@
+Starting audit...
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/Main.java:3:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:8:14: Variable 'type' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:9:13: Variable 'pozx' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:10:13: Variable 'pozy' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:12:20: Parameter type should be final. [FinalParameters]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:12:31: Parameter pozx should be final. [FinalParameters]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:12:41: Parameter pozy should be final. [FinalParameters]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:21:17: 'char' is followed by whitespace. [NoWhitespaceAfter]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:25:17: 'char' is followed by whitespace. [NoWhitespaceAfter]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:45:58: 'char' is followed by whitespace. [NoWhitespaceAfter]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:47:45: 'char' is followed by whitespace. [NoWhitespaceAfter]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInput.java:71: Line is longer than 100 characters (found 102). [LineLength]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInputLoader.java:52:13: 'char' is followed by whitespace. [NoWhitespaceAfter]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/GameInputLoader.java:56:13: 'char' is followed by whitespace. [NoWhitespaceAfter]
+Audit done.
+Checkstyle ends with 14 errors.

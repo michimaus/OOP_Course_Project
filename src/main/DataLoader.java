@@ -2,14 +2,13 @@ package main;
 
 import java.util.List;
 
-public class GameInput {
+public class DataLoader {
 
     static class PlayerData {
-        char type;
+        String type;
         int pozx;
         int pozy;
-
-        PlayerData(char type, int pozx, int pozy) {
+        PlayerData(String type, int pozx, int pozy) {
             this.type = type;
             this.pozx = pozx;
             this.pozy = pozy;
@@ -19,30 +18,30 @@ public class GameInput {
     private int n;
     private int m;
     private char [][] map;
-    private int p;
+    private int NoPlayers;
     private List<PlayerData> inputPlayers;
-    private int r;
+    private int rounds;
     private char [][] moves;
 
-    public GameInput() {
+    public DataLoader() {
         n = 0;
         m = 0;
         map = null;
-        p = 0;
+        NoPlayers = 0;
         inputPlayers = null;
-        r = 0;
+        rounds = 0;
         moves = null;
     }
 
-    public GameInput(final int n, final int m, final char [][] map, final int p,
-                     final List<PlayerData> inputPlayers,
-                     final int r, final char [][] moves) {
+    public DataLoader(final int n, final int m, final char [][] map, final int NoPlayers,
+                      final List<PlayerData> inputPlayers,
+                      final int rounds, final char [][] moves) {
         this.m = m;
         this.n = n;
         this.map = map;
-        this.p = p;
+        this.NoPlayers = NoPlayers;
         this.inputPlayers = inputPlayers;
-        this.r = r;
+        this.rounds = rounds;
         this.moves = moves;
     }
 
@@ -58,16 +57,16 @@ public class GameInput {
         return map;
     }
 
-    public int getP() {
-        return p;
+    public int getNoPlayers() {
+        return NoPlayers;
     }
 
     public List<PlayerData> getInputPlayers() {
         return inputPlayers;
     }
 
-    public int getR() {
-        return r;
+    public int getRounds() {
+        return rounds;
     }
 
     public char[][] getMoves() {

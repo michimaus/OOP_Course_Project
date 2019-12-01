@@ -4,35 +4,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fileio.FileSystem;
+import players.StandardPlayer;
 
-public final class GameInputLoader {
+public final class InputOutputStream {
     private final String mInputPath;
     private final String mOutputPath;
 
-    GameInputLoader(final String inputPath, final String outputPath) {
+    InputOutputStream(final String inputPath, final String outputPath) {
         mInputPath = inputPath;
         mOutputPath = outputPath;
     }
 
-    public void write() {
+    public void write(List<StandardPlayer> players) {
         try {
             FileSystem fs = new FileSystem(mInputPath, mOutputPath);
+            for (StandardPlayer player : players) {
+                fs.writeWord(player.getType());
+                fs.writeCharacter(' ');
 
-            fs.writeWord("miau miau miau\n");
-
+                if (player.getHp() <= 0) {
+                    fs.writeWord("dead");
+                } else {
+                    fs.writeInt(player.getLevel());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(player.getXp());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(player.getHp());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(player.getPosX());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(player.getPosY());
+                }
+                fs.writeNewLine();
+            }
             fs.close();
-
         } catch (Exception e1) {
             e1.printStackTrace();
         }
     }
 
-    public GameInput load() {
+    public DataLoader load() {
         int n = 0;
         int m = 0;
         char [][] map = null;
         int p = 0;
-        List<GameInput.PlayerData> inputPlayers = new ArrayList<>();
+        List<DataLoader.PlayerData> inputPlayers = new ArrayList<>();
         int r = 0;
         char [][] moves = null;
 
@@ -56,7 +72,7 @@ public final class GameInputLoader {
                 String auxStr = fs.nextWord();
                 int auxPosx = fs.nextInt();
                 int auxPosy = fs.nextInt();
-                inputPlayers.add(new GameInput.PlayerData(auxStr.charAt(0), auxPosx, auxPosy));
+                inputPlayers.add(new DataLoader.PlayerData(auxStr, auxPosx, auxPosy));
             }
 
             r = fs.nextInt();
@@ -75,6 +91,6 @@ public final class GameInputLoader {
             e1.printStackTrace();
         }
 
-        return new GameInput(n, m, map, p,inputPlayers, r, moves);
+        return new DataLoader(n, m, map, p,inputPlayers, r, moves);
     }
 }

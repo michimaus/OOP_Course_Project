@@ -5,13 +5,13 @@ import java.util.List;
 public class DataLoader {
 
     static class PlayerData {
-        String type;
-        int pozx;
-        int pozy;
-        PlayerData(String type, int pozx, int pozy) {
+        char type;
+        int posR;
+        int posC;
+        PlayerData(char type, int posR, int posC) {
             this.type = type;
-            this.pozx = pozx;
-            this.pozy = pozy;
+            this.posR = posR;
+            this.posC = posC;
         }
     }
 

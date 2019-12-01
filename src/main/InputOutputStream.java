@@ -19,7 +19,7 @@ public final class InputOutputStream {
         try {
             FileSystem fs = new FileSystem(mInputPath, mOutputPath);
             for (StandardPlayer player : players) {
-                fs.writeWord(player.getType());
+                fs.writeCharacter(player.getType());
                 fs.writeCharacter(' ');
 
                 if (player.getHp() <= 0) {
@@ -31,9 +31,9 @@ public final class InputOutputStream {
                     fs.writeCharacter(' ');
                     fs.writeInt(player.getHp());
                     fs.writeCharacter(' ');
-                    fs.writeInt(player.getPosX());
+                    fs.writeInt(player.getPosR());
                     fs.writeCharacter(' ');
-                    fs.writeInt(player.getPosY());
+                    fs.writeInt(player.getPosC());
                 }
                 fs.writeNewLine();
             }
@@ -72,7 +72,7 @@ public final class InputOutputStream {
                 String auxStr = fs.nextWord();
                 int auxPosx = fs.nextInt();
                 int auxPosy = fs.nextInt();
-                inputPlayers.add(new DataLoader.PlayerData(auxStr, auxPosx, auxPosy));
+                inputPlayers.add(new DataLoader.PlayerData(auxStr.charAt(0), auxPosx, auxPosy));
             }
 
             r = fs.nextInt();

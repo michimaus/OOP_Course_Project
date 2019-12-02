@@ -22,14 +22,14 @@ public final class InputOutputStream {
                 fs.writeCharacter(player.getType());
                 fs.writeCharacter(' ');
 
-                if (player.getHp() <= 0) {
+                if (player.getMaxHp() <= 0) {
                     fs.writeWord("dead");
                 } else {
                     fs.writeInt(player.getLevel());
                     fs.writeCharacter(' ');
                     fs.writeInt(player.getXp());
                     fs.writeCharacter(' ');
-                    fs.writeInt(player.getHp());
+                    fs.writeInt(player.getMaxHp());
                     fs.writeCharacter(' ');
                     fs.writeInt(player.getPosR());
                     fs.writeCharacter(' ');

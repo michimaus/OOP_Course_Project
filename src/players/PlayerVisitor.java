@@ -1,43 +1,44 @@
 package players;
 
 public interface PlayerVisitor {
-    public void fireBlast(KnightPlayer player);
-    public void fireBlast(RoguePlayer player);
-    public void fireBlast(PyromancerPlayer player);
-    public void fireBlast(WizardPlayer player);
 
-    public void ignite(KnightPlayer player);
-    public void ignite(PyromancerPlayer player);
-    public void ignite(RoguePlayer player);
-    public void ignite(WizardPlayer player);
+    public float fireBlast(KnightPlayer player, int level);
+    public float fireBlast(RoguePlayer player, int level);
+    public float fireBlast(PyromancerPlayer player, int level);
+    public float fireBlast(WizardPlayer player, int level);
 
-    public void execute(KnightPlayer player);
-    public void execute(PyromancerPlayer player);
-    public void execute(RoguePlayer player);
-    public void execute(WizardPlayer player);
+    public float ignite(KnightPlayer player, int level);
+    public float ignite(PyromancerPlayer player, int level);
+    public float ignite(RoguePlayer player, int level);
+    public float ignite(WizardPlayer player, int level);
 
-    public void slam(KnightPlayer player);
-    public void slam(PyromancerPlayer player);
-    public void slam(RoguePlayer player);
-    public void slam(WizardPlayer player);
+    public float execute(KnightPlayer player, int level);
+    public float execute(PyromancerPlayer player, int level);
+    public float execute(RoguePlayer player, int level);
+    public float execute(WizardPlayer player, int level);
 
-    public void drain(KnightPlayer player);
-    public void drain(PyromancerPlayer player);
-    public void drain(RoguePlayer player);
-    public void drain(WizardPlayer player);
+    public float slam(KnightPlayer player, int level);
+    public float slam(PyromancerPlayer player, int level);
+    public float slam(RoguePlayer player, int level);
+    public float slam(WizardPlayer player, int level);
 
-    public void deflect(KnightPlayer player);
-    public void deflect(PyromancerPlayer player);
-    public void deflect(RoguePlayer player);
-    public void deflect(WizardPlayer player);
+    public float drain(KnightPlayer player, int level);
+    public float drain(PyromancerPlayer player, int level);
+    public float drain(RoguePlayer player, int level);
+    public float drain(WizardPlayer player, int level);
 
-    public void backStab(KnightPlayer player);
-    public void backStab(PyromancerPlayer player);
-    public void backStab(RoguePlayer player);
-    public void backStab(WizardPlayer player);
+    public float deflect(KnightPlayer player, int level);
+    public float deflect(PyromancerPlayer player, int level);
+    public float deflect(RoguePlayer player, int level);
+    public float deflect(WizardPlayer player, int level);
 
-    public void paralysis(KnightPlayer player);
-    public void paralysis(PyromancerPlayer player);
-    public void paralysis(RoguePlayer player);
-    public void paralysis(WizardPlayer player);
+    public float backStab(KnightPlayer player, int level);
+    public float backStab(PyromancerPlayer player, int level);
+    public float backStab(RoguePlayer player, int level);
+    public float backStab(WizardPlayer player, int level);
+
+    public float paralysis(KnightPlayer player, int level);
+    public float paralysis(PyromancerPlayer player, int level);
+    public float paralysis(RoguePlayer player, int level);
+    public float paralysis(WizardPlayer player, int level);
 }

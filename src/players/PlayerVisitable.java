@@ -1,5 +1,7 @@
 package players;
 
 public interface PlayerVisitable {
-    public void accept(PlayerVisitor v);
+    public void strike(PlayerVisitor v);
+    public void calculateStrike(PlayerVisitor heroSpells, StandardPlayer opponent, char land);
+
 }

@@ -1,164 +1,197 @@
 package players;
 
+import common.Constants;
+
 public class Spells implements PlayerVisitor {
 
     @Override
-    public void fireBlast(KnightPlayer player) {
-
+    public float fireBlast(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void fireBlast(RoguePlayer player) {
-
+    public float fireBlast(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void fireBlast(PyromancerPlayer player) {
-
+    public float fireBlast(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void fireBlast(WizardPlayer player) {
-
+    public float fireBlast(WizardPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void ignite(KnightPlayer player) {
-
+    public float ignite(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void ignite(PyromancerPlayer player) {
-
+    public float ignite(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void ignite(RoguePlayer player) {
-
+    public float ignite(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void ignite(WizardPlayer player) {
+    public float ignite(WizardPlayer player, int level) {
+        return 0;
+    }
 
+    private int baseExecute(int maxHp, int currentHp, int level) {
+        float procent = (float) (level + Constants.EXECUTE_PROCENT);
+        float currentProcent = ((float) currentHp / (float) maxHp) * Constants.ONE_HUNDRED;
+        if (procent > Constants.MAX_EXECUTE_PROCENT)
+            procent = Constants.MAX_EXECUTE_PROCENT;
+        if (procent >= currentProcent) {
+            return -1;
+        } else {
+            return Constants.EXECUTE_BASE_DAMAGE + level * Constants.ADD_EXECUTE_DAMAGE;
+        }
     }
 
     @Override
-    public void execute(KnightPlayer player) {
-
+    public float execute(KnightPlayer player, int level) {
+        int baseDamage = baseExecute(player.getMaxHp(), player.getCurrentHp(), level);
+        return (float) baseDamage;
     }
 
     @Override
-    public void execute(PyromancerPlayer player) {
-
+    public float execute(PyromancerPlayer player, int level) {
+        int baseDamage = baseExecute(player.getMaxHp(), player.getCurrentHp(), level);
+        if (baseDamage == -1){
+            return (float) baseDamage;
+        } else {
+            return ((float) baseDamage +
+                    (Constants.EXECUTE_PROCENT_PYROMANCER * (float) baseDamage) / Constants.ONE_HUNDRED);
+        }
     }
 
     @Override
-    public void execute(RoguePlayer player) {
-
+    public float execute(RoguePlayer player, int level) {
+        int baseDamage = baseExecute(player.getMaxHp(), player.getCurrentHp(), level);
+        if (baseDamage == -1){
+            return (float) baseDamage;
+        } else {
+            return ((float) baseDamage +
+                    (Constants.EXECUTE_PROCENT_ROGUE * (float) baseDamage) / Constants.ONE_HUNDRED);
+        }
     }
 
     @Override
-    public void execute(WizardPlayer player) {
-
+    public float execute(WizardPlayer player, int level) {
+        int baseDamage = baseExecute(player.getMaxHp(), player.getCurrentHp(), level);
+        if (baseDamage == -1){
+            return (float) baseDamage;
+        } else {
+            return ((float) baseDamage -
+                    (Constants.EXECUTE_PROCENT_WIZARD * (float) baseDamage) / Constants.ONE_HUNDRED);
+        }
     }
 
     @Override
-    public void slam(KnightPlayer player) {
-
+    public float slam(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void slam(PyromancerPlayer player) {
-
+    public float slam(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void slam(RoguePlayer player) {
-
+    public float slam(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void slam(WizardPlayer player) {
-
+    public float slam(WizardPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void drain(KnightPlayer player) {
-
+    public float drain(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void drain(PyromancerPlayer player) {
-
+    public float drain(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void drain(RoguePlayer player) {
-
+    public float drain(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void drain(WizardPlayer player) {
-
+    public float drain(WizardPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void deflect(KnightPlayer player) {
-
+    public float deflect(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void deflect(PyromancerPlayer player) {
-
+    public float deflect(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void deflect(RoguePlayer player) {
-
+    public float deflect(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void deflect(WizardPlayer player) {
-
+    public float deflect(WizardPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void backStab(KnightPlayer player) {
-
+    public float backStab(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void backStab(PyromancerPlayer player) {
-
+    public float backStab(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void backStab(RoguePlayer player) {
-
+    public float backStab(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void backStab(WizardPlayer player) {
-
+    public float backStab(WizardPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void paralysis(KnightPlayer player) {
-
+    public float paralysis(KnightPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void paralysis(PyromancerPlayer player) {
-
+    public float paralysis(PyromancerPlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void paralysis(RoguePlayer player) {
-
+    public float paralysis(RoguePlayer player, int level) {
+        return 0;
     }
 
     @Override
-    public void paralysis(WizardPlayer player) {
-
+    public float paralysis(WizardPlayer player, int level) {
+        return 0;
     }
 }

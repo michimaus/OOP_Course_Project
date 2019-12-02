@@ -4,6 +4,15 @@ import common.Constants;
 import gameterain.GameMap;
 
 public abstract class StandardPlayer implements PlayerVisitable{
+    public boolean isHasAtacked() {
+        return hasAtacked;
+    }
+
+    public void setHasAtacked(boolean hasAtacked) {
+        this.hasAtacked = hasAtacked;
+    }
+
+    protected boolean hasAtacked;
     protected int id;
     protected char type;
     protected int posR;
@@ -19,14 +28,15 @@ public abstract class StandardPlayer implements PlayerVisitable{
     protected GameMap map;
     protected int incomingDamage;
 
-    abstract float getSlamed(PlayerVisitor heroSpell, int level, char land);
-    abstract float getFireBlasted(PlayerVisitor heroSpell, int level, char land);
-    abstract float getIgnited(PlayerVisitor heroSpell, int level, char land);
-    abstract float getExecuted(PlayerVisitor heroSpell, int level, char land);
-    abstract float getDrained(PlayerVisitor heroSpell, int level, char land);
-    abstract float getDeflected(PlayerVisitor heroSpell, int level, char land, WizardPlayer wizThis);
-    abstract float getBaskStabbed(PlayerVisitor heroSpell, int level, char land, int count);
-    abstract float getParalyzed(PlayerVisitor heroSpell, int level, char land);
+    abstract void updateMaxHP(final int noLevels);
+    abstract void getSlamed(PlayerVisitor heroSpell, int level, char land);
+    abstract void getFireBlasted(PlayerVisitor heroSpell, int level, char land);
+    abstract void getIgnited(PlayerVisitor heroSpell, int level, char land);
+    abstract void getExecuted(PlayerVisitor heroSpell, int level, char land);
+    abstract void getDrained(PlayerVisitor heroSpell, int level, char land);
+    abstract void getDeflected(PlayerVisitor heroSpell, int level, char land, WizardPlayer wizThis);
+    abstract void getBaskStabbed(PlayerVisitor heroSpell, int level, char land, int count);
+    abstract void getParalyzed(PlayerVisitor heroSpell, int level, char land);
     public abstract void calculateStrike(PlayerVisitor heroSpells, StandardPlayer opponent, char land);
 
     public char getType() {
@@ -71,6 +81,7 @@ public abstract class StandardPlayer implements PlayerVisitable{
     }
 
     public StandardPlayer(char type, int posR, int posC, int id) {
+        hasAtacked = false;
         this.stuned = false;
         this.stundeFor = 0;
         this.id = id;
@@ -83,9 +94,10 @@ public abstract class StandardPlayer implements PlayerVisitable{
         this.level = 0;
         this.hasDotFor = 0;
     }
-    protected boolean getKillXp(StandardPlayer other) {
-        if (other.currentHp > 0)
+    public boolean getKillXp(StandardPlayer other) {
+        if (other.currentHp > 0) {
             return false;
+        }
         int xpTransfer = Constants.XP_UPPER_BOUND - (level - other.level) * Constants.XP_INTERVAL;
         if (xpTransfer < 0)
             xpTransfer = 0;
@@ -93,9 +105,12 @@ public abstract class StandardPlayer implements PlayerVisitable{
         return true;
     }
 
-    protected void checkLevelUp() {
-        if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL)
-            level += 1 + (xp - (Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL;
+    public void checkLevelUp() {
+        if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL) {
+            int levelCount = (1 + (xp - (Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL);
+            this.updateMaxHP(levelCount);
+            level += levelCount;
+        }
     }
 
     public void updatePlayerNewRound(char c) {
@@ -152,7 +167,7 @@ public abstract class StandardPlayer implements PlayerVisitable{
         this.dotDamage = dotDamage;
     }
 
-    protected void takeDamage() {
+    public void takeDamage() {
         currentHp -= incomingDamage;
         incomingDamage = 0;
         if (currentHp <= 0)
@@ -160,6 +175,9 @@ public abstract class StandardPlayer implements PlayerVisitable{
     }
 
     public void printData() {
-        System.out.println(type + " " + level + " " + xp + " " + currentHp);
+        if (currentHp > 0)
+            System.out.println(type + " " + level + " " + xp + " " + currentHp + " " + posR + " " + posC);
+        else
+            System.out.println(type + " dead");
     }
 }

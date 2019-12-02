@@ -6,12 +6,15 @@ public final class Constants {
     public static final int WIZARd_HP = 400;
     public static final int ROGUE_HP = 600;
 
+    public static final int KNIGHT_HP_ON_LEVEL = 80;
+    public static final int PYROMANCE_HP_ON_LEVEL = 50;
+    public static final int WIZARd_HP_ON_LEVEL = 30;
+    public static final int ROGUE_HP_ON_LEVEL = 40;
+
     public static final int INIT_LEVEL = 250;
     public static final int ENCEREASE_LEVEL = 50;
     public static final int XP_UPPER_BOUND = 200;
     public static final int XP_INTERVAL = 40;
-
-
 
     public static final float ONE_HUNDRED = 100f;
 
@@ -76,7 +79,7 @@ public final class Constants {
     public static final float DEFLECT_ROGUE_BONUS = 1.2f;
     public static final float DEFLECT_KNIGHT_BONUS = 1.4f;
     public static final float DEFLECT_PYROMANCER_BONUS = 1.3f;
-    public static final float DEFLECT_WIZARD_BONUS = 0f;
+    public static final float DEFLECT_MAX_PERCENT = 0.7f;
 
     public static final float DRAIN = 0.2f;
     public static final float DRAIN_LEVEL_BONUS = 0.05f;

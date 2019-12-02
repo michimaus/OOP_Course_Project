@@ -36,25 +36,19 @@ public class Main {
         GameMap map = GameMap.getInstance();
         map.initMap(dataLoader.getN(), dataLoader.getM(), dataLoader.getMap(), players);
 
-        boolean [] checked = new boolean [dataLoader.getNoPlayers()];
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
-
-            for (int j = 0; j < dataLoader.getNoPlayers(); ++j) {
-                checked[j] = false;
-            }
-
 //            checked = new boolean [dataLoader.getNoPlayers()];
             for (StandardPlayer player : players) {
-//                player.takeDamageDot();
+                player.setHasAtacked(false);
                 player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
             }
 
             for (StandardPlayer player : players) {
 
-                if (!checked[player.getId()]) {
+                if (!player.isHasAtacked()) {
                     if (player.getCurrentHp() > 0)
-                        map.timeForFight(player.getPosR(), player.getPosC(), checked);
+                        map.timeForFight(player.getPosR(), player.getPosC());
                 }
 
             }

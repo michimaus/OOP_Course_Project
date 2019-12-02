@@ -77,14 +77,11 @@ public class GameMap {
         putPlayerAtPosition(newX, newY, player);
     }
 
-    public void timeForFight(int posR, int posC, boolean[] checked) {
+    public void timeForFight(int posR, int posC) {
 
-        if (secondPlayerOnPos[posR][posC] == null) {
-            checked[firstPlayerOnPos[posR][posC].getId()] = true;
-//            firstPlayerOnPos[posR][posC].getId();
-        } else  {
-            checked[firstPlayerOnPos[posR][posC].getId()] = true;
-            checked[secondPlayerOnPos[posR][posC].getId()] = true;
+        if (secondPlayerOnPos[posR][posC] != null) {
+//            checked[firstPlayerOnPos[posR][posC].getId()] = true;
+//            checked[secondPlayerOnPos[posR][posC].getId()] = true;
 
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
@@ -92,7 +89,20 @@ public class GameMap {
             p2.setIncomingDamage(0);
 
             p1.calculateStrike(heroSpells, p2, mapTerain[posR][posC]);
+            p1.setHasAtacked(true);
             p2.calculateStrike(heroSpells, p1, mapTerain[posR][posC]);
+            p2.setHasAtacked(true);
+
+            p1.takeDamage();
+            p2.takeDamage();
+
+            if (p2.getKillXp(p1)) {
+                p2.checkLevelUp();
+            }
+
+            if (p1.getKillXp(p2)) {
+                p1.checkLevelUp();
+            }
 
 //            if (p1.getType() == 'W') {
 //                p1.calculateStrike(heroSpells, p2, mapTerain[posR][posC]);

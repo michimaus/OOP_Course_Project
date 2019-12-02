@@ -4,44 +4,54 @@ import common.Constants;
 
 public class WizardPlayer extends StandardPlayer {
 
+    public float getDeflectDamage() {
+        return deflectDamage;
+    }
+
+    public void setDeflectDamage(float deflectDamage) {
+        this.deflectDamage = deflectDamage;
+    }
+
+    float deflectDamage;
+
     @Override
-    float getSlamed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.slam(this, level);
+    float getSlamed(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.slam(this, level, land);
     }
 
     @Override
-    float getFireBlasted(PlayerVisitor heroSpell, int level) {
-        return heroSpell.fireBlast(this, level);
+    float getFireBlasted(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.fireBlast(this, level, land);
     }
 
     @Override
-    float getIgnited(PlayerVisitor heroSpell, int level) {
-        return heroSpell.ignite(this, level);
+    float getIgnited(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.ignite(this, level, land);
     }
 
     @Override
-    float getExecuted(PlayerVisitor heroSpell, int level) {
-        return heroSpell.execute(this, level);
+    float getExecuted(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.execute(this, level, land);
     }
 
     @Override
-    float getDrained(PlayerVisitor heroSpell, int level) {
-        return heroSpell.drain(this, level);
+    float getDrained(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.drain(this, level, land);
     }
 
     @Override
-    float getDeflected(PlayerVisitor heroSpell, int level) {
-        return heroSpell.deflect(this, level);
+    float getDeflected(PlayerVisitor heroSpell, int level, char land, WizardPlayer wizThis) {
+        return heroSpell.deflect(this, level, land, wizThis);
     }
 
     @Override
-    float getBaskStabbed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.backStab(this, level);
+    float getBaskStabbed(PlayerVisitor heroSpell, int level, char land, int count) {
+        return heroSpell.backStab(this, level, land, count);
     }
 
     @Override
-    float getParalyzed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.paralysis(this, level);
+    float getParalyzed(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.paralysis(this, level, land);
     }
 
     public WizardPlayer(char type, int posR, int posC, int playerId) {
@@ -52,13 +62,15 @@ public class WizardPlayer extends StandardPlayer {
     }
 
     @Override
-    public void strike(PlayerVisitor v) {
-
-    }
-
-    @Override
     public void calculateStrike(PlayerVisitor heroSpells, StandardPlayer opponent, char land) {
-
+//        deflectDamage = 0;
+//        opponent.calculateStrike(heroSpells, this, land);
+        opponent.getDeflected(heroSpells, level, land, this);
+        opponent.getDrained(heroSpells, level, land);
+        opponent.takeDamage();
+        if (this.getKillXp(opponent)) {
+            checkLevelUp();
+        }
     }
 
 

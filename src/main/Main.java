@@ -53,10 +53,16 @@ public class Main {
             for (StandardPlayer player : players) {
 
                 if (!checked[player.getId()]) {
-                    map.timeForFight(player.getPosR(), player.getPosC(), checked);
+                    if (player.getCurrentHp() > 0)
+                        map.timeForFight(player.getPosR(), player.getPosC(), checked);
                 }
 
             }
+
+            for (StandardPlayer player : players) {
+                player.printData();
+            }
+            System.out.println("-----------END ROUND--------");
         }
         inputOutputStream.write(players);
 

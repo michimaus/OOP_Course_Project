@@ -4,45 +4,44 @@ import common.Constants;
 
 public class KnightPlayer extends StandardPlayer {
 
-
     @Override
-    float getSlamed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.slam(this, level);
+    float getSlamed(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.slam(this, level, land);
     }
 
     @Override
-    float getFireBlasted(PlayerVisitor heroSpell, int level) {
-        return heroSpell.fireBlast(this, level);
+    float getFireBlasted(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.fireBlast(this, level, land);
     }
 
     @Override
-    float getIgnited(PlayerVisitor heroSpell, int level) {
-        return heroSpell.ignite(this, level);
+    float getIgnited(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.ignite(this, level, land);
     }
 
     @Override
-    float getExecuted(PlayerVisitor heroSpell, int level) {
-        return heroSpell.execute(this, level);
+    float getExecuted(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.execute(this, level, land);
     }
 
     @Override
-    float getDrained(PlayerVisitor heroSpell, int level) {
-        return heroSpell.drain(this, level);
+    float getDrained(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.drain(this, level, land);
     }
 
     @Override
-    float getDeflected(PlayerVisitor heroSpell, int level) {
-        return heroSpell.deflect(this, level);
+    float getDeflected(PlayerVisitor heroSpell, int level, char land, WizardPlayer wizThis) {
+        return heroSpell.deflect(this, level, land, wizThis);
     }
 
     @Override
-    float getBaskStabbed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.backStab(this, level);
+    float getBaskStabbed(PlayerVisitor heroSpell, int level, char land, int count) {
+        return heroSpell.backStab(this, level, land, count);
     }
 
     @Override
-    float getParalyzed(PlayerVisitor heroSpell, int level) {
-        return heroSpell.paralysis(this, level);
+    float getParalyzed(PlayerVisitor heroSpell, int level, char land) {
+        return heroSpell.paralysis(this, level, land);
     }
 
 
@@ -53,25 +52,25 @@ public class KnightPlayer extends StandardPlayer {
     }
 
     @Override
-    public void strike(PlayerVisitor v) {
-
-    }
-
-    @Override
     public void calculateStrike(PlayerVisitor heroSpells, StandardPlayer opponent, char land) {
-//        heroSpells.execute(opponents);
-        int terainBonus = 0;
-        if (land == 'L') {
-            terainBonus =
+        opponent.getExecuted(heroSpells, this.level, land);
+        opponent.getSlamed(heroSpells, this.level, land);
+        opponent.takeDamage();
+        if (this.getKillXp(opponent)) {
+            checkLevelUp();
         }
-
-        float damage = 0f;
-        damage += opponent.getExecuted(heroSpells, level);
-        if (damage == -1f) {
-            opponent.die();
-        }
-
-        damage += opponent.getSlamed(heroSpells, level);
+//        int terainBonus = 0;
+//        if (land == 'L') {
+//            terainBonus =
+//        }
+//
+//        float damage = 0f;
+//        damage += opponent.getExecuted(heroSpells, level);
+//        if (damage == -1f) {
+//            opponent.die();
+//        }
+//
+//        damage += opponent.getSlamed(heroSpells, level);
     }
 
 }

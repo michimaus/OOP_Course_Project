@@ -1,5 +1,6 @@
 package players;
 
+import common.Constants;
 import gameterain.GameMap;
 
 public abstract class StandardPlayer implements PlayerVisitable{
@@ -8,11 +9,6 @@ public abstract class StandardPlayer implements PlayerVisitable{
     protected int posR;
     protected int posC;
     protected int maxHp;
-
-    public int getCurrentHp() {
-        return currentHp;
-    }
-
     protected int currentHp;
     protected int xp;
     protected int level;
@@ -21,25 +17,24 @@ public abstract class StandardPlayer implements PlayerVisitable{
     protected int stundeFor;
     protected boolean stuned;
     protected GameMap map;
-    protected int dealDamage;
+    protected int incomingDamage;
 
-
-    abstract float getSlamed(PlayerVisitor heroSpell, int level);
-    abstract float getFireBlasted(PlayerVisitor heroSpell, int level);
-    abstract float getIgnited(PlayerVisitor heroSpell, int level);
-    abstract float getExecuted(PlayerVisitor heroSpell, int level);
-    abstract float getDrained(PlayerVisitor heroSpell, int level);
-    abstract float getDeflected(PlayerVisitor heroSpell, int level);
-    abstract float getBaskStabbed(PlayerVisitor heroSpell, int level);
-    abstract float getParalyzed(PlayerVisitor heroSpell, int level);
+    abstract float getSlamed(PlayerVisitor heroSpell, int level, char land);
+    abstract float getFireBlasted(PlayerVisitor heroSpell, int level, char land);
+    abstract float getIgnited(PlayerVisitor heroSpell, int level, char land);
+    abstract float getExecuted(PlayerVisitor heroSpell, int level, char land);
+    abstract float getDrained(PlayerVisitor heroSpell, int level, char land);
+    abstract float getDeflected(PlayerVisitor heroSpell, int level, char land, WizardPlayer wizThis);
+    abstract float getBaskStabbed(PlayerVisitor heroSpell, int level, char land, int count);
+    abstract float getParalyzed(PlayerVisitor heroSpell, int level, char land);
     public abstract void calculateStrike(PlayerVisitor heroSpells, StandardPlayer opponent, char land);
-
-    public void setDealDamage(int dealDamage) {
-        this.dealDamage = dealDamage;
-    }
 
     public char getType() {
         return type;
+    }
+
+    public int getCurrentHp() {
+        return currentHp;
     }
 
     public int getPosR() {
@@ -52,6 +47,15 @@ public abstract class StandardPlayer implements PlayerVisitable{
 
     public int getMaxHp() {
         return maxHp;
+    }
+
+    public int getIncomingDamage() {
+        return incomingDamage;
+    }
+
+    public void setIncomingDamage(int incomingDamage) {
+        this.incomingDamage = incomingDamage;
+//        System.out.println(incomingDamage);
     }
 
     public int getXp() {
@@ -79,17 +83,32 @@ public abstract class StandardPlayer implements PlayerVisitable{
         this.level = 0;
         this.hasDotFor = 0;
     }
+    protected boolean getKillXp(StandardPlayer other) {
+        if (other.currentHp > 0)
+            return false;
+        int xpTransfer = Constants.XP_UPPER_BOUND - (level - other.level) * Constants.XP_INTERVAL;
+        if (xpTransfer < 0)
+            xpTransfer = 0;
+        this.xp += xpTransfer;
+        return true;
+    }
+
+    protected void checkLevelUp() {
+        if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL)
+            level += 1 + (xp - (Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL;
+    }
 
     public void updatePlayerNewRound(char c) {
-        if (currentHp <= 0) {
-            return;
-        }
-
         if (hasDotFor != 0) {
             --hasDotFor;
             currentHp -= dotDamage;
         } else {
             dotDamage = 0;
+        }
+
+        if (currentHp <= 0) {
+            die();
+            return;
         }
 
         if (stundeFor == 0) {
@@ -127,4 +146,20 @@ public abstract class StandardPlayer implements PlayerVisitable{
         map.takeOut(this);
     }
 
+    public void getDot(int stunedFor, int hasDotFor, int dotDamage) {
+        this.stundeFor = stunedFor;
+        this.hasDotFor = hasDotFor;
+        this.dotDamage = dotDamage;
+    }
+
+    protected void takeDamage() {
+        currentHp -= incomingDamage;
+        incomingDamage = 0;
+        if (currentHp <= 0)
+            die();
+    }
+
+    public void printData() {
+        System.out.println(type + " " + level + " " + xp + " " + currentHp);
+    }
 }

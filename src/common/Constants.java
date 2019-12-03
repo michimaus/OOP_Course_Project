@@ -1,14 +1,17 @@
 package common;
 
 public final class Constants {
+    private Constants() {
+    }
+
     public static final int KNIGHT_HP = 900;
     public static final int PYROMANCE_HP = 500;
-    public static final int WIZARd_HP = 400;
+    public static final int WIZARD_HP = 400;
     public static final int ROGUE_HP = 600;
 
     public static final int KNIGHT_HP_ON_LEVEL = 80;
     public static final int PYROMANCE_HP_ON_LEVEL = 50;
-    public static final int WIZARd_HP_ON_LEVEL = 30;
+    public static final int WIZARD_HP_ON_LEVEL = 30;
     public static final int ROGUE_HP_ON_LEVEL = 40;
 
     public static final int INIT_LEVEL = 250;

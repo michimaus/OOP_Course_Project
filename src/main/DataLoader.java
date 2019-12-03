@@ -5,10 +5,22 @@ import java.util.List;
 public class DataLoader {
 
     static class PlayerData {
-        char type;
-        int posR;
-        int posC;
-        PlayerData(char type, int posR, int posC) {
+        public char getType() {
+            return type;
+        }
+
+        public int getPosR() {
+            return posR;
+        }
+
+        public int getPosC() {
+            return posC;
+        }
+
+        private char type;
+        private int posR;
+        private int posC;
+        PlayerData(final char type, final int posR, final int posC) {
             this.type = type;
             this.posR = posR;
             this.posC = posC;
@@ -17,59 +29,59 @@ public class DataLoader {
 
     private int n;
     private int m;
-    private char [][] map;
-    private int NoPlayers;
+    private char[][] map;
+    private int noPlayers;
     private List<PlayerData> inputPlayers;
     private int rounds;
-    private char [][] moves;
+    private char[][] moves;
 
     public DataLoader() {
         n = 0;
         m = 0;
         map = null;
-        NoPlayers = 0;
+        noPlayers = 0;
         inputPlayers = null;
         rounds = 0;
         moves = null;
     }
 
-    public DataLoader(final int n, final int m, final char [][] map, final int NoPlayers,
+    public DataLoader(final int n, final int m, final char[][] map, final int noPlayers,
                       final List<PlayerData> inputPlayers,
-                      final int rounds, final char [][] moves) {
+                      final int rounds, final char[][] moves) {
         this.m = m;
         this.n = n;
         this.map = map;
-        this.NoPlayers = NoPlayers;
+        this.noPlayers = noPlayers;
         this.inputPlayers = inputPlayers;
         this.rounds = rounds;
         this.moves = moves;
     }
 
-    public int getN() {
+    public final int getN() {
         return n;
     }
 
-    public int getM() {
+    public final int getM() {
         return m;
     }
 
-    public char[][] getMap() {
+    public final char[][] getMap() {
         return map;
     }
 
-    public int getNoPlayers() {
-        return NoPlayers;
+    public final int getNoPlayers() {
+        return noPlayers;
     }
 
-    public List<PlayerData> getInputPlayers() {
+    public final List<PlayerData> getInputPlayers() {
         return inputPlayers;
     }
 
-    public int getRounds() {
+    public final int getRounds() {
         return rounds;
     }
 
-    public char[][] getMoves() {
+    public final char[][] getMoves() {
         return moves;
     }
 }

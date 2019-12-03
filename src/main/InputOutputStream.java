@@ -15,7 +15,7 @@ public final class InputOutputStream {
         mOutputPath = outputPath;
     }
 
-    public void write(List<StandardPlayer> players) {
+    public void write(final List<StandardPlayer> players) {
         try {
             FileSystem fs = new FileSystem(mInputPath, mOutputPath);
             for (StandardPlayer player : players) {
@@ -46,11 +46,11 @@ public final class InputOutputStream {
     public DataLoader load() {
         int n = 0;
         int m = 0;
-        char [][] map = null;
+        char[][] map = null;
         int p = 0;
         List<DataLoader.PlayerData> inputPlayers = new ArrayList<>();
         int r = 0;
-        char [][] moves = null;
+        char[][] moves = null;
 
         try {
             FileSystem fs = new FileSystem(mInputPath, mOutputPath);
@@ -91,6 +91,6 @@ public final class InputOutputStream {
             e1.printStackTrace();
         }
 
-        return new DataLoader(n, m, map, p,inputPlayers, r, moves);
+        return new DataLoader(n, m, map, p, inputPlayers, r, moves);
     }
 }

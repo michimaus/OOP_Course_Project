@@ -5,34 +5,14 @@ import players.StandardPlayer;
 
 import java.util.List;
 
-public class GameMap {
+public final class GameMap {
     private static GameMap instance = null;
-    Spells heroSpells;
-    private char [][] mapTerain;
-    private StandardPlayer [][] firstPlayerOnPos;
-    private StandardPlayer [][] secondPlayerOnPos;
+    private Spells heroSpells;
+    private char[][] mapTerain;
+    private StandardPlayer[][] firstPlayerOnPos;
+    private StandardPlayer[][] secondPlayerOnPos;
 
-    public char[][] getMapTerain() {
-        return mapTerain;
-    }
-
-    public StandardPlayer[][] getFirstPlayerOnPos() {
-        return firstPlayerOnPos;
-    }
-
-    public StandardPlayer[][] getSecondPlayerOnPos() {
-        return secondPlayerOnPos;
-    }
-
-    public char getTerainType(final int posR, final int posC) {
-        return mapTerain[posR][posC];
-    }
-
-    public Spells getHeroSpells() {
-        return heroSpells;
-    }
-
-    private GameMap () {
+    private GameMap() {
         heroSpells = new Spells();
         mapTerain = null;
         firstPlayerOnPos = null;
@@ -40,8 +20,8 @@ public class GameMap {
     }
 
     public void initMap(final int n, final int m,
-                        final char [][] mapTerain, final List<StandardPlayer> players) {
-        this.mapTerain = mapTerain;
+                        final char[][] mapTerainGet, final List<StandardPlayer> players) {
+        this.mapTerain = mapTerainGet;
 
         firstPlayerOnPos = new StandardPlayer[n][m];
         secondPlayerOnPos = new StandardPlayer[n][m];
@@ -68,35 +48,17 @@ public class GameMap {
     }
 
     public void updatePlayerPosition(final int oldX, final int oldY,
-                                     final int newX, final int newY, StandardPlayer player) {
+                                     final int newX, final int newY, final StandardPlayer player) {
 
-        if (secondPlayerOnPos[oldX][oldY] == player) {
-            secondPlayerOnPos[oldX][oldY] = null;
-        } else {
+        if (secondPlayerOnPos[oldX][oldY] != player) {
             firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
-            secondPlayerOnPos[oldX][oldY] = null;
         }
-
+        secondPlayerOnPos[oldX][oldY] = null;
         putPlayerAtPosition(newX, newY, player);
     }
 
-    public void testPrint() {
-        for (int i = 0; i < firstPlayerOnPos.length; ++i) {
-            for(int j = 0; j < firstPlayerOnPos[i].length; ++j) {
-                if (secondPlayerOnPos[i][j] != null) {
-                    System.out.print(secondPlayerOnPos[i][j].getId() + " ");
-                } else {
-                    System.out.print("- ");
-                }
-            }
-            System.out.println(" ");
-        }
-    }
-
-    public void timeForFight(int posR, int posC, int round) {
+    public void timeForFight(final int posR, final int posC) {
         if (secondPlayerOnPos[posR][posC] != null) {
-//            System.out.println(posR + " eee "+ round + " ee " + posC);
-
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
 
@@ -122,13 +84,13 @@ public class GameMap {
             if (p1.getKillXp(p2)) {
                 p1.checkLevelUp();
             }
-
         }
     }
 
-    public void takeOut(StandardPlayer p) {
+    public void takeOut(final StandardPlayer p) {
         if (p == firstPlayerOnPos[p.getPosR()][p.getPosC()]) {
-            firstPlayerOnPos[p.getPosR()][p.getPosC()] = secondPlayerOnPos[p.getPosR()][p.getPosC()];
+            firstPlayerOnPos[p.getPosR()][p.getPosC()]
+                    = secondPlayerOnPos[p.getPosR()][p.getPosC()];
         }
         secondPlayerOnPos[p.getPosR()][p.getPosC()] = null;
     }

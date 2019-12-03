@@ -74,30 +74,30 @@ public class Main {
             }
         }
 
-        Map<CoordsPair, StandardPlayer> playerEvidence = new HashMap<>();
+//        Map<CoordsPair, StandardPlayer> playerEvidence = new HashMap<>();
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
-            playerEvidence.clear();
+//            playerEvidence.clear();
+
+            for (StandardPlayer player : players) {
+                if (player.getCurrentHp() <= 0)
+                    continue;
+                player.takeDotDamage();
+            }
 
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
-
                 player.setHasAtacked(false);
                 player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
-//                System.out.print(dataLoader.getMoves()[i][player.getId()]);
-//                if (playerEvidence.get(new CoordsPair(player.getPosR(), player.getPosR())) != null) {
-//                    StandardPlayer.fight(playerEvidence.get(new CoordsPair(player.getPosR(), player.getPosR())), player);
-//                } else {
-//                    playerEvidence.put(new CoordsPair(player.getPosR(), player.getPosR()), player);
-//                }
             }
-//            System.out.println(" ");
 
             for (StandardPlayer player : players) {
-                if (player.getCurrentHp() > 0) {
-                    if (!player.isHasAtacked())
+                if (player.getCurrentHp() <= 0)
+                    continue;
+
+                if (!player.isHasAtacked()) {
                         map.timeForFight(player.getPosR(), player.getPosC(), i);
                 }
             }
@@ -109,16 +109,13 @@ public class Main {
         }
 //
 //
-        System.out.println(" ");
-        map.testPrint();
+//        System.out.println(" ");
+//        map.testPrint();
 //
 ////        map.nulTest();
 //        for (StandardPlayer player : players) {
 //            System.out.println(player.getType());
 //        }
-
-
-
 
         inputOutputStream.write(players);
     }

@@ -111,6 +111,10 @@ public class GameMap {
             p1.takeDamage();
             p2.takeDamage();
 
+            if (p1.getCurrentHp() <= 0 && p2.getCurrentHp() <= 0) {
+                return;
+            }
+
             if (p2.getKillXp(p1)) {
                 p2.checkLevelUp();
             }
@@ -118,6 +122,7 @@ public class GameMap {
             if (p1.getKillXp(p2)) {
                 p1.checkLevelUp();
             }
+
         }
     }
 

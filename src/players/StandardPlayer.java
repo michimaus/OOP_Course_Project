@@ -22,7 +22,16 @@ public abstract class StandardPlayer implements PlayerVisitable{
     protected int xp;
     protected int level;
     protected int hasDotFor;
-    protected int dotDamage;
+
+    public float getDotDamage() {
+        return dotDamage;
+    }
+
+    public void setDotDamage(float dotDamage) {
+        this.dotDamage = dotDamage;
+    }
+
+    protected float dotDamage;
     protected int stundeFor;
     protected boolean stuned;
     protected GameMap map;
@@ -113,7 +122,7 @@ public abstract class StandardPlayer implements PlayerVisitable{
         }
     }
 
-    public void updatePlayerNewRound(char c) {
+    public void takeDotDamage() {
         if (hasDotFor != 0) {
             --hasDotFor;
             currentHp -= dotDamage;
@@ -123,8 +132,11 @@ public abstract class StandardPlayer implements PlayerVisitable{
 
         if (currentHp <= 0) {
             die();
-            return;
         }
+    }
+
+    public void updatePlayerNewRound(char c) {
+
 
         if (stundeFor == 0) {
             boolean ok = true;
@@ -148,8 +160,9 @@ public abstract class StandardPlayer implements PlayerVisitable{
                     ok = false;
                     break;
             }
-            map.updatePlayerPosition(oldR, oldC, posR, posC, this);
-
+            if (ok) {
+                map.updatePlayerPosition(oldR, oldC, posR, posC, this);
+            }
         } else {
             --stundeFor;
         }
@@ -184,7 +197,7 @@ public abstract class StandardPlayer implements PlayerVisitable{
         map.takeOut(this);
     }
 
-    public void getDot(int stunedFor, int hasDotFor, int dotDamage) {
+    public void getDot(int stunedFor, int hasDotFor, float dotDamage) {
         this.stundeFor = stunedFor;
         this.hasDotFor = hasDotFor;
         this.dotDamage = dotDamage;

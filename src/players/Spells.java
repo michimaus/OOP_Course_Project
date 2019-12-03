@@ -2,8 +2,6 @@ package players;
 
 import common.Constants;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class Spells implements PlayerVisitor {
 
     private float baseFireBlast(StandardPlayer player, int level, char land) {
@@ -46,20 +44,26 @@ public class Spells implements PlayerVisitor {
 
     private float baseIgnite(StandardPlayer player, int level, char land) {
         float damage = Constants.IGNITE + level * Constants.IGNITE_LEVEL_BONUS;
+
         if (land == 'V') {
+            player.getDot(0, Constants.IGNITE_TIME,(Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
+                            Constants.LAND_PYROMANCER_BONUS);
+
             return damage * Constants.LAND_PYROMANCER_BONUS;
         }
+        player.getDot(0, Constants.IGNITE_TIME, (Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) );
         return damage;
     }
 
     @Override
     public float ignite(KnightPlayer player, int level, char land) {
         int damage = Math.round(baseIgnite(player, level, land) * Constants.IGNITE_KNIGHT_BONUS);
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_KNIGHT_BONUS));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        
-        player.getDot(0, Constants.IGNITE_TIME,
-                Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
-                        Constants.IGNITE_KNIGHT_BONUS));
+
+//        player.getDot(0, Constants.IGNITE_TIME,
+//                Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
+//                        Constants.IGNITE_KNIGHT_BONUS));
         return 0;
     }
 
@@ -67,9 +71,7 @@ public class Spells implements PlayerVisitor {
     public float ignite(PyromancerPlayer player, int level, char land) {
         int damage = Math.round(baseIgnite(player, level, land) * Constants.IGNITE_PYROMANCER_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(0, Constants.IGNITE_TIME,
-                Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
-                        Constants.IGNITE_PYROMANCER_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_PYROMANCER_BONUS));
         return 0;
     }
 
@@ -77,9 +79,9 @@ public class Spells implements PlayerVisitor {
     public float ignite(RoguePlayer player, int level, char land) {
         int damage = Math.round(baseIgnite(player, level, land) * Constants.IGNITE_ROGUE_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(0, Constants.IGNITE_TIME,
-                Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
-                        Constants.IGNITE_ROGUE_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_ROGUE_BONUS));
+//        System.out.println(player.getDotDamage() + " lgmgsjngg ");
+
         return 0;
     }
 
@@ -87,9 +89,8 @@ public class Spells implements PlayerVisitor {
     public float ignite(WizardPlayer player, int level, char land) {
         int damage = Math.round(baseIgnite(player, level, land) * Constants.IGNITE_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(0, Constants.IGNITE_TIME,
-                Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
-                        Constants.IGNITE_WIZARD_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_WIZARD_BONUS));
+
         return 0;
     }
 
@@ -266,8 +267,8 @@ public class Spells implements PlayerVisitor {
             damage = baseBackStab(wizThis, player.getLevel(), land, 0);
         }
         damage = Math.round(damage);
-        int [] count = new int[1];
-        damage += baseParalysis(count, player.getLevel(), land);
+//        int [] count = new int[1];
+        damage += baseParalysis(wizThis, player.getLevel(), land);
         damage = Math.round(damage);
 
         float percent = baseDeflect(level, land);
@@ -325,49 +326,48 @@ public class Spells implements PlayerVisitor {
         return 0;
     }
 
-    private float baseParalysis(int[] count, int level, char land) {
+    private float baseParalysis(StandardPlayer player, int level, char land) {
         float damage = Constants.PARALYSIS + level * Constants.PARALYSIS_LEVEL_BONUS;
-        count[0] = 3;
+
         if (land == 'W') {
-            count[0] = 6;
+            player.getDot(Constants.PARALYSIS_TIME_BONUS, Constants.PARALYSIS_TIME_BONUS, damage * Constants.LAND_ROGUE_BONUS);
             return damage * Constants.LAND_ROGUE_BONUS;
         }
+        player.getDot(Constants.PARALYSIS_TIME, Constants.PARALYSIS_TIME, damage);
         return damage;
     }
 
     @Override
     public float paralysis(KnightPlayer player, int level, char land) {
-        int [] count  = new int[1];
-        int damage = Math.round(baseParalysis(count, level, land) * Constants.PARALYSIS_KNIGHT_BONUS);
+        int damage = Math.round(baseParalysis(player, level, land) * Constants.PARALYSIS_KNIGHT_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(count[0], count[0], damage);
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_KNIGHT_BONUS));
         return 0;
     }
 
     @Override
     public float paralysis(PyromancerPlayer player, int level, char land) {
-        int [] count  = new int[1];
-        int damage = Math.round(baseParalysis(count, level, land) * Constants.PARALYSIS_PYROMANCER_BONUS);
+        int damage = Math.round(baseParalysis(player, level, land) * Constants.PARALYSIS_PYROMANCER_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(count[0], count[0], damage);
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_PYROMANCER_BONUS));
+
         return 0;
     }
 
     @Override
     public float paralysis(RoguePlayer player, int level, char land) {
-        int [] count  = new int[1];
-        int damage = Math.round(baseParalysis(count, level, land) * Constants.PARALYSIS_ROGUE_BONUS);
+        int damage = Math.round(baseParalysis(player, level, land) * Constants.PARALYSIS_ROGUE_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(count[0], count[0], damage);
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_ROGUE_BONUS));
+
         return 0;
     }
 
     @Override
     public float paralysis(WizardPlayer player, int level, char land) {
-        int [] count  = new int[1];
-        int damage = Math.round(baseParalysis(count, level, land) * Constants.PARALYSIS_WIZARD_BONUS);
+        int damage = Math.round(baseParalysis(player, level, land) * Constants.PARALYSIS_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.getDot(count[0], count[0], damage);
+        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_WIZARD_BONUS));
         return 0;
     }
 }

@@ -5,6 +5,12 @@ import players.StandardPlayer;
 
 import java.util.List;
 
+/**
+ * Map is a singletone.
+ * Cells of the map contains the terain deffinition and referances to the players that are found
+ * at the specific coordinates.
+ */
+
 public final class GameMap {
     private static GameMap instance = null;
     private Spells heroSpells;
@@ -57,6 +63,13 @@ public final class GameMap {
         putPlayerAtPosition(newX, newY, player);
     }
 
+    /**
+     * Checks tha case for a fight (when two players are on the same sport)
+     * Implements the logic of the interaction.
+     * @param posR = row
+     * @param posC = column
+     */
+
     public void timeForFight(final int posR, final int posC) {
         if (secondPlayerOnPos[posR][posC] != null) {
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
@@ -86,6 +99,11 @@ public final class GameMap {
             }
         }
     }
+
+    /**
+     * Forgets the player position.
+     * @param p = player that is dead, no longer on the map.
+     */
 
     public void takeOut(final StandardPlayer p) {
         if (p == firstPlayerOnPos[p.getPosR()][p.getPosC()]) {

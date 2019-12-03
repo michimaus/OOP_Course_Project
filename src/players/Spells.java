@@ -4,6 +4,13 @@ import common.Constants;
 
 public class Spells implements PlayerVisitor {
 
+    /**
+     * baseFireBlast.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return Tha base damage that the player is going to take.
+     */
+
     private float baseFireBlast(final int level, final char land) {
         float damage = Constants.FIREBLAST + level * Constants.FIREBLAST_LEVEL_BONUS;
         if (land == 'V') {
@@ -39,6 +46,14 @@ public class Spells implements PlayerVisitor {
                 * Constants.FIREBLAST_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
+
+    /**
+     * baseIgnite.
+     * @param player = gets the effect of the Dot of the ability.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return The base damage that the player is going to take.
+     */
 
     private float baseIgnite(final StandardPlayer player, final int level, final char land) {
         float damage = Constants.IGNITE + level * Constants.IGNITE_LEVEL_BONUS;
@@ -86,6 +101,14 @@ public class Spells implements PlayerVisitor {
 
     }
 
+    /**
+     * baseExecute.
+     * @param player = needs to get that percent of the remaining life in order to apply effects.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return  The base damage that the player is going to take.
+     */
+
     private float baseExecute(final StandardPlayer player, final int level, final char land) {
         float procent = Constants.BASE_EXECUTE_PROCENT + level * Constants.BONUS_EXECUTE_PROCENT;
         if (procent > Constants.MAX_EXECUTE_PROCENT) {
@@ -130,6 +153,14 @@ public class Spells implements PlayerVisitor {
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
+    /**
+     * baseSlam.
+     * @param player = gets the effect of the Dot of the ability.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return The base damage that the player is going to take.
+     */
+
     private float baseSlam(final StandardPlayer player, final int level, final char land) {
         float damage = Constants.SLAM + level * Constants.SLAM_LEVEL_BONUS;
         player.getDot(1, 0, 0);
@@ -162,6 +193,14 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseSlam(player, level, land) * Constants.SLAM_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
+
+    /**
+     * baseDrain.
+     * @param player = needs to get that percent of the remaining life in order to apply effects.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return The base damage that the player is going to take.
+     */
 
     private float baseDrain(final StandardPlayer player, final int level, final char land) {
         float percent = Constants.DRAIN + level * Constants.DRAIN_LEVEL_BONUS;
@@ -203,6 +242,13 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseDrain(player, level, land) * Constants.DRAIN_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
+
+    /**
+     * baseDeflect.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return The base damage that the player is going to take.
+     */
 
     private float baseDeflect(final int level, final char land) {
         float percent = Constants.DEFLECT + level * Constants.DEFLECT_LEVEL_BONUS;
@@ -269,6 +315,14 @@ public class Spells implements PlayerVisitor {
 
     }
 
+    /**
+     * baseBackStab.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @param count = parameter of the rogue class to keep evidance of the criticals
+     * @return The base damage that the player is going to take.
+     */
+
     private float baseBackStab(final int level, final char land, final int count) {
         float damage = Constants.BACKSTAB + level * Constants.BACKSTAB_LEVEL_BONUS;
         if (count == Constants.BACKSTAB_CRIT_TIME && land == 'W') {
@@ -311,6 +365,14 @@ public class Spells implements PlayerVisitor {
                 * Constants.BACKSTAB_WIZARD_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
+
+    /**
+     * baseParalysis.
+     * @param player = gets the effect of the DoT.
+     * @param level = level of the heroe casting the spell
+     * @param land = where the fight takes place
+     * @return The base damage that the player is going to take.
+     */
 
     private float baseParalysis(final StandardPlayer player, final int level, final char land) {
         float damage = Constants.PARALYSIS + level * Constants.PARALYSIS_LEVEL_BONUS;

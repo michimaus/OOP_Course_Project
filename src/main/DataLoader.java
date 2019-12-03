@@ -2,6 +2,12 @@ package main;
 
 import java.util.List;
 
+/**
+ * In this file it is designed the structure of the input data.
+ * Each field retains raw data that are parsed to the main program where those
+ * are getting processed.
+ */
+
 public class DataLoader {
 
     static class PlayerData {
@@ -34,16 +40,6 @@ public class DataLoader {
     private List<PlayerData> inputPlayers;
     private int rounds;
     private char[][] moves;
-
-    public DataLoader() {
-        n = 0;
-        m = 0;
-        map = null;
-        noPlayers = 0;
-        inputPlayers = null;
-        rounds = 0;
-        moves = null;
-    }
 
     public DataLoader(final int n, final int m, final char[][] map, final int noPlayers,
                       final List<PlayerData> inputPlayers,

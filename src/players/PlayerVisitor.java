@@ -1,5 +1,10 @@
 package players;
 
+/**
+ * Signatures for the methods of all spells.
+ * Particularly implementations for each case-interction between heroes.
+ */
+
 public interface PlayerVisitor {
     void fireBlast(KnightPlayer player, int level, char land);
     void fireBlast(RoguePlayer player, int level, char land);

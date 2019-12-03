@@ -2,6 +2,12 @@ package players;
 
 import common.Constants;
 
+/**
+ * Class of the Knight race.
+ * Here are implemented the calls for the spells the character is applying,
+ * the specific HP status and the calls for the spells that hit this hero, with different efects.
+ */
+
 public class KnightPlayer extends StandardPlayer {
 
     @Override

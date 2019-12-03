@@ -11,6 +11,13 @@ import players.KnightPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main game runner where the logic of the game gets implemented.
+ * First the data gets processed -getting the players and the map elements-
+ * and then are implemented the game rules for every round -checking for DoT damage,
+ * making the players move around the map, and then looking at the map if is the case for a fight.
+ */
+
 public final class Main {
     private Main() {
     }

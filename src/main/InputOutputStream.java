@@ -6,6 +6,11 @@ import java.util.List;
 import fileio.FileSystem;
 import players.StandardPlayer;
 
+/**
+ * Structer for the calss that reads form files and writes into another one.
+ * Used the provided fileIO.jar.
+ */
+
 public final class InputOutputStream {
     private final String mInputPath;
     private final String mOutputPath;

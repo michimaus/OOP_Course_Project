@@ -3,6 +3,11 @@ package players;
 import common.Constants;
 import gameterain.GameMap;
 
+/**
+ * Abstract class that builds the base player -is getting extended by all other race classes.
+ * Retains the basic data for the players
+ */
+
 public abstract class StandardPlayer implements PlayerVisitable {
 
     protected boolean hasAtacked;
@@ -21,7 +26,14 @@ public abstract class StandardPlayer implements PlayerVisitable {
     protected GameMap map;
     protected int incomingDamage;
 
-    abstract void updateMaxHP(int noLevels);
+    /**
+     * Signatures for the spells of the heroes, when they get hit.
+     * @param heroSpell = the visitor that implements the logic of the spells
+     * @param levelHero = the level of the hero that is applying the spell
+     * @param land = the land where the fight is taking place
+     * Also "calculateStrike" is specific to every race
+     *             -the place where the attacker applies the hits.
+     */
     abstract void getSlamed(PlayerVisitor heroSpell, int levelHero, char land);
     abstract void getFireBlasted(PlayerVisitor heroSpell,  int levelHero, char land);
     abstract void getIgnited(PlayerVisitor heroSpell, int levelHero, char land);
@@ -33,6 +45,8 @@ public abstract class StandardPlayer implements PlayerVisitable {
     abstract void getParalyzed(PlayerVisitor heroSpell, int levelHero, char land);
     public abstract void calculateStrike(PlayerVisitor heroSpells,
                                          StandardPlayer opponent,  char land);
+
+    abstract void updateMaxHP(int noLevels);
 
     public final char getType() {
         return type;
@@ -104,6 +118,15 @@ public abstract class StandardPlayer implements PlayerVisitable {
         this.level = 0;
         this.hasDotFor = 0;
     }
+
+    /**
+     * It is checked the result of the fight.
+     * @param other = hero that fought with this one
+     * @return true if this hero managed to kill the other
+     * In case of a positive result the mecahnism of the level up is implemented below,
+     * in "checkLevelUp.
+     */
+
     public final boolean getKillXp(final StandardPlayer other) {
         if (other.currentHp > 0) {
             return false;
@@ -125,6 +148,11 @@ public abstract class StandardPlayer implements PlayerVisitable {
         }
     }
 
+    /**
+     * Next three methods implement the logic of the player when taking damage.
+     * The effects are getting applied in different sports in the main game engine.
+     */
+
     public final void takeDotDamage() {
         if (hasDotFor != 0) {
             --hasDotFor;
@@ -132,11 +160,30 @@ public abstract class StandardPlayer implements PlayerVisitable {
         } else {
             dotDamage = 0;
         }
-
         if (currentHp <= 0) {
             die();
         }
     }
+
+    public final void getDot(final int stunedForSeconds,
+                             final int hasDotForSeconds, final float dotDamageNow) {
+        this.stunedFor = stunedForSeconds;
+        this.hasDotFor = hasDotForSeconds;
+        this.dotDamage = dotDamageNow;
+    }
+
+    public final void takeDamage() {
+        currentHp -= incomingDamage;
+        incomingDamage = 0;
+        if (currentHp <= 0) {
+            die();
+        }
+    }
+
+    /**
+     * If the move is valid the the position of the player gets updated on the map.
+     * @param c = the name of the move the player is going to make.
+     */
 
     public final void updatePlayerNewRound(final char c) {
         if (stunedFor == 0) {
@@ -172,20 +219,5 @@ public abstract class StandardPlayer implements PlayerVisitable {
     protected final void die() {
         currentHp = -1;
         map.takeOut(this);
-    }
-
-    public final void getDot(final int stunedForSeconds,
-                             final int hasDotForSeconds, final float dotDamageNow) {
-        this.stunedFor = stunedForSeconds;
-        this.hasDotFor = hasDotForSeconds;
-        this.dotDamage = dotDamageNow;
-    }
-
-    public final void takeDamage() {
-        currentHp -= incomingDamage;
-        incomingDamage = 0;
-        if (currentHp <= 0) {
-            die();
-        }
     }
 }

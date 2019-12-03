@@ -24,6 +24,14 @@ public class GameMap {
         return secondPlayerOnPos;
     }
 
+    public char getTerainType(final int posR, final int posC) {
+        return mapTerain[posR][posC];
+    }
+
+    public Spells getHeroSpells() {
+        return heroSpells;
+    }
+
     private GameMap () {
         heroSpells = new Spells();
         mapTerain = null;
@@ -39,12 +47,7 @@ public class GameMap {
         secondPlayerOnPos = new StandardPlayer[n][m];
 
         for (StandardPlayer p : players) {
-//            if (firstPlayerOnPos[p.getPosX()][p.getPosY()] == null) {
-//                firstPlayerOnPos[p.getPosX()][p.getPosY()] = p;
-//            } else {
-//                System.out.println("eceva");
-//                secondPlayerOnPos[p.getPosX()][p.getPosY()] = p;
-//            }
+
             putPlayerAtPosition(p.getPosR(), p.getPosC(), p);
         }
     }
@@ -66,25 +69,37 @@ public class GameMap {
 
     public void updatePlayerPosition(final int oldX, final int oldY,
                                      final int newX, final int newY, StandardPlayer player) {
-        if (secondPlayerOnPos[oldX][oldY] == null) {
-            firstPlayerOnPos[oldX][oldY] = null;
+
+        if (secondPlayerOnPos[oldX][oldY] == player) {
+            secondPlayerOnPos[oldX][oldY] = null;
         } else {
-            if (firstPlayerOnPos[oldX][oldY] == player) {
-                firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
-            }
+            firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
             secondPlayerOnPos[oldX][oldY] = null;
         }
+
         putPlayerAtPosition(newX, newY, player);
     }
 
-    public void timeForFight(int posR, int posC) {
+    public void testPrint() {
+        for (int i = 0; i < firstPlayerOnPos.length; ++i) {
+            for(int j = 0; j < firstPlayerOnPos[i].length; ++j) {
+                if (secondPlayerOnPos[i][j] != null) {
+                    System.out.print(secondPlayerOnPos[i][j].getId() + " ");
+                } else {
+                    System.out.print("- ");
+                }
+            }
+            System.out.println(" ");
+        }
+    }
 
+    public void timeForFight(int posR, int posC, int round) {
         if (secondPlayerOnPos[posR][posC] != null) {
-//            checked[firstPlayerOnPos[posR][posC].getId()] = true;
-//            checked[secondPlayerOnPos[posR][posC].getId()] = true;
+//            System.out.println(posR + " eee "+ round + " ee " + posC);
 
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
+
             p1.setIncomingDamage(0);
             p2.setIncomingDamage(0);
 
@@ -103,16 +118,6 @@ public class GameMap {
             if (p1.getKillXp(p2)) {
                 p1.checkLevelUp();
             }
-
-//            if (p1.getType() == 'W') {
-//                p1.calculateStrike(heroSpells, p2, mapTerain[posR][posC]);
-//            } else {
-//                if (p2.getType() == 'W') {
-//                    p2.calculateStrike(heroSpells, p1, mapTerain[posR][posC]);
-//                }
-//                p1.calculateStrike(heroSpells, p2, mapTerain[posR][posC]);
-//                p2.calculateStrike(heroSpells, p1, mapTerain[posR][posC]);
-//            }
         }
     }
 

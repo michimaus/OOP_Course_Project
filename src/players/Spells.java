@@ -56,6 +56,7 @@ public class Spells implements PlayerVisitor {
     public float ignite(KnightPlayer player, int level, char land) {
         int damage = Math.round(baseIgnite(player, level, land) * Constants.IGNITE_KNIGHT_BONUS);
         player.setIncomingDamage(player.getIncomingDamage() + damage);
+        
         player.getDot(0, Constants.IGNITE_TIME,
                 Math.round((Constants.IGNITE_OVERTIME + level * Constants.IGNITE_OVERTIME_BONUS) *
                         Constants.IGNITE_KNIGHT_BONUS));
@@ -98,7 +99,8 @@ public class Spells implements PlayerVisitor {
             procent = Constants.MAX_EXECUTE_PROCENT;
 
         if ((float) player.getCurrentHp() / (float) player.getMaxHp() < procent) {
-            return (float) player.getCurrentHp();
+            player.setIncomingDamage(player.getIncomingDamage() + player.getCurrentHp());
+            return 0;
         } else {
             if (land == 'L') {
                 return (float) (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * level) * Constants.LAND_KNIGHT_BONUS;
@@ -230,7 +232,9 @@ public class Spells implements PlayerVisitor {
     @Override
     public float deflect(KnightPlayer player, int level, char land, WizardPlayer wizThis) {
         float damage = baseSlam(wizThis, player.getLevel(), land);
+        damage = Math.round(damage);
         damage += baseExecute(wizThis, player.getLevel(), land);
+        damage = Math.round(damage);
 
         float percent = baseDeflect(level, land);
         player.setIncomingDamage(player.getIncomingDamage() +
@@ -241,7 +245,9 @@ public class Spells implements PlayerVisitor {
     @Override
     public float deflect(PyromancerPlayer player, int level, char land, WizardPlayer wizThis) {
         float damage = baseFireBlast(wizThis, player.getLevel(), land);
+        damage = Math.round(damage);
         damage += baseIgnite(wizThis, player.getLevel(), land);
+        damage = Math.round(damage);
 
         float percent = baseDeflect(level, land);
 
@@ -252,15 +258,17 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public float deflect(RoguePlayer player, int level, char land, WizardPlayer wizThis) {
-        System.out.println(player.getBackStabCount() + "agsjhasjdksadnasnd");
+//        System.out.println(player.getBackStabCount() + "agsjhasjdksadnasnd");
         float damage = 0;
         if ((player.isHasAtacked() && player.getBackStabCount() == 0) || (!player.isHasAtacked() && player.getBackStabCount() == 2)) {
             damage = baseBackStab(wizThis, player.getLevel(), land, Constants.BACKSTAB_CRIT_TIME);
         } else {
             damage = baseBackStab(wizThis, player.getLevel(), land, 0);
         }
+        damage = Math.round(damage);
         int [] count = new int[1];
         damage += baseParalysis(count, player.getLevel(), land);
+        damage = Math.round(damage);
 
         float percent = baseDeflect(level, land);
 

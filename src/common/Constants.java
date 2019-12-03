@@ -16,7 +16,7 @@ public final class Constants {
     public static final int XP_UPPER_BOUND = 200;
     public static final int XP_INTERVAL = 40;
 
-    public static final float ONE_HUNDRED = 100f;
+    public static final int PRIME_NUMBER = 7919;
 
     public static final float LAND_ROGUE_BONUS = 1.15f;
     public static final float LAND_KNIGHT_BONUS = 1.15f;

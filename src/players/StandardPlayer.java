@@ -148,11 +148,34 @@ public abstract class StandardPlayer implements PlayerVisitable{
                     ok = false;
                     break;
             }
-            if (ok && maxHp > 0) {
-                map.updatePlayerPosition(oldR, oldC, posR, posC, this);
-            }
+            map.updatePlayerPosition(oldR, oldC, posR, posC, this);
+
         } else {
             --stundeFor;
+        }
+    }
+
+    public static void fight(StandardPlayer p1, StandardPlayer p2) {
+
+        p1.setIncomingDamage(0);
+        p2.setIncomingDamage(0);
+
+        p1.calculateStrike(GameMap.getInstance().getHeroSpells(), p2,
+                GameMap.getInstance().getTerainType(p1.getPosR(), p1.getPosC()));
+        p1.setHasAtacked(true);
+        p2.calculateStrike(GameMap.getInstance().getHeroSpells(), p1,
+                GameMap.getInstance().getTerainType(p1.getPosR(), p1.getPosC()));
+        p2.setHasAtacked(true);
+
+        p1.takeDamage();
+        p2.takeDamage();
+
+        if (p2.getKillXp(p1)) {
+            p2.checkLevelUp();
+        }
+
+        if (p1.getKillXp(p2)) {
+            p1.checkLevelUp();
         }
     }
 

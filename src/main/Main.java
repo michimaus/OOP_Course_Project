@@ -5,7 +5,9 @@ import gameterain.GameMap;
 import players.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(final String[] args) {
@@ -36,38 +38,88 @@ public class Main {
         GameMap map = GameMap.getInstance();
         map.initMap(dataLoader.getN(), dataLoader.getM(), dataLoader.getMap(), players);
 
+        class CoordsPair {
+            private final int posR;
+            private final int posC;
+
+            public CoordsPair(final int posR, final int posC) {
+                this.posR = posR;
+                this.posC = posC;
+            }
+
+            @Override
+            public boolean equals(final Object o) {
+                if (this == o) {
+                    return true;
+                }
+                if (!(o instanceof CoordsPair)) {
+                    return false;
+                }
+                final CoordsPair pair = (CoordsPair) o;
+
+                if (posR != pair.posR) {
+                    return false;
+                }
+                if (posC != pair.posC) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = posR;
+                result = Constants.PRIME_NUMBER * result + posC;
+                return result;
+            }
+        }
+
+        Map<CoordsPair, StandardPlayer> playerEvidence = new HashMap<>();
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
-//            checked = new boolean [dataLoader.getNoPlayers()];
-            for (StandardPlayer player : players) {
-                player.setHasAtacked(false);
-                player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
-            }
+            playerEvidence.clear();
 
             for (StandardPlayer player : players) {
-
-                if (!player.isHasAtacked()) {
-                    if (player.getCurrentHp() > 0)
-                        map.timeForFight(player.getPosR(), player.getPosC());
+                if (player.getCurrentHp() <= 0) {
+                    continue;
                 }
 
+                player.setHasAtacked(false);
+                player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
+//                System.out.print(dataLoader.getMoves()[i][player.getId()]);
+//                if (playerEvidence.get(new CoordsPair(player.getPosR(), player.getPosR())) != null) {
+//                    StandardPlayer.fight(playerEvidence.get(new CoordsPair(player.getPosR(), player.getPosR())), player);
+//                } else {
+//                    playerEvidence.put(new CoordsPair(player.getPosR(), player.getPosR()), player);
+//                }
             }
+//            System.out.println(" ");
 
+            for (StandardPlayer player : players) {
+                if (player.getCurrentHp() > 0) {
+                    if (!player.isHasAtacked())
+                        map.timeForFight(player.getPosR(), player.getPosC(), i);
+                }
+            }
+            System.out.println("Round: " + i);
             for (StandardPlayer player : players) {
                 player.printData();
             }
             System.out.println("-----------END ROUND--------");
         }
+//
+//
+        System.out.println(" ");
+        map.testPrint();
+//
+////        map.nulTest();
+//        for (StandardPlayer player : players) {
+//            System.out.println(player.getType());
+//        }
+
+
+
+
         inputOutputStream.write(players);
-
-//        map.nulTest();
-        for (StandardPlayer player : players) {
-            System.out.println(player.getType());
-        }
-
-//        int ceva = 234;
-//        int altceva = 645;
-//        float currentProcent = ((float) ceva / (float) altceva) * Constants.ONE_HUNDRED;
-//        System.out.println(currentProcent);
     }
 }

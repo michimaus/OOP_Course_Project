@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cedam" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/cedam" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/cetrimitem" vcs="Git" />
   </component>
 </project>

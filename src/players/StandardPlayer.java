@@ -8,7 +8,7 @@ import gameterain.GameMap;
  * Retains the basic data for the players
  */
 
-public abstract class StandardPlayer implements PlayerVisitable {
+public abstract class StandardPlayer {
 
     protected boolean hasAtacked;
     protected int id;

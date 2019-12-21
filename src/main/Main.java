@@ -1,15 +1,12 @@
 package main;
 
 import gameterain.GameMap;
+import players.PlayerFactory;
 import players.StandardPlayer;
-import players.WizardPlayer;
-import players.PyromancerPlayer;
-import players.RoguePlayer;
-import players.KnightPlayer;
 
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Main game runner where the logic of the game gets implemented.
@@ -25,35 +22,27 @@ public final class Main {
     public static void main(final String[] args) {
         InputOutputStream inputOutputStream = new InputOutputStream(args[0], args[1]);
         DataLoader dataLoader = inputOutputStream.load();
+
         List<StandardPlayer> players = new ArrayList<>();
-        int playerId = 0;
+        PlayerFactory playerFactory = PlayerFactory.getInstance();
 
         for (DataLoader.PlayerData data : dataLoader.getInputPlayers()) {
-            switch (data.getType()) {
-                case 'W':
-                   players.add(new WizardPlayer(data.getType(), data.getPosR(),
-                           data.getPosC(), playerId));
-                   break;
-                case 'P':
-                   players.add(new PyromancerPlayer(data.getType(), data.getPosR(),
-                           data.getPosC(), playerId));
-                   break;
-                case 'K':
-                   players.add(new KnightPlayer(data.getType(), data.getPosR(),
-                           data.getPosC(), playerId));
-                   break;
-                default:
-                   players.add(new RoguePlayer(data.getType(), data.getPosR(),
-                           data.getPosC(), playerId));
-                   break;
-            }
-            ++playerId;
+            players.add(playerFactory.creatPlayer(data));
         }
 
         GameMap map = GameMap.getInstance();
         map.initMap(dataLoader.getN(), dataLoader.getM(), dataLoader.getMap(), players);
+        LinkedList<LinkedList<DataLoader.AngelData>> angels = dataLoader.getInputAngels();
+        int i = 0;
 
-        for (int i = 0; i < dataLoader.getRounds(); ++i) {
+        for (LinkedList<DataLoader.AngelData> angelsThisRound : angels) {
+
+            System.out.println(angelsThisRound.size());
+
+            for (DataLoader.AngelData angel : angelsThisRound) {
+                System.out.print(" " + angel.getType());
+            }
+
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
                     continue;
@@ -65,7 +54,7 @@ public final class Main {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
-                player.setHasAtacked(false);
+                player.setHasAttacked(false);
                 player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
             }
 
@@ -73,10 +62,11 @@ public final class Main {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
-                if (!player.isHasAtacked()) {
+                if (!player.isHasAttacked()) {
                         map.timeForFight(player.getPosR(), player.getPosC());
                 }
             }
+            ++i;
         }
         inputOutputStream.write(players);
     }

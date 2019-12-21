@@ -1,8 +1,10 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import common.Constants;
 import fileio.FileSystem;
 import players.StandardPlayer;
 
@@ -54,6 +56,7 @@ public final class InputOutputStream {
         char[][] map = null;
         int p = 0;
         List<DataLoader.PlayerData> inputPlayers = new ArrayList<>();
+        LinkedList<LinkedList<DataLoader.AngelData>> inputAngels = new LinkedList<>();
         int r = 0;
         char[][] moves = null;
 
@@ -90,12 +93,35 @@ public final class InputOutputStream {
                 }
             }
 
+            for (int i = 0; i < r; ++i) {
+                int numAngels = fs.nextInt();
+
+
+//                System.out.println(numAngels);
+
+
+                inputAngels.add(new LinkedList<>());
+
+                for (int j = 0; j < numAngels; ++j) {
+                    String auxStr = fs.nextWord();
+                    int len = auxStr.length();
+
+                    int auxPosy = auxStr.charAt(auxStr.length() - Constants.INDEX_POSY) - '0';
+                    int auxPosx = auxStr.charAt(auxStr.length() - Constants.INDEX_POSX) - '0';
+
+
+                    inputAngels.getLast().add(new DataLoader.AngelData(auxStr.substring(0,
+                            auxStr.length() - Constants.INDEX_SUBSTRING), auxPosx, auxPosy));
+                }
+//                System.out.println();
+            }
+
             fs.close();
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
 
-        return new DataLoader(n, m, map, p, inputPlayers, r, moves);
+        return new DataLoader(n, m, map, inputPlayers, inputAngels, r, moves);
     }
 }

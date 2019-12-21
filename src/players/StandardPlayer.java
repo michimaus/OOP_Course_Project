@@ -1,16 +1,20 @@
 package players;
 
+import angels.AngelVisitable;
+
 import common.Constants;
 import gameterain.GameMap;
+import spells.PlayerVisitable;
+import spells.PlayerVisitor;
 
 /**
  * Abstract class that builds the base player -is getting extended by all other race classes.
  * Retains the basic data for the players
  */
 
-public abstract class StandardPlayer {
+public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable {
 
-    protected boolean hasAtacked;
+    protected boolean hasAttacked;
     protected int id;
     protected char type;
     protected int posR;
@@ -34,19 +38,24 @@ public abstract class StandardPlayer {
      * Also "calculateStrike" is specific to every race
      *             -the place where the attacker applies the hits.
      */
-    abstract void getSlamed(PlayerVisitor heroSpell, int levelHero, char land);
-    abstract void getFireBlasted(PlayerVisitor heroSpell,  int levelHero, char land);
-    abstract void getIgnited(PlayerVisitor heroSpell, int levelHero, char land);
-    abstract void getExecuted(PlayerVisitor heroSpell, int levelHero, char land);
-    abstract void getDrained(PlayerVisitor heroSpell, int levelHero, char land);
-    abstract void getDeflected(PlayerVisitor heroSpell, int levelHero,
-                               char land, WizardPlayer wizThis);
-    abstract void getBaskStabbed(PlayerVisitor heroSpell, int levelHero, char land, int count);
-    abstract void getParalyzed(PlayerVisitor heroSpell, int levelHero, char land);
+    abstract void getSlamed(PlayerVisitor heroSpell, KnightPlayer caster);
+    abstract void getFireBlasted(PlayerVisitor heroSpell,  PyromancerPlayer caster);
+    abstract void getIgnited(PlayerVisitor heroSpell, PyromancerPlayer caster);
+    abstract void getExecuted(PlayerVisitor heroSpell, KnightPlayer caster);
+    abstract void getDrained(PlayerVisitor heroSpell, WizardPlayer caster);
+    abstract void getDeflected(PlayerVisitor heroSpell, WizardPlayer caster);
+    abstract void getBaskStabbed(PlayerVisitor heroSpell, RoguePlayer caster);
+    abstract void getParalyzed(PlayerVisitor heroSpell, RoguePlayer caster);
+
+
     public abstract void calculateStrike(PlayerVisitor heroSpells,
                                          StandardPlayer opponent,  char land);
 
     abstract void updateMaxHP(int noLevels);
+
+    public final char getPieceOfLand() {
+        return map.getPieceOfLand(posR, posC);
+    }
 
     public final char getType() {
         return type;
@@ -68,12 +77,12 @@ public abstract class StandardPlayer {
         return maxHp;
     }
 
-    public final boolean isHasAtacked() {
-        return hasAtacked;
+    public final boolean isHasAttacked() {
+        return hasAttacked;
     }
 
-    public final void setHasAtacked(final boolean hasAtacked) {
-        this.hasAtacked = hasAtacked;
+    public final void setHasAttacked(final boolean hasAttacked) {
+        this.hasAttacked = hasAttacked;
     }
 
     public final int getIncomingDamage() {
@@ -105,7 +114,7 @@ public abstract class StandardPlayer {
     }
 
     public StandardPlayer(final char type, final int posR, final int posC, final int id) {
-        hasAtacked = false;
+        hasAttacked = false;
         this.stuned = false;
         this.stunedFor = 0;
         this.id = id;

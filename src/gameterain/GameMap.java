@@ -1,6 +1,6 @@
 package gameterain;
 
-import players.Spells;
+import spells.Spells;
 import players.StandardPlayer;
 
 import java.util.List;
@@ -33,7 +33,6 @@ public final class GameMap {
         secondPlayerOnPos = new StandardPlayer[n][m];
 
         for (StandardPlayer p : players) {
-
             putPlayerAtPosition(p.getPosR(), p.getPosC(), p);
         }
     }
@@ -79,9 +78,9 @@ public final class GameMap {
             p2.setIncomingDamage(0);
 
             p1.calculateStrike(heroSpells, p2, mapTerain[posR][posC]);
-            p1.setHasAtacked(true);
+            p1.setHasAttacked(true);
             p2.calculateStrike(heroSpells, p1, mapTerain[posR][posC]);
-            p2.setHasAtacked(true);
+            p2.setHasAttacked(true);
 
             p1.takeDamage();
             p2.takeDamage();
@@ -98,6 +97,10 @@ public final class GameMap {
                 p1.checkLevelUp();
             }
         }
+    }
+
+    public final char getPieceOfLand(final int posR, final int posC) {
+        return mapTerain[posR][posC];
     }
 
     /**

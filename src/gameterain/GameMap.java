@@ -1,5 +1,8 @@
 package gameterain;
 
+import angels.AngelEffects;
+import angels.AngelFactory;
+import main.DataLoader;
 import spells.Spells;
 import players.StandardPlayer;
 
@@ -14,12 +17,16 @@ import java.util.List;
 public final class GameMap {
     private static GameMap instance = null;
     private Spells heroSpells;
+    private AngelEffects angelEffects;
+    private AngelFactory angelFactory;
     private char[][] mapTerain;
     private StandardPlayer[][] firstPlayerOnPos;
     private StandardPlayer[][] secondPlayerOnPos;
 
     private GameMap() {
         heroSpells = new Spells();
+        angelEffects = new AngelEffects();
+        angelFactory = AngelFactory.getInstance();
         mapTerain = null;
         firstPlayerOnPos = null;
         secondPlayerOnPos = null;
@@ -99,7 +106,7 @@ public final class GameMap {
         }
     }
 
-    public final char getPieceOfLand(final int posR, final int posC) {
+    public char getPieceOfLand(final int posR, final int posC) {
         return mapTerain[posR][posC];
     }
 
@@ -114,5 +121,16 @@ public final class GameMap {
                     = secondPlayerOnPos[p.getPosR()][p.getPosC()];
         }
         secondPlayerOnPos[p.getPosR()][p.getPosC()] = null;
+    }
+
+    public void spawnAngel(final DataLoader.AngelData angelData) {
+        if (firstPlayerOnPos[angelData.getPosR()][angelData.getPosC()] != null) {
+            angelFactory.applyAngelEffect(angelData.getType(),
+                    firstPlayerOnPos[angelData.getPosR()][angelData.getPosC()]);
+        }
+        if (secondPlayerOnPos[angelData.getPosR()][angelData.getPosC()] != null) {
+            angelFactory.applyAngelEffect(angelData.getType(),
+                    secondPlayerOnPos[angelData.getPosR()][angelData.getPosC()]);
+        }
     }
 }

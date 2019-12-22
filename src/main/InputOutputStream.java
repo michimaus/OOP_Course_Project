@@ -97,23 +97,25 @@ public final class InputOutputStream {
                 int numAngels = fs.nextInt();
 
 
-//                System.out.println(numAngels);
-
-
                 inputAngels.add(new LinkedList<>());
 
                 for (int j = 0; j < numAngels; ++j) {
                     String auxStr = fs.nextWord();
-                    int len = auxStr.length();
+                    String vecStr[] = new String[Constants.NUMBER_SPLIT + 1];
+                    int k = 0;
 
-                    int auxPosy = auxStr.charAt(auxStr.length() - Constants.INDEX_POSY) - '0';
-                    int auxPosx = auxStr.charAt(auxStr.length() - Constants.INDEX_POSX) - '0';
+                    for (String auxSubStr : auxStr.split(",")) {
+                        vecStr[k] = auxSubStr;
+//                        System.out.println(vecStr[k]);
+                        ++k;
+                    }
 
+                    int auxPosy = Integer.parseInt(vecStr[--k]);
+                    int auxPosx = Integer.parseInt(vecStr[--k]);
 
-                    inputAngels.getLast().add(new DataLoader.AngelData(auxStr.substring(0,
-                            auxStr.length() - Constants.INDEX_SUBSTRING), auxPosx, auxPosy));
+                    inputAngels.getLast().add(new DataLoader.AngelData(vecStr[--k],
+                            auxPosx, auxPosy));
                 }
-//                System.out.println();
             }
 
             fs.close();

@@ -1,5 +1,2 @@
 Starting audit...
-[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/gameterain/GameMap.java:102:12: Redundant 'final' modifier. [RedundantModifier]
-[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/DataLoader.java:3:8: Unused import - java.util.ArrayList. [UnusedImports]
 Audit done.
-Checkstyle ends with 2 errors.

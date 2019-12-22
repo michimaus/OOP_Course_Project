@@ -2,6 +2,7 @@ package players;
 
 import angels.AngelVisitable;
 
+import angels.AngelVisitor;
 import common.Constants;
 import gameterain.GameMap;
 import spells.PlayerVisitable;
@@ -26,15 +27,14 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
     protected int hasDotFor;
     protected float dotDamage;
     protected int stunedFor;
-    protected boolean stuned;
     protected GameMap map;
     protected int incomingDamage;
+    protected float modifier;
 
     /**
      * Signatures for the spells of the heroes, when they get hit.
      * @param heroSpell = the visitor that implements the logic of the spells
-     * @param levelHero = the level of the hero that is applying the spell
-     * @param land = the land where the fight is taking place
+     * @param caster = the hero casting the spell
      * Also "calculateStrike" is specific to every race
      *             -the place where the attacker applies the hits.
      */
@@ -47,6 +47,19 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
     abstract void getBaskStabbed(PlayerVisitor heroSpell, RoguePlayer caster);
     abstract void getParalyzed(PlayerVisitor heroSpell, RoguePlayer caster);
 
+    abstract void visitedByDamageAngel(AngelVisitor angel);
+    abstract void visitedByDarkAngel(AngelVisitor angel);
+    abstract void visitedByDracula(AngelVisitor angel);
+    abstract void visitedByGoodBoy(AngelVisitor angel);
+    abstract void visitedByLevelUpAngel(AngelVisitor angel);
+    abstract void visitedByLifeGiver(AngelVisitor angel);
+    abstract void visitedBySmallAngel(AngelVisitor angel);
+    abstract void visitedBySpawner(AngelVisitor angel);
+    abstract void visitedByXPAngel(AngelVisitor angel);
+
+    public final void visitedByTheDoomer(final AngelVisitor angel) {
+        this.die();
+    }
 
     public abstract void calculateStrike(PlayerVisitor heroSpells,
                                          StandardPlayer opponent,  char land);
@@ -115,7 +128,6 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
 
     public StandardPlayer(final char type, final int posR, final int posC, final int id) {
         hasAttacked = false;
-        this.stuned = false;
         this.stunedFor = 0;
         this.id = id;
         this.dotDamage = 0;

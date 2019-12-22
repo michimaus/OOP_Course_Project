@@ -19,9 +19,7 @@ public final class Constants {
     public static final int XP_UPPER_BOUND = 200;
     public static final int XP_INTERVAL = 40;
 
-    public static final int INDEX_SUBSTRING = 4;
-    public static final int INDEX_POSX = 3;
-    public static final int INDEX_POSY = 1;
+    public static final int NUMBER_SPLIT = 3;
 
     public static final float LAND_ROGUE_BONUS = 1.15f;
     public static final float LAND_KNIGHT_BONUS = 1.15f;

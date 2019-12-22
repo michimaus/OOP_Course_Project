@@ -1,5 +1,6 @@
 package players;
 
+import angels.AngelVisitor;
 import common.Constants;
 import spells.PlayerVisitor;
 
@@ -55,6 +56,51 @@ public class KnightPlayer extends StandardPlayer {
     @Override
     final void getParalyzed(final PlayerVisitor heroSpell, final RoguePlayer caster) {
         heroSpell.paralysis(this, caster);
+    }
+
+    @Override
+    void visitedByDamageAngel(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByDarkAngel(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByDracula(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByGoodBoy(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByLevelUpAngel(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByLifeGiver(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedBySmallAngel(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedBySpawner(final AngelVisitor angel) {
+
+    }
+
+    @Override
+    void visitedByXPAngel(final AngelVisitor angel) {
+
     }
 
 

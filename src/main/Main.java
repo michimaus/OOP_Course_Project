@@ -37,12 +37,6 @@ public final class Main {
 
         for (LinkedList<DataLoader.AngelData> angelsThisRound : angels) {
 
-            System.out.println(angelsThisRound.size());
-
-            for (DataLoader.AngelData angel : angelsThisRound) {
-                System.out.print(" " + angel.getType());
-            }
-
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
                     continue;
@@ -64,6 +58,12 @@ public final class Main {
                 }
                 if (!player.isHasAttacked()) {
                         map.timeForFight(player.getPosR(), player.getPosC());
+                }
+            }
+
+            if (angelsThisRound.size() != 0) {
+                for (DataLoader.AngelData angel : angelsThisRound) {
+                    map.spawnAngel(angel);
                 }
             }
             ++i;

@@ -32,16 +32,18 @@ public final class GameMap {
         secondPlayerOnPos = null;
     }
 
-    public void initMap(final int n, final int m,
-                        final char[][] mapTerainGet, final List<StandardPlayer> players) {
-        this.mapTerain = mapTerainGet;
-
-        firstPlayerOnPos = new StandardPlayer[n][m];
-        secondPlayerOnPos = new StandardPlayer[n][m];
+    public void initPlayers(final List<StandardPlayer> players) {
 
         for (StandardPlayer p : players) {
             putPlayerAtPosition(p.getPosR(), p.getPosC(), p);
         }
+    }
+
+    public void initLand(final int n, final int m, final char[][] mapTerainGet) {
+        this.mapTerain = mapTerainGet;
+
+        firstPlayerOnPos = new StandardPlayer[n][m];
+        secondPlayerOnPos = new StandardPlayer[n][m];
     }
 
     public void putPlayerAtPosition(final int posX, final int posY, final StandardPlayer player) {

@@ -14,17 +14,20 @@ import players.StandardPlayer;
  */
 
 public final class InputOutputStream {
-    private final String mInputPath;
-    private final String mOutputPath;
+    private FileSystem fs = null;
+    private DataLoader dataLoader;
 
     InputOutputStream(final String inputPath, final String outputPath) {
-        mInputPath = inputPath;
-        mOutputPath = outputPath;
+        dataLoader = DataLoader.getInstance();
+        try {
+            fs = new FileSystem(inputPath, outputPath);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 
-    public void write(final List<StandardPlayer> players) {
+    public void writeFinalStandings(final List<StandardPlayer> players) {
         try {
-            FileSystem fs = new FileSystem(mInputPath, mOutputPath);
             for (StandardPlayer player : players) {
                 fs.writeCharacter(player.getType());
                 fs.writeCharacter(' ');
@@ -50,7 +53,62 @@ public final class InputOutputStream {
         }
     }
 
-    public DataLoader load() {
+    public void loadMap() {
+        int n;
+        int m;
+        char[][] map;
+        try {
+            n = fs.nextInt();
+            m = fs.nextInt();
+            map = new char[n][m];
+
+            for (int i = 0; i < n; ++i) {
+                String auxStr = fs.nextWord();
+                for (int j = 0; j < m; ++j) {
+                    map[i][j] = auxStr.charAt(j);
+                }
+            }
+            dataLoader.setGameMap(n, m, map);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void loadNumPlayers() {
+        int p;
+        try {
+            p = fs.nextInt();
+            dataLoader.setNumPlyaers(p);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void loadPlayer() {
+        int posR;
+        int posC;
+        char type;
+        try {
+            type = fs.nextWord().charAt(0);
+            posR = fs.nextInt();
+            posC = fs.nextInt();
+            dataLoader.setPlayer(type, posR, posC);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void loadNumRounds() {
+        int r;
+        try {
+            r = fs.nextInt();
+            dataLoader.setRounds(r);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void load() {
         int n = 0;
         int m = 0;
         char[][] map = null;
@@ -61,8 +119,6 @@ public final class InputOutputStream {
         char[][] moves = null;
 
         try {
-            FileSystem fs = new FileSystem(mInputPath, mOutputPath);
-
             n = fs.nextInt();
             m = fs.nextInt();
             map = new char[n][m];
@@ -96,7 +152,6 @@ public final class InputOutputStream {
             for (int i = 0; i < r; ++i) {
                 int numAngels = fs.nextInt();
 
-
                 inputAngels.add(new LinkedList<>());
 
                 for (int j = 0; j < numAngels; ++j) {
@@ -106,7 +161,6 @@ public final class InputOutputStream {
 
                     for (String auxSubStr : auxStr.split(",")) {
                         vecStr[k] = auxSubStr;
-//                        System.out.println(vecStr[k]);
                         ++k;
                     }
 
@@ -118,12 +172,10 @@ public final class InputOutputStream {
                 }
             }
 
-            fs.close();
-
         } catch (Exception e1) {
             e1.printStackTrace();
         }
 
-        return new DataLoader(n, m, map, inputPlayers, inputAngels, r, moves);
+//        return new DataLoader(n, m, map, inputPlayers, inputAngels, r, moves);
     }
 }

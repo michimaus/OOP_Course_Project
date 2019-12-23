@@ -21,17 +21,23 @@ public final class Main {
 
     public static void main(final String[] args) {
         InputOutputStream inputOutputStream = new InputOutputStream(args[0], args[1]);
-        DataLoader dataLoader = inputOutputStream.load();
+        DataLoader dataLoader = DataLoader.getInstance();
 
+        inputOutputStream.loadMap();
+        GameMap map = GameMap.getInstance();
+        map.initLand(dataLoader.getN(), dataLoader.getM(), dataLoader.getMap());
+
+        inputOutputStream.loadNumPlayers();
         List<StandardPlayer> players = new ArrayList<>();
         PlayerFactory playerFactory = PlayerFactory.getInstance();
 
-        for (DataLoader.PlayerData data : dataLoader.getInputPlayers()) {
-            players.add(playerFactory.creatPlayer(data));
+        for (int i = 0; i < dataLoader.getP(); ++i) {
+            inputOutputStream.loadPlayer();
+            players.add(playerFactory.creatPlayer(dataLoader.getPlayer()));
         }
+        map.initPlayers(players);
 
-        GameMap map = GameMap.getInstance();
-        map.initMap(dataLoader.getN(), dataLoader.getM(), dataLoader.getMap(), players);
+
         LinkedList<LinkedList<DataLoader.AngelData>> angels = dataLoader.getInputAngels();
         int i = 0;
 
@@ -68,6 +74,6 @@ public final class Main {
             }
             ++i;
         }
-        inputOutputStream.write(players);
+        inputOutputStream.writeFinalStandings(players);
     }
 }

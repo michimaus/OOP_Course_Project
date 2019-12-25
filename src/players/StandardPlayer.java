@@ -126,6 +126,14 @@ public abstract class StandardPlayer implements PlayerVisitable {
         return id;
     }
 
+    public final float getModifier() {
+        return modifier;
+    }
+
+    public final void addModifier(final float addPercent) {
+        modifier += addPercent;
+    }
+
     public StandardPlayer(final String type, final int posR, final int posC, final int id) {
         hasAttacked = false;
         this.stunedFor = 0;
@@ -138,6 +146,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
         this.xp = 0;
         this.level = 0;
         this.hasDotFor = 0;
+        this.modifier = 0f;
     }
 
     /**
@@ -237,8 +246,35 @@ public abstract class StandardPlayer implements PlayerVisitable {
         }
     }
 
-    protected final void die() {
+    public final void addHPFromAngel(final int addHpPVale) {
+        currentHp += addHpPVale;
+        if (currentHp > maxHp) {
+            currentHp = maxHp;
+        }
+    }
+
+    public final void die() {
         currentHp = -1;
         map.takeOut(this);
+    }
+
+    public final void oneLevelUp() {
+        xp = 0;
+        this.updateMaxHP(1);
+        ++level;
+    }
+
+    public final void setCurrentHp(final int hp) {
+        currentHp = hp;
+    }
+
+    public final void getXpFromAngel(final int addXp) {
+        xp += addXp;
+        if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL) {
+            int levelCount = (1 + (xp - (Constants.INIT_LEVEL + level
+                    * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL);
+            this.updateMaxHP(levelCount);
+            level += levelCount;
+        }
     }
 }

@@ -16,7 +16,7 @@ public class AngelMyObserver extends MyObserver {
         inputOutputStream.writeAngelSpawn(angel);
     }
 
-    public void updatePlayerInteraction(final StandardAngel angel, final StandardPlayer player) {
+    public final void updatePlayerInteraction(final StandardAngel angel, final StandardPlayer player) {
         inputOutputStream.writePlayerIntercation(angel, player);
     }
 }

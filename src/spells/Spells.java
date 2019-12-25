@@ -26,28 +26,28 @@ public class Spells implements PlayerVisitor {
     @Override
     public final void fireBlast(final KnightPlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseFireBlast(caster)
-                * Constants.FIREBLAST_KNIGHT_BONUS);
+                * (Constants.FIREBLAST_KNIGHT_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void fireBlast(final RoguePlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseFireBlast(caster)
-                * Constants.FIREBLAST_ROGUE_BONUS);
+                * (Constants.FIREBLAST_ROGUE_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void fireBlast(final PyromancerPlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseFireBlast(caster)
-                * Constants.FIREBLAST_PYROMANCER_BONUS);
+                * (Constants.FIREBLAST_PYROMANCER_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void fireBlast(final WizardPlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseFireBlast(caster)
-                * Constants.FIREBLAST_WIZARD_BONUS);
+                * (Constants.FIREBLAST_WIZARD_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
@@ -75,32 +75,40 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void ignite(final KnightPlayer player, final PyromancerPlayer caster) {
-        int damage = Math.round(baseIgnite(player, caster) * Constants.IGNITE_KNIGHT_BONUS);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_KNIGHT_BONUS));
+        int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_KNIGHT_BONUS
+                + caster.getModifier()));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_KNIGHT_BONUS
+                + caster.getModifier())));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void ignite(final PyromancerPlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseIgnite(player, caster)
-                * Constants.IGNITE_PYROMANCER_BONUS);
+                * (Constants.IGNITE_PYROMANCER_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_PYROMANCER_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_PYROMANCER_BONUS
+                + caster.getModifier())));
     }
 
     @Override
     public final void ignite(final RoguePlayer player, final PyromancerPlayer caster) {
-        int damage = Math.round(baseIgnite(player, caster) * Constants.IGNITE_ROGUE_BONUS);
+        int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_ROGUE_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_ROGUE_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_ROGUE_BONUS
+                + caster.getModifier())));
 
     }
 
     @Override
     public final void ignite(final WizardPlayer player, final PyromancerPlayer caster) {
-        int damage = Math.round(baseIgnite(player, caster) * Constants.IGNITE_WIZARD_BONUS);
+        int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_WIZARD_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.IGNITE_WIZARD_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_WIZARD_BONUS
+                + caster.getModifier())));
 
     }
 
@@ -141,19 +149,22 @@ public class Spells implements PlayerVisitor {
     @Override
     public final void execute(final PyromancerPlayer player, final KnightPlayer caster) {
         int damage = Math.round(baseExecute(player, caster)
-                * Constants.EXECUTE_PYROMANCER_BONUS);
+                * (Constants.EXECUTE_PYROMANCER_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void execute(final RoguePlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseExecute(player, caster) * Constants.EXECUTE_ROGUE_BONUS);
+        int damage = Math.round(baseExecute(player, caster) * (Constants.EXECUTE_ROGUE_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void execute(final WizardPlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseExecute(player, caster) * Constants.EXECUTE_WIZARD_BONUS);
+        int damage = Math.round(baseExecute(player, caster) * (Constants.EXECUTE_WIZARD_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
@@ -175,25 +186,29 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void slam(final KnightPlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseSlam(player, caster) * Constants.SLAM_KNIGHT_BONUS);
+        int damage = Math.round(baseSlam(player, caster) * (Constants.SLAM_KNIGHT_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void slam(final PyromancerPlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseSlam(player, caster) * Constants.SLAM_PYROMANCER_BONUS);
+        int damage = Math.round(baseSlam(player, caster) * (Constants.SLAM_PYROMANCER_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void slam(final RoguePlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseSlam(player, caster) * Constants.SLAM_ROGUE_BONUS);
+        int damage = Math.round(baseSlam(player, caster) * (Constants.SLAM_ROGUE_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void slam(final WizardPlayer player, final KnightPlayer caster) {
-        int damage = Math.round(baseSlam(player, caster) * Constants.SLAM_WIZARD_BONUS);
+        int damage = Math.round(baseSlam(player, caster) * (Constants.SLAM_WIZARD_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
@@ -222,26 +237,30 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void drain(final KnightPlayer player, final WizardPlayer caster) {
-        int damage = Math.round(baseDrain(player, caster) * Constants.DRAIN_KNIGHT_BONUS);
+        int damage = Math.round(baseDrain(player, caster) * (Constants.DRAIN_KNIGHT_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
 
     }
 
     @Override
     public final void drain(final PyromancerPlayer player, final WizardPlayer caster) {
-        int damage = Math.round(baseDrain(player, caster) * Constants.DRAIN_PYROMANCER_BONUS);
+        int damage = Math.round(baseDrain(player, caster) * (Constants.DRAIN_PYROMANCER_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void drain(final RoguePlayer player, final WizardPlayer caster) {
-        int damage = Math.round(baseDrain(player, caster) * Constants.DRAIN_ROGUE_BONUS);
+        int damage = Math.round(baseDrain(player, caster) * (Constants.DRAIN_ROGUE_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void drain(final WizardPlayer player, final WizardPlayer caster) {
-        int damage = Math.round(baseDrain(player, caster) * Constants.DRAIN_WIZARD_BONUS);
+        int damage = Math.round(baseDrain(player, caster) * (Constants.DRAIN_WIZARD_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
@@ -271,7 +290,8 @@ public class Spells implements PlayerVisitor {
 
         float percent = baseDeflect(caster);
         player.setIncomingDamage(player.getIncomingDamage()
-                + Math.round(damage * percent * Constants.DEFLECT_KNIGHT_BONUS));
+                + Math.round(damage * percent * (Constants.DEFLECT_KNIGHT_BONUS
+                + caster.getModifier())));
     }
 
     @Override
@@ -284,7 +304,8 @@ public class Spells implements PlayerVisitor {
         float percent = baseDeflect(caster);
 
         player.setIncomingDamage(player.getIncomingDamage()
-                + Math.round(damage * percent * Constants.DEFLECT_PYROMANCER_BONUS));
+                + Math.round(damage * percent * (Constants.DEFLECT_PYROMANCER_BONUS
+                + caster.getModifier())));
     }
 
     @Override
@@ -306,7 +327,8 @@ public class Spells implements PlayerVisitor {
         float percent = baseDeflect(caster);
 
         player.setIncomingDamage(player.getIncomingDamage()
-                + Math.round(damage * percent * Constants.DEFLECT_ROGUE_BONUS));
+                + Math.round(damage * percent * (Constants.DEFLECT_ROGUE_BONUS
+                + caster.getModifier())));
 
     }
 
@@ -337,27 +359,31 @@ public class Spells implements PlayerVisitor {
     @Override
     public final void backStab(final KnightPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseBackStab(caster)
-                * Constants.BACKSTAB_KNIGHT_BONUS);
+                * (Constants.BACKSTAB_KNIGHT_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void backStab(final PyromancerPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseBackStab(caster)
-                * Constants.BACKSTAB_PYROMANCER_BONUS);
+                * (Constants.BACKSTAB_PYROMANCER_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void backStab(final RoguePlayer player, final RoguePlayer caster) {
-        int damage = Math.round(baseBackStab(caster) * Constants.BACKSTAB_ROGUE_BONUS);
+        int damage = Math.round(baseBackStab(caster) * (Constants.BACKSTAB_ROGUE_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
     @Override
     public final void backStab(final WizardPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseBackStab(caster)
-                * Constants.BACKSTAB_WIZARD_BONUS);
+                * (Constants.BACKSTAB_WIZARD_BONUS
+                + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
 
@@ -382,35 +408,39 @@ public class Spells implements PlayerVisitor {
     @Override
     public final void paralysis(final KnightPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseParalysis(player, caster)
-                * Constants.PARALYSIS_KNIGHT_BONUS);
+                * (Constants.PARALYSIS_KNIGHT_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_KNIGHT_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_KNIGHT_BONUS
+                + caster.getModifier())));
     }
 
     @Override
     public final void paralysis(final PyromancerPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseParalysis(player, caster)
-                * Constants.PARALYSIS_PYROMANCER_BONUS);
+                * (Constants.PARALYSIS_PYROMANCER_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
         player.setDotDamage(Math.round(player.getDotDamage()
-                * Constants.PARALYSIS_PYROMANCER_BONUS));
+                * (Constants.PARALYSIS_PYROMANCER_BONUS
+                + caster.getModifier())));
 
     }
 
     @Override
     public final void paralysis(final RoguePlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseParalysis(player, caster)
-                * Constants.PARALYSIS_ROGUE_BONUS);
+                * (Constants.PARALYSIS_ROGUE_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_ROGUE_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_ROGUE_BONUS
+                + caster.getModifier())));
 
     }
 
     @Override
     public final void paralysis(final WizardPlayer player, final RoguePlayer caster) {
         int damage = Math.round(baseParalysis(player, caster)
-                * Constants.PARALYSIS_WIZARD_BONUS);
+                * (Constants.PARALYSIS_WIZARD_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * Constants.PARALYSIS_WIZARD_BONUS));
+        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_WIZARD_BONUS
+                + caster.getModifier())));
     }
 }

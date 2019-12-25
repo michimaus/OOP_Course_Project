@@ -9,6 +9,9 @@ public class SmallAngel extends StandardAngel {
 
     @Override
     public final void applyEffect(final AngelEffects angelEffects, final StandardPlayer player) {
+        if (player.getCurrentHp() <= 0) {
+            return;
+        }
         player.visitedBySmallAngel(angelEffects);
     }
 }

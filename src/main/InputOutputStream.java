@@ -1,9 +1,8 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import angels.StandardAngel;
 import common.Constants;
 import fileio.FileSystem;
 import players.StandardPlayer;
@@ -17,10 +16,45 @@ public final class InputOutputStream {
     private FileSystem fs = null;
     private DataLoader dataLoader;
 
-    InputOutputStream(final String inputPath, final String outputPath) {
-        dataLoader = DataLoader.getInstance();
+    InputOutputStream(final String inputPath, final String outputPath,
+                      final DataLoader dataLoader) {
+        this.dataLoader = dataLoader;
         try {
             fs = new FileSystem(inputPath, outputPath);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writeEmptyLine() {
+        try {
+            fs.writeNewLine();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writeRound(final int round) {
+        try {
+            fs.writeWord("~~ Round " + (round + 1) + " ~~\n");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writeAngelSpawn(final StandardAngel angel) {
+        try {
+            fs.writeWord("Angel " + angel.getType() + " was spawned at "
+                    + angel.getPosR() + " " + angel.getPosC() + '\n');
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writePlayerIntercation(final StandardAngel angel, final StandardPlayer player) {
+        try {
+            fs.writeWord(angel.getType() + angel.getAngelOutAction()
+                    + player.getType() + " " + player.getId() + '\n');
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -29,7 +63,7 @@ public final class InputOutputStream {
     public void writeFinalStandings(final List<StandardPlayer> players) {
         try {
             for (StandardPlayer player : players) {
-                fs.writeCharacter(player.getType());
+                fs.writeCharacter(player.getType().charAt(0));
                 fs.writeCharacter(' ');
 
                 if (player.getCurrentHp() <= 0) {
@@ -78,7 +112,7 @@ public final class InputOutputStream {
         int p;
         try {
             p = fs.nextInt();
-            dataLoader.setNumPlyaers(p);
+            dataLoader.setNumPlayers(p);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -98,84 +132,50 @@ public final class InputOutputStream {
         }
     }
 
-    public void loadNumRounds() {
+    public void loadRoundsMoves() {
         int r;
+        char[][] moves;
         try {
             r = fs.nextInt();
             dataLoader.setRounds(r);
+            moves = new char[r][dataLoader.getP()];
+            for (int i = 0; i < r; ++i) {
+                String auxStr = fs.nextWord();
+                for (int j = 0; j < dataLoader.getP(); ++j) {
+                    moves[i][j] = auxStr.charAt(j);
+                }
+            }
+            dataLoader.setMoves(moves);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
     }
 
-    public void load() {
-        int n = 0;
-        int m = 0;
-        char[][] map = null;
-        int p = 0;
-        List<DataLoader.PlayerData> inputPlayers = new ArrayList<>();
-        LinkedList<LinkedList<DataLoader.AngelData>> inputAngels = new LinkedList<>();
-        int r = 0;
-        char[][] moves = null;
-
+    public void loadNumAngelsRound() {
+        int numAngels;
         try {
-            n = fs.nextInt();
-            m = fs.nextInt();
-            map = new char[n][m];
-
-            for (int i = 0; i < n; ++i) {
-                String auxStr = fs.nextWord();
-                for (int j = 0; j < m; ++j) {
-                    map[i][j] = auxStr.charAt(j);
-                }
-            }
-
-            p = fs.nextInt();
-
-            for (int i = 0; i < p; ++i) {
-                String auxStr = fs.nextWord();
-                int auxPosx = fs.nextInt();
-                int auxPosy = fs.nextInt();
-                inputPlayers.add(new DataLoader.PlayerData(auxStr.charAt(0), auxPosx, auxPosy));
-            }
-
-            r = fs.nextInt();
-            moves = new char[r][p];
-
-            for (int i = 0; i < r; ++i) {
-                String auxStr = fs.nextWord();
-                for (int j = 0; j < p; ++j) {
-                    moves[i][j] = auxStr.charAt(j);
-                }
-            }
-
-            for (int i = 0; i < r; ++i) {
-                int numAngels = fs.nextInt();
-
-                inputAngels.add(new LinkedList<>());
-
-                for (int j = 0; j < numAngels; ++j) {
-                    String auxStr = fs.nextWord();
-                    String vecStr[] = new String[Constants.NUMBER_SPLIT + 1];
-                    int k = 0;
-
-                    for (String auxSubStr : auxStr.split(",")) {
-                        vecStr[k] = auxSubStr;
-                        ++k;
-                    }
-
-                    int auxPosy = Integer.parseInt(vecStr[--k]);
-                    int auxPosx = Integer.parseInt(vecStr[--k]);
-
-                    inputAngels.getLast().add(new DataLoader.AngelData(vecStr[--k],
-                            auxPosx, auxPosy));
-                }
-            }
-
+            numAngels = fs.nextInt();
+            dataLoader.setNumAngelsRound(numAngels);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
 
-//        return new DataLoader(n, m, map, inputPlayers, inputAngels, r, moves);
+    public void loadAngel() {
+        try {
+            String auxStr = fs.nextWord();
+            String[] vecStr = new String[Constants.NUMBER_SPLIT];
+            int k = 0;
+            for (String auxSubStr : auxStr.split(",")) {
+                vecStr[k] = auxSubStr;
+                ++k;
+            }
+            int auxPosC = Integer.parseInt(vecStr[--k]);
+            int auxPosR = Integer.parseInt(vecStr[--k]);
+
+            dataLoader.setAngel(vecStr[--k], auxPosR, auxPosC);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 }

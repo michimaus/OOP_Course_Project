@@ -1,4 +1,2 @@
 Starting audit...
-[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/main/InputOutputStream.java:102:34: Array brackets at illegal position. [ArrayTypeStyle]
 Audit done.
-Checkstyle ends with 1 errors.

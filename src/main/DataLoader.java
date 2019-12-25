@@ -22,28 +22,31 @@ public final class DataLoader {
         return instance;
     }
 
-    public static class AngelData {
-        public final String getType() {
+    public static final class AngelData {
+        private AngelData() {
+        }
+
+        public String getType() {
             return type;
         }
 
-        public final int getPosR() {
+        public int getPosR() {
             return posR;
         }
 
-        public final int getPosC() {
+        public int getPosC() {
             return posC;
         }
 
-        public final void setType(final String type) {
+        public void setType(final String type) {
             this.type = type;
         }
 
-        public final void setPosR(final int posR) {
+        public void setPosR(final int posR) {
             this.posR = posR;
         }
 
-        public final void setPosC(final int posC) {
+        public void setPosC(final int posC) {
             this.posC = posC;
         }
 
@@ -52,28 +55,31 @@ public final class DataLoader {
         private int posC;
     }
 
-    public static class PlayerData {
-        public final char getType() {
+    public static final class PlayerData {
+        private PlayerData() {
+        }
+
+        public char getType() {
             return type;
         }
 
-        public final int getPosR() {
+        public int getPosR() {
             return posR;
         }
 
-        public final int getPosC() {
+        public int getPosC() {
             return posC;
         }
 
-        public final void setType(final char type) {
+        public void setType(final char type) {
             this.type = type;
         }
 
-        public final void setPosR(final int posR) {
+        public void setPosR(final int posR) {
             this.posR = posR;
         }
 
-        public final void setPosC(final int posC) {
+        public void setPosC(final int posC) {
             this.posC = posC;
         }
 
@@ -86,23 +92,32 @@ public final class DataLoader {
     private int p;
     private int m;
     private char[][] map;
-    private PlayerData player = null;
-    private AngelData angel = null;
+    private PlayerData player;
+    private AngelData angel;
     private int rounds;
     private char[][] moves;
+    private int numAngelsRound;
 
-    public void setGameMap(final int nRead, final int mRead, final char mapRead[][]) {
-        this.n = nRead;
-        this.m = mRead;
-        this.map = mapRead;
+    public void setRounds(final int rounds) {
+        this.rounds = rounds;
     }
 
-    public void setNumPlyaers(final int pRead) {
+    public void setMoves(final char[][] moves) {
+        this.moves = moves;
+    }
+
+    public void setNumPlayers(final int pRead) {
         this.p = pRead;
     }
 
-    public PlayerData getPlayer() {
-        return player;
+    public void setNumAngelsRound(final int numAngels) {
+        numAngelsRound = numAngels;
+    }
+
+    public void setGameMap(final int nRead, final int mRead, final char[][] mapRead) {
+        this.n = nRead;
+        this.m = mRead;
+        this.map = mapRead;
     }
 
     public void setPlayer(final char type, final int posR, final int posC) {
@@ -117,19 +132,13 @@ public final class DataLoader {
         angel.setPosC(posC);
     }
 
+    public PlayerData getPlayer() {
+        return player;
+    }
 
-//    public DataLoader(final int n, final int m, final char[][] map,
-//                      final List<PlayerData> inputPlayers,
-//                      final LinkedList<LinkedList<AngelData>> inputAngels,
-//                      final int rounds, final char[][] moves) {
-//        this.m = m;
-//        this.n = n;
-//        this.map = map;
-//        this.inputPlayers = inputPlayers;
-//        this.inputAngels = inputAngels;
-//        this.rounds = rounds;
-//        this.moves = moves;
-//    }
+    public AngelData getAngel() {
+        return angel;
+    }
 
     public int getP() {
         return p;
@@ -143,12 +152,12 @@ public final class DataLoader {
         return m;
     }
 
-    public char[][] getMap() {
-        return map;
+    public int getNumAngelsRound() {
+        return numAngelsRound;
     }
 
-    public void setRounds(final int rounds) {
-        this.rounds = rounds;
+    public char[][] getMap() {
+        return map;
     }
 
     public int getRounds() {

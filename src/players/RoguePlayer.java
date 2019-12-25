@@ -65,51 +65,51 @@ public class RoguePlayer extends StandardPlayer {
     }
 
     @Override
-    void visitedByDamageAngel(final AngelVisitor angel) {
-
+    public final void visitedByDamageAngel(final AngelVisitor angel) {
+        angel.effectDamageAngel(this);
     }
 
     @Override
-    void visitedByDarkAngel(final AngelVisitor angel) {
-
+    public final void visitedByDarkAngel(final AngelVisitor angel) {
+        angel.effectDarkAngel(this);
     }
 
     @Override
-    void visitedByDracula(final AngelVisitor angel) {
-
+    public final void visitedByDracula(final AngelVisitor angel) {
+        angel.effectDracula(this);
     }
 
     @Override
-    void visitedByGoodBoy(final AngelVisitor angel) {
-
+    public final void visitedByGoodBoy(final AngelVisitor angel) {
+        angel.effectGoodBoy(this);
     }
 
     @Override
-    void visitedByLevelUpAngel(final AngelVisitor angel) {
-
+    public final void visitedByLevelUpAngel(final AngelVisitor angel) {
+        angel.effectLevelUpAngel(this);
     }
 
     @Override
-    void visitedByLifeGiver(final AngelVisitor angel) {
-
+    public final void visitedByLifeGiver(final AngelVisitor angel) {
+        angel.effectLifeGiver(this);
     }
 
     @Override
-    void visitedBySmallAngel(final AngelVisitor angel) {
-
+    public final void visitedBySmallAngel(final AngelVisitor angel) {
+        angel.effectSmallAngel(this);
     }
 
     @Override
-    void visitedBySpawner(final AngelVisitor angel) {
-
+    public final void visitedBySpawner(final AngelVisitor angel) {
+        angel.effectSpawner(this);
     }
 
     @Override
-    void visitedByXPAngel(final AngelVisitor angel) {
-
+    public final void visitedByXPAngel(final AngelVisitor angel) {
+        angel.effectXpAngel(this);
     }
 
-    public RoguePlayer(final char type, final int posR, final int posC, final int playerId) {
+    public RoguePlayer(final String type, final int posR, final int posC, final int playerId) {
         super(type, posR, posC, playerId);
         maxHp = Constants.ROGUE_HP;
         currentHp = maxHp;

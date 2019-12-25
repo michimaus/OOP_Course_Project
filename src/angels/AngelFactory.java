@@ -1,6 +1,6 @@
 package angels;
 
-import players.StandardPlayer;
+import main.DataLoader;
 
 public final class AngelFactory {
     private static AngelFactory instance = null;
@@ -15,30 +15,35 @@ public final class AngelFactory {
         return instance;
     }
 
-    public void applyAngelEffect(final String type, final StandardPlayer player) {
-        switch (type) {
+    public StandardAngel createAngel(final DataLoader.AngelData angelData) {
+        switch (angelData.getType()) {
             case "DamageAngel":
-                System.out.println("yaaaaaaa");
-                break;
+                return new DamageAngel(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "DarkAngel":
-                System.out.println("yaaaaaaa");
-                break;
+                return new DarkAngel(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "GoodBoy":
-                break;
+                return new GoodBoy(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "LevelUpAngel":
-                break;
+                return new LevelUpAngel(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "LifeGiver":
-                break;
+                return new LifeGiver(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "SmallAngel":
-                break;
+                return new SmallAngel(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "Spawner":
-                break;
+                return new Spawner(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "XPAngel":
-                System.out.println("yaaaaaaa");
-                break;
+                return new XPAngel(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             default:
-//                System.out.println("yaaaaaaa");
-                break;
+                return new TheDoomer(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
         }
     }
 }

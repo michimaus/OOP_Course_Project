@@ -1,11 +1,13 @@
 package gameterain;
 
 import angels.AngelEffects;
-import angels.AngelFactory;
-import main.DataLoader;
+import angels.StandardAngel;
+import observer.AngelMyObserver;
+import observer.PlayerMyObserver;
 import spells.Spells;
 import players.StandardPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,17 +18,19 @@ import java.util.List;
 
 public final class GameMap {
     private static GameMap instance = null;
+
     private Spells heroSpells;
     private AngelEffects angelEffects;
-    private AngelFactory angelFactory;
     private char[][] mapTerain;
     private StandardPlayer[][] firstPlayerOnPos;
     private StandardPlayer[][] secondPlayerOnPos;
+    private ArrayList<StandardAngel> angels;
+    private AngelMyObserver angelObservers;
+    private PlayerMyObserver playerObservers;
 
     private GameMap() {
         heroSpells = new Spells();
         angelEffects = new AngelEffects();
-        angelFactory = AngelFactory.getInstance();
         mapTerain = null;
         firstPlayerOnPos = null;
         secondPlayerOnPos = null;
@@ -37,6 +41,14 @@ public final class GameMap {
         for (StandardPlayer p : players) {
             putPlayerAtPosition(p.getPosR(), p.getPosC(), p);
         }
+    }
+
+    public void setPlayerObservers(final PlayerMyObserver obs) {
+        playerObservers = obs;
+    }
+
+    public void setAngelObservers(final AngelMyObserver obs) {
+        angelObservers = obs;
     }
 
     public void initLand(final int n, final int m, final char[][] mapTerainGet) {
@@ -125,14 +137,21 @@ public final class GameMap {
         secondPlayerOnPos[p.getPosR()][p.getPosC()] = null;
     }
 
-    public void spawnAngel(final DataLoader.AngelData angelData) {
-        if (firstPlayerOnPos[angelData.getPosR()][angelData.getPosC()] != null) {
-            angelFactory.applyAngelEffect(angelData.getType(),
-                    firstPlayerOnPos[angelData.getPosR()][angelData.getPosC()]);
-        }
-        if (secondPlayerOnPos[angelData.getPosR()][angelData.getPosC()] != null) {
-            angelFactory.applyAngelEffect(angelData.getType(),
-                    secondPlayerOnPos[angelData.getPosR()][angelData.getPosC()]);
+    public void spawnAngels(final List<StandardAngel> angelsThisRound) {
+        for (StandardAngel angel : angelsThisRound) {
+            angelObservers.updateAngelSpawn(angel);
+            if (firstPlayerOnPos[angel.getPosR()][angel.getPosC()] != null) {
+                angelObservers.updatePlayerInteraction(angel,
+                        firstPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+                angel.applyEffect(angelEffects,
+                        firstPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+            }
+            if (secondPlayerOnPos[angel.getPosR()][angel.getPosC()] != null) {
+                angelObservers.updatePlayerInteraction(angel,
+                        secondPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+                angel.applyEffect(angelEffects,
+                        secondPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+            }
         }
     }
 }

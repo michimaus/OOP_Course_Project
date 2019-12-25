@@ -22,6 +22,11 @@ public interface AngelVisitor {
     void effectDracula(WizardPlayer player);
     void effectDracula(RoguePlayer player);
 
+    void effectGoodBoy(KnightPlayer player);
+    void effectGoodBoy(PyromancerPlayer player);
+    void effectGoodBoy(WizardPlayer player);
+    void effectGoodBoy(RoguePlayer player);
+
     void effectLevelUpAngel(KnightPlayer player);
     void effectLevelUpAngel(PyromancerPlayer player);
     void effectLevelUpAngel(WizardPlayer player);

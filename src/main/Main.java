@@ -1,10 +1,13 @@
 package main;
 
+import angels.AngelFactory;
+import angels.StandardAngel;
 import gameterain.GameMap;
+import observer.AngelMyObserver;
+import observer.PlayerMyObserver;
 import players.PlayerFactory;
 import players.StandardPlayer;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,8 +23,8 @@ public final class Main {
     }
 
     public static void main(final String[] args) {
-        InputOutputStream inputOutputStream = new InputOutputStream(args[0], args[1]);
         DataLoader dataLoader = DataLoader.getInstance();
+        InputOutputStream inputOutputStream = new InputOutputStream(args[0], args[1], dataLoader);
 
         inputOutputStream.loadMap();
         GameMap map = GameMap.getInstance();
@@ -37,20 +40,20 @@ public final class Main {
         }
         map.initPlayers(players);
 
+        inputOutputStream.loadRoundsMoves();
+        AngelFactory angelFactory = AngelFactory.getInstance();
 
-        LinkedList<LinkedList<DataLoader.AngelData>> angels = dataLoader.getInputAngels();
-        int i = 0;
+        AngelMyObserver angelMyObserver = new AngelMyObserver(map, inputOutputStream);
+        PlayerMyObserver playerMyObserver = new PlayerMyObserver(map, inputOutputStream);
 
-        for (LinkedList<DataLoader.AngelData> angelsThisRound : angels) {
+        for (int i = 0; i < dataLoader.getRounds(); ++i) {
+            inputOutputStream.writeRound(i);
 
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
                 player.takeDotDamage();
-            }
-
-            for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
@@ -67,12 +70,18 @@ public final class Main {
                 }
             }
 
-            if (angelsThisRound.size() != 0) {
-                for (DataLoader.AngelData angel : angelsThisRound) {
-                    map.spawnAngel(angel);
-                }
+            inputOutputStream.loadNumAngelsRound();
+            List<StandardAngel> angels = new ArrayList<>();
+
+            System.out.println(dataLoader.getNumAngelsRound());
+            for (int j = 0; j < dataLoader.getNumAngelsRound(); ++j) {
+                inputOutputStream.loadAngel();
+                angels.add(angelFactory.createAngel(dataLoader.getAngel()));
+                System.out.println(dataLoader.getAngel().getType());
             }
-            ++i;
+            map.spawnAngels(angels);
+            inputOutputStream.writeEmptyLine();
+
         }
         inputOutputStream.writeFinalStandings(players);
     }

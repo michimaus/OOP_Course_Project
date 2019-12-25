@@ -9,167 +9,187 @@ import players.StandardPlayer;
 public class AngelEffects implements AngelVisitor {
 
     @Override
-    public void effectDamageAngel(final KnightPlayer player) {
+    public final void effectDamageAngel(final KnightPlayer player) {
+        System.out.println("cevaKnight");
+    }
+
+    @Override
+    public final void effectDamageAngel(final PyromancerPlayer player) {
+        System.out.println("cevaPyro");
+    }
+
+    @Override
+    public final void effectDamageAngel(final WizardPlayer player) {
+        System.out.println("cevaWiz");
+    }
+
+    @Override
+    public final void effectDamageAngel(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectDamageAngel(final PyromancerPlayer player) {
+    public final void effectDarkAngel(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectDamageAngel(final WizardPlayer player) {
+    public final void effectDarkAngel(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectDamageAngel(final RoguePlayer player) {
+    public final void effectDarkAngel(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectDarkAngel(final KnightPlayer player) {
+    public final void effectDarkAngel(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectDarkAngel(final PyromancerPlayer player) {
+    public final void effectDracula(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectDarkAngel(final WizardPlayer player) {
+    public final void effectDracula(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectDarkAngel(final RoguePlayer player) {
+    public final void effectDracula(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectDracula(final KnightPlayer player) {
+    public final void effectDracula(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectDracula(final PyromancerPlayer player) {
+    public final void effectGoodBoy(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectDracula(final WizardPlayer player) {
+    public final void effectGoodBoy(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectDracula(final RoguePlayer player) {
+    public final void effectGoodBoy(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectLevelUpAngel(final KnightPlayer player) {
+    public final void effectGoodBoy(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectLevelUpAngel(final PyromancerPlayer player) {
+    public final void effectLevelUpAngel(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectLevelUpAngel(final WizardPlayer player) {
+    public final void effectLevelUpAngel(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectLevelUpAngel(final RoguePlayer player) {
+    public final void effectLevelUpAngel(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectLifeGiver(final KnightPlayer player) {
+    public final void effectLevelUpAngel(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectLifeGiver(final PyromancerPlayer player) {
+    public final void effectLifeGiver(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectLifeGiver(final WizardPlayer player) {
+    public final void effectLifeGiver(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectLifeGiver(final RoguePlayer player) {
+    public final void effectLifeGiver(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectSmallAngel(final KnightPlayer player) {
+    public final void effectLifeGiver(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectSmallAngel(final PyromancerPlayer player) {
+    public final void effectSmallAngel(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectSmallAngel(final WizardPlayer player) {
+    public final void effectSmallAngel(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectSmallAngel(final RoguePlayer player) {
+    public final void effectSmallAngel(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectSpawner(final KnightPlayer player) {
+    public final void effectSmallAngel(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectSpawner(final PyromancerPlayer player) {
+    public final void effectSpawner(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectSpawner(final WizardPlayer player) {
+    public final void effectSpawner(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectSpawner(final RoguePlayer player) {
+    public final void effectSpawner(final WizardPlayer player) {
 
     }
 
     @Override
-    public void effectTheDoomer(final StandardPlayer player) {
+    public final void effectSpawner(final RoguePlayer player) {
 
     }
 
     @Override
-    public void effectXpAngel(final KnightPlayer player) {
+    public final void effectTheDoomer(final StandardPlayer player) {
 
     }
 
     @Override
-    public void effectXpAngel(final PyromancerPlayer player) {
+    public final void effectXpAngel(final KnightPlayer player) {
 
     }
 
     @Override
-    public void effectXpAngel(final WizardPlayer player) {
+    public final void effectXpAngel(final PyromancerPlayer player) {
 
     }
 
     @Override
-    public void effectXpAngel(final RoguePlayer player) {
+    public final void effectXpAngel(final WizardPlayer player) {
+
+    }
+
+    @Override
+    public final void effectXpAngel(final RoguePlayer player) {
 
     }
 }

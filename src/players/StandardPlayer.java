@@ -13,11 +13,11 @@ import spells.PlayerVisitor;
  * Retains the basic data for the players
  */
 
-public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable {
+public abstract class StandardPlayer implements PlayerVisitable {
 
     protected boolean hasAttacked;
     protected int id;
-    protected char type;
+    protected String type;
     protected int posR;
     protected int posC;
     protected int maxHp;
@@ -47,18 +47,18 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
     abstract void getBaskStabbed(PlayerVisitor heroSpell, RoguePlayer caster);
     abstract void getParalyzed(PlayerVisitor heroSpell, RoguePlayer caster);
 
-    abstract void visitedByDamageAngel(AngelVisitor angel);
-    abstract void visitedByDarkAngel(AngelVisitor angel);
-    abstract void visitedByDracula(AngelVisitor angel);
-    abstract void visitedByGoodBoy(AngelVisitor angel);
-    abstract void visitedByLevelUpAngel(AngelVisitor angel);
-    abstract void visitedByLifeGiver(AngelVisitor angel);
-    abstract void visitedBySmallAngel(AngelVisitor angel);
-    abstract void visitedBySpawner(AngelVisitor angel);
-    abstract void visitedByXPAngel(AngelVisitor angel);
+    public abstract void visitedByDamageAngel(AngelVisitor angel);
+    public abstract void visitedByDarkAngel(AngelVisitor angel);
+    public abstract void visitedByDracula(AngelVisitor angel);
+    public abstract void visitedByGoodBoy(AngelVisitor angel);
+    public abstract void visitedByLevelUpAngel(AngelVisitor angel);
+    public abstract void visitedByLifeGiver(AngelVisitor angel);
+    public abstract void visitedBySmallAngel(AngelVisitor angel);
+    public abstract void visitedBySpawner(AngelVisitor angel);
+    public abstract void visitedByXPAngel(AngelVisitor angel);
 
     public final void visitedByTheDoomer(final AngelVisitor angel) {
-        this.die();
+        angel.effectTheDoomer(this);
     }
 
     public abstract void calculateStrike(PlayerVisitor heroSpells,
@@ -70,7 +70,7 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
         return map.getPieceOfLand(posR, posC);
     }
 
-    public final char getType() {
+    public final String getType() {
         return type;
     }
 
@@ -126,7 +126,7 @@ public abstract class StandardPlayer implements PlayerVisitable, AngelVisitable 
         return id;
     }
 
-    public StandardPlayer(final char type, final int posR, final int posC, final int id) {
+    public StandardPlayer(final String type, final int posR, final int posC, final int id) {
         hasAttacked = false;
         this.stunedFor = 0;
         this.id = id;

@@ -34,4 +34,6 @@ public abstract class StandardAngel implements AngelVisitable {
     }
 
     public abstract void applyEffect(AngelEffects angelEffects, StandardPlayer player);
+
+    public abstract boolean canInteract(StandardPlayer player);
 }

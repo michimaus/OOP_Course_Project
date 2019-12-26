@@ -57,7 +57,6 @@ public final class Main {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
-                player.updateStrategy();
                 player.setHasAttacked(false);
                 player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
             }
@@ -74,16 +73,22 @@ public final class Main {
             inputOutputStream.loadNumAngelsRound();
             List<StandardAngel> angels = new ArrayList<>();
 
-            System.out.println(dataLoader.getNumAngelsRound());
+//            System.out.println(dataLoader.getNumAngelsRound());
             for (int j = 0; j < dataLoader.getNumAngelsRound(); ++j) {
                 inputOutputStream.loadAngel();
                 angels.add(angelFactory.createAngel(dataLoader.getAngel()));
-                System.out.println(dataLoader.getAngel().getType());
+//                System.out.println(dataLoader.getAngel().getType());
             }
             map.spawnAngels(angels);
             inputOutputStream.writeEmptyLine();
 
+            for (StandardPlayer player : players) {
+                if (player.getCurrentHp() <= 0) {
+                    player.leaveMap();
+                }
+            }
         }
         inputOutputStream.writeFinalStandings(players);
+        inputOutputStream.closeFiles();
     }
 }

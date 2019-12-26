@@ -10,9 +10,14 @@ public class LifeGiver extends StandardAngel {
 
     @Override
     public final void applyEffect(final AngelEffects angelEffects, final StandardPlayer player) {
-        if (player.getCurrentHp() <= 0) {
-            return;
-        }
         player.visitedByLifeGiver(angelEffects);
+    }
+
+    @Override
+    public final boolean canInteract(final StandardPlayer player) {
+        if (player.getCurrentHp() <= 0) {
+            return false;
+        }
+        return true;
     }
 }

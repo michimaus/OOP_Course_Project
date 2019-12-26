@@ -51,7 +51,7 @@ public final class InputOutputStream {
         }
     }
 
-    public void writePlayerIntercation(final StandardAngel angel, final StandardPlayer player) {
+    public void writePlayerInteraction(final StandardAngel angel, final StandardPlayer player) {
         try {
             fs.writeWord(angel.getType() + angel.getAngelOutAction()
                     + player.getType() + " " + player.getId() + '\n');
@@ -60,8 +60,45 @@ public final class InputOutputStream {
         }
     }
 
+    public void writePlayerKillingOther(final StandardPlayer killer, final StandardPlayer player) {
+        try {
+            fs.writeWord("Player " + player.getType() + ' ' + player.getId()
+                    + " was killed by " + killer.getType() + " " + killer.getId() + '\n');
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writeAngelKillingPlayer(final StandardPlayer player) {
+        try {
+            fs.writeWord("Player " + player.getType() + ' ' + player.getId()
+                    + " was killed by an angel\n");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writePlayerRespawned(final StandardPlayer player) {
+        try {
+            fs.writeWord("Player " + player.getType() + ' ' + player.getId()
+                    + " was brought to life by an angel\n");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void writePlayerReachLevel(final StandardPlayer player, final int level) {
+        try {
+            fs.writeWord(player.getType() + ' ' + player.getId()
+                    + " reached level " + level + '\n');
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
     public void writeFinalStandings(final List<StandardPlayer> players) {
         try {
+            fs.writeWord("~~ Results ~~\n");
             for (StandardPlayer player : players) {
                 fs.writeCharacter(player.getType().charAt(0));
                 fs.writeCharacter(' ');
@@ -81,6 +118,13 @@ public final class InputOutputStream {
                 }
                 fs.writeNewLine();
             }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void closeFiles() {
+        try {
             fs.close();
         } catch (Exception e1) {
             e1.printStackTrace();

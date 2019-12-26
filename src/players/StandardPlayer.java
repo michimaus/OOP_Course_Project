@@ -66,6 +66,14 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     abstract void updateMaxHP(int noLevels);
 
+    public final void updateLevel(final int noLevels) {
+        for (int i = 1; i <= noLevels; ++i) {
+            map.getPlayerObservers().updatePlayerLevel(this, level + i);
+        }
+        updateMaxHP(noLevels);
+        level += noLevels;
+    }
+
     public final char getPieceOfLand() {
         return map.getPieceOfLand(posR, posC);
     }
@@ -173,8 +181,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
         if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL) {
             int levelCount = (1 + (xp - (Constants.INIT_LEVEL + level
                     * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL);
-            this.updateMaxHP(levelCount);
-            level += levelCount;
+           updateLevel(levelCount);
         }
     }
 
@@ -190,9 +197,6 @@ public abstract class StandardPlayer implements PlayerVisitable {
         } else {
             dotDamage = 0;
         }
-        if (currentHp <= 0) {
-            die();
-        }
     }
 
     public final void getDot(final int stunedForSeconds,
@@ -205,9 +209,6 @@ public abstract class StandardPlayer implements PlayerVisitable {
     public final void takeDamage() {
         currentHp -= incomingDamage;
         incomingDamage = 0;
-        if (currentHp <= 0) {
-            die();
-        }
     }
 
     /**
@@ -217,6 +218,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     public final void updatePlayerNewRound(final char c) {
         if (stunedFor == 0) {
+            strategy.getStrategy(this);
             boolean ok = true;
             final int oldR = posR;
             final int oldC = posC;
@@ -250,35 +252,30 @@ public abstract class StandardPlayer implements PlayerVisitable {
         currentHp += addHpPVale;
         if (currentHp > maxHp) {
             currentHp = maxHp;
+        } else if (currentHp <= 0) {
+            map.getPlayerObservers().updateAngelKillingPlayer(this);
         }
     }
 
-    public final void die() {
-        currentHp = -1;
-        map.takeOut(this);
+    public final void leaveMap() {
+        if (currentHp <= 0) {
+            map.takeOut(this);
+        }
     }
 
     public final void oneLevelUp() {
-        xp = 0;
-        this.updateMaxHP(1);
-        ++level;
+        xp = Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL;
+        updateLevel(1);
     }
 
     public final void setCurrentHp(final int hp) {
         currentHp = hp;
+        map.getPlayerObservers().updatePlayerRespawned(this);
+        map.putPlayerAtPosition(posR, posC, this);
     }
 
     public final void getXpFromAngel(final int addXp) {
         xp += addXp;
-        if (xp >= Constants.INIT_LEVEL + level * Constants.ENCEREASE_LEVEL) {
-            int levelCount = (1 + (xp - (Constants.INIT_LEVEL + level
-                    * Constants.ENCEREASE_LEVEL)) / Constants.ENCEREASE_LEVEL);
-            this.updateMaxHP(levelCount);
-            level += levelCount;
-        }
-    }
-
-    public final void updateStrategy() {
-        strategy.getStrategy(this);
+        checkLevelUp();
     }
 }

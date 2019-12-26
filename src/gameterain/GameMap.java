@@ -24,7 +24,7 @@ public final class GameMap {
     private char[][] mapTerain;
     private StandardPlayer[][] firstPlayerOnPos;
     private StandardPlayer[][] secondPlayerOnPos;
-    private ArrayList<StandardAngel> angels;
+    private List<StandardPlayer>[][] deadPlayers;
     private AngelMyObserver angelObservers;
     private PlayerMyObserver playerObservers;
 
@@ -34,6 +34,7 @@ public final class GameMap {
         mapTerain = null;
         firstPlayerOnPos = null;
         secondPlayerOnPos = null;
+        deadPlayers = null;
     }
 
     public void initPlayers(final List<StandardPlayer> players) {
@@ -51,9 +52,22 @@ public final class GameMap {
         angelObservers = obs;
     }
 
+    public AngelMyObserver getAngelObservers() {
+        return angelObservers;
+    }
+
+    public PlayerMyObserver getPlayerObservers() {
+        return playerObservers;
+    }
+
     public void initLand(final int n, final int m, final char[][] mapTerainGet) {
         this.mapTerain = mapTerainGet;
-
+        deadPlayers = new List[n][m];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                deadPlayers[i][j] = new ArrayList<>();
+            }
+        }
         firstPlayerOnPos = new StandardPlayer[n][m];
         secondPlayerOnPos = new StandardPlayer[n][m];
     }
@@ -76,10 +90,18 @@ public final class GameMap {
     public void updatePlayerPosition(final int oldX, final int oldY,
                                      final int newX, final int newY, final StandardPlayer player) {
 
-        if (secondPlayerOnPos[oldX][oldY] != player) {
+        if (firstPlayerOnPos[oldX][oldY] == player) {
             firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
+            secondPlayerOnPos[oldX][oldY] = null;
         }
-        secondPlayerOnPos[oldX][oldY] = null;
+        if (secondPlayerOnPos[oldX][oldY] == player) {
+            secondPlayerOnPos[oldX][oldY] = null;
+        }
+
+//        if (secondPlayerOnPos[oldX][oldY] != player) {
+//            firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
+//        }
+//        secondPlayerOnPos[oldX][oldY] = null;
         putPlayerAtPosition(newX, newY, player);
     }
 
@@ -95,6 +117,13 @@ public final class GameMap {
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
 
+            System.out.println(p1.getType() + p1.getCurrentHp());
+            System.out.println(p2.getType() + p2.getCurrentHp());
+
+            if (p1.getCurrentHp() <= 0 || p2.getCurrentHp() <= 0) {
+                return;
+            }
+
             p1.setIncomingDamage(0);
             p2.setIncomingDamage(0);
 
@@ -107,14 +136,18 @@ public final class GameMap {
             p2.takeDamage();
 
             if (p1.getCurrentHp() <= 0 && p2.getCurrentHp() <= 0) {
+                playerObservers.updatePlayerKillingOther(p1, p2);
+                playerObservers.updatePlayerKillingOther(p2, p1);
                 return;
             }
 
             if (p2.getKillXp(p1)) {
+                playerObservers.updatePlayerKillingOther(p2, p1);
                 p2.checkLevelUp();
             }
 
             if (p1.getKillXp(p2)) {
+                playerObservers.updatePlayerKillingOther(p1, p2);
                 p1.checkLevelUp();
             }
         }
@@ -135,22 +168,53 @@ public final class GameMap {
                     = secondPlayerOnPos[p.getPosR()][p.getPosC()];
         }
         secondPlayerOnPos[p.getPosR()][p.getPosC()] = null;
+        deadPlayers[p.getPosR()][p.getPosC()].add(p);
     }
 
     public void spawnAngels(final List<StandardAngel> angelsThisRound) {
         for (StandardAngel angel : angelsThisRound) {
             angelObservers.updateAngelSpawn(angel);
-            if (firstPlayerOnPos[angel.getPosR()][angel.getPosC()] != null) {
-                angelObservers.updatePlayerInteraction(angel,
-                        firstPlayerOnPos[angel.getPosR()][angel.getPosC()]);
-                angel.applyEffect(angelEffects,
-                        firstPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+            StandardPlayer p1;
+            StandardPlayer p2;
+            if (firstPlayerOnPos[angel.getPosR()][angel.getPosC()] != null
+                    && secondPlayerOnPos[angel.getPosR()][angel.getPosC()] != null) {
+                if (firstPlayerOnPos[angel.getPosR()][angel.getPosC()].getId()
+                        < secondPlayerOnPos[angel.getPosR()][angel.getPosC()].getId()) {
+                    p1 = firstPlayerOnPos[angel.getPosR()][angel.getPosC()];
+                    p2 = secondPlayerOnPos[angel.getPosR()][angel.getPosC()];
+                } else {
+                    p2 = firstPlayerOnPos[angel.getPosR()][angel.getPosC()];
+                    p1 = secondPlayerOnPos[angel.getPosR()][angel.getPosC()];
+                }
+            } else {
+                p1 = firstPlayerOnPos[angel.getPosR()][angel.getPosC()];
+                p2 = secondPlayerOnPos[angel.getPosR()][angel.getPosC()];
             }
-            if (secondPlayerOnPos[angel.getPosR()][angel.getPosC()] != null) {
-                angelObservers.updatePlayerInteraction(angel,
-                        secondPlayerOnPos[angel.getPosR()][angel.getPosC()]);
-                angel.applyEffect(angelEffects,
-                        secondPlayerOnPos[angel.getPosR()][angel.getPosC()]);
+
+            if (p1 != null) {
+                if (angel.canInteract(p1)) {
+                    angelObservers.updatePlayerInteraction(angel, p1);
+                    angel.applyEffect(angelEffects, p1);
+                }
+            }
+            if (p2 != null) {
+                if (angel.canInteract(p2)) {
+                    angelObservers.updatePlayerInteraction(angel, p2);
+                    angel.applyEffect(angelEffects, p2);
+                }
+            }
+            boolean okRespawn = false;
+            for (StandardPlayer deadPlayer : deadPlayers[angel.getPosR()][angel.getPosC()]) {
+                if (angel.canInteract(deadPlayer)) {
+                    okRespawn = true;
+                    angelObservers.updatePlayerInteraction(angel, deadPlayer);
+                    angel.applyEffect(angelEffects, deadPlayer);
+                } else {
+                    break;
+                }
+            }
+            if (okRespawn) {
+                deadPlayers[angel.getPosR()][angel.getPosC()] = new ArrayList<>();
             }
         }
     }

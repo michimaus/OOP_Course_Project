@@ -10,10 +10,15 @@ public class LevelUpAngel extends StandardAngel {
 
     @Override
     public final void applyEffect(final AngelEffects angelEffects, final StandardPlayer player) {
-        if (player.getCurrentHp() <= 0) {
-            return;
-        }
         player.visitedByLevelUpAngel(angelEffects);
         player.oneLevelUp();
+    }
+
+    @Override
+    public final boolean canInteract(final StandardPlayer player) {
+        if (player.getCurrentHp() <= 0) {
+            return false;
+        }
+        return true;
     }
 }

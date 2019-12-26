@@ -23,6 +23,9 @@ public final class AngelFactory {
             case "DarkAngel":
                 return new DarkAngel(angelData.getType(),
                         angelData.getPosR(), angelData.getPosC());
+            case "Dracula":
+                return new Dracula(angelData.getType(),
+                        angelData.getPosR(), angelData.getPosC());
             case "GoodBoy":
                 return new GoodBoy(angelData.getType(),
                         angelData.getPosR(), angelData.getPosC());

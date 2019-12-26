@@ -185,7 +185,7 @@ public class AngelEffects implements AngelVisitor {
 
     @Override
     public final void effectTheDoomer(final StandardPlayer player) {
-        player.die();
+        player.addHp((-1) * player.getCurrentHp());
     }
 
     @Override

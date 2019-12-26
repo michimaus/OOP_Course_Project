@@ -1,8 +1,9 @@
 package players;
 
-import angels.AngelVisitor;
+import angelseffects.AngelVisitor;
 import common.Constants;
 import spells.PlayerVisitor;
+import strategy.RogueStrategy;
 
 /**
  * Class of the Rogue race.
@@ -113,6 +114,7 @@ public class RoguePlayer extends StandardPlayer {
         super(type, posR, posC, playerId);
         maxHp = Constants.ROGUE_HP;
         currentHp = maxHp;
+        strategy = RogueStrategy.getInstance();
     }
 
     @Override

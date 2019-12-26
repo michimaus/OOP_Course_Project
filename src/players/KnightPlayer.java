@@ -1,8 +1,9 @@
 package players;
 
-import angels.AngelVisitor;
+import angelseffects.AngelVisitor;
 import common.Constants;
 import spells.PlayerVisitor;
+import strategy.KnightStrategy;
 
 /**
  * Class of the Knight race.
@@ -108,6 +109,7 @@ public class KnightPlayer extends StandardPlayer {
         super(type, posR, posC, playerId);
         maxHp = Constants.KNIGHT_HP;
         currentHp = maxHp;
+        strategy = KnightStrategy.getInstance();
     }
 
     @Override

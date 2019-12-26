@@ -1,8 +1,9 @@
 package players;
 
-import angels.AngelVisitor;
+import angelseffects.AngelVisitor;
 import common.Constants;
 import spells.PlayerVisitor;
+import strategy.WizardStrategy;
 
 /**
  * Class of the Wizard race.
@@ -107,6 +108,7 @@ public class WizardPlayer extends StandardPlayer {
         super(type, posR, posC, playerId);
         maxHp = Constants.WIZARD_HP;
         currentHp = maxHp;
+        strategy = WizardStrategy.getInstance();
     }
 
     @Override

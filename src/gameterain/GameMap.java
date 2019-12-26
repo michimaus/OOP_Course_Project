@@ -1,6 +1,6 @@
 package gameterain;
 
-import angels.AngelEffects;
+import angelseffects.AngelEffects;
 import angels.StandardAngel;
 import observer.AngelMyObserver;
 import observer.PlayerMyObserver;

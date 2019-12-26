@@ -1,5 +1,6 @@
 package angels;
 
+import angelseffects.AngelEffects;
 import players.StandardPlayer;
 
 public class Dracula extends StandardAngel {

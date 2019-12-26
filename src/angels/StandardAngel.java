@@ -1,5 +1,7 @@
 package angels;
 
+import angelseffects.AngelEffects;
+import angelseffects.AngelVisitable;
 import players.StandardPlayer;
 
 public abstract class StandardAngel implements AngelVisitable {

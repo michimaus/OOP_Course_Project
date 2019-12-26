@@ -1,12 +1,11 @@
 package players;
 
-import angels.AngelVisitable;
-
-import angels.AngelVisitor;
+import angelseffects.AngelVisitor;
 import common.Constants;
 import gameterain.GameMap;
 import spells.PlayerVisitable;
 import spells.PlayerVisitor;
+import strategy.PlayerStrategy;
 
 /**
  * Abstract class that builds the base player -is getting extended by all other race classes.
@@ -30,6 +29,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
     protected GameMap map;
     protected int incomingDamage;
     protected float modifier;
+    protected PlayerStrategy strategy;
 
     /**
      * Signatures for the spells of the heroes, when they get hit.
@@ -246,7 +246,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
         }
     }
 
-    public final void addHPFromAngel(final int addHpPVale) {
+    public final void addHp(final int addHpPVale) {
         currentHp += addHpPVale;
         if (currentHp > maxHp) {
             currentHp = maxHp;
@@ -276,5 +276,9 @@ public abstract class StandardPlayer implements PlayerVisitable {
             this.updateMaxHP(levelCount);
             level += levelCount;
         }
+    }
+
+    public final void updateStrategy() {
+        strategy.getStrategy(this);
     }
 }

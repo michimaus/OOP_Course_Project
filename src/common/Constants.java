@@ -148,4 +148,31 @@ public final class Constants {
     public static final int XP_ANGEL_PYROMANCER = 50;
     public static final int XP_ANGEL_ROGUE = 40;
     public static final int XP_ANGEL_WIZARD = 60;
+
+    public static final int DEFENSIVE_KNIGHT = 3;
+    public static final int DEFENSIVE_PYROMANCER = 4;
+    public static final int DEFENSIVE_ROGUE = 7;
+    public static final int DEFENSIVE_WIZARD = 4;
+    public static final int AGRESIVE_KNIGHT = 2;
+    public static final int AGRESIVE_PYROMANCER = 3;
+    public static final int AGRESIVE_ROGUE = 5;
+    public static final int AGRESIVE_WIZARD = 2;
+
+    public static final int BONUS_HP_DEFENSIVE_KNIGHT = 4;
+    public static final int BONUS_HP_DEFENSIVE_PYROMANCER = 3;
+    public static final int BONUS_HP_DEFENSIVE_ROGUE = 2;
+    public static final int BONUS_HP_DEFENSIVE_WIZARD = 5;
+    public static final int BONUS_HP_AGRESIVE_KNIGHT = 5;
+    public static final int BONUS_HP_AGRESIVE_PYROMANCER = 4;
+    public static final int BONUS_HP_AGRESIVE_ROGUE = 7;
+    public static final int BONUS_HP_AGRESIVE_WIZARD = 10;
+
+    public static final float MODIFIER_DEFENSIVE_KNIGHT = 0.2f;
+    public static final float MODIFIER_DEFENSIVE_PYROMANCER = 0.3f;
+    public static final float MODIFIER_DEFENSIVE_ROGUE = 0.1f;
+    public static final float MODIFIER_DEFENSIVE_WIZARD = 0.2f;
+    public static final float MODIFIER_AGRESIVE_KNIGHT = 0.5f;
+    public static final float MODIFIER_AGRESIVE_PYROMANCER = 0.7f;
+    public static final float MODIFIER_AGRESIVE_ROGUE = 0.4f;
+    public static final float MODIFIER_AGRESIVE_WIZARD = 0.6f;
 }

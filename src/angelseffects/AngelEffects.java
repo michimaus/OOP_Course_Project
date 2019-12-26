@@ -1,4 +1,4 @@
-package angels;
+package angelseffects;
 
 import common.Constants;
 import players.KnightPlayer;
@@ -33,70 +33,70 @@ public class AngelEffects implements AngelVisitor {
 
     @Override
     public final void effectDarkAngel(final KnightPlayer player) {
-        player.addHPFromAngel(Constants.DARK_ANGEL_KNIGHT * (-1));
+        player.addHp(Constants.DARK_ANGEL_KNIGHT * (-1));
     }
 
     @Override
     public final void effectDarkAngel(final PyromancerPlayer player) {
-        player.addHPFromAngel(Constants.DARK_ANGEL_PYROMANCER * (-1));
+        player.addHp(Constants.DARK_ANGEL_PYROMANCER * (-1));
     }
 
     @Override
     public final void effectDarkAngel(final WizardPlayer player) {
-        player.addHPFromAngel(Constants.DARK_ANGEL_WIZARD * (-1));
+        player.addHp(Constants.DARK_ANGEL_WIZARD * (-1));
     }
 
     @Override
     public final void effectDarkAngel(final RoguePlayer player) {
-        player.addHPFromAngel(Constants.DARK_ANGEL_ROGUE * (-1));
+        player.addHp(Constants.DARK_ANGEL_ROGUE * (-1));
     }
 
     @Override
     public final void effectDracula(final KnightPlayer player) {
         player.addModifier(Constants.DRACULA_DAMAGE_KNIGHT * (-1));
-        player.addHPFromAngel(Constants.DRACULA_HP_KNIGHT * (-1));
+        player.addHp(Constants.DRACULA_HP_KNIGHT * (-1));
     }
 
     @Override
     public final void effectDracula(final PyromancerPlayer player) {
         player.addModifier(Constants.DRACULA_DAMAGE_PYROMANCER * (-1));
-        player.addHPFromAngel(Constants.DRACULA_HP_PYROMANCER * (-1));
+        player.addHp(Constants.DRACULA_HP_PYROMANCER * (-1));
     }
 
     @Override
     public final void effectDracula(final WizardPlayer player) {
         player.addModifier(Constants.DRACULA_DAMAGE_WIZARD * (-1));
-        player.addHPFromAngel(Constants.DRACULA_HP_WIZARD * (-1));
+        player.addHp(Constants.DRACULA_HP_WIZARD * (-1));
     }
 
     @Override
     public final void effectDracula(final RoguePlayer player) {
         player.addModifier(Constants.DRACULA_DAMAGE_ROGUE * (-1));
-        player.addHPFromAngel(Constants.DRACULA_HP_ROGUE * (-1));
+        player.addHp(Constants.DRACULA_HP_ROGUE * (-1));
     }
 
     @Override
     public final void effectGoodBoy(final KnightPlayer player) {
         player.addModifier(Constants.GOODBOY_DAMAGE_KNIGHT);
-        player.addHPFromAngel(Constants.GOODBOY_HP_KNIGHT);
+        player.addHp(Constants.GOODBOY_HP_KNIGHT);
     }
 
     @Override
     public final void effectGoodBoy(final PyromancerPlayer player) {
         player.addModifier(Constants.GOODBOY_DAMAGE_PYROMANCER);
-        player.addHPFromAngel(Constants.GOODBOY_HP_PYROMANCER);
+        player.addHp(Constants.GOODBOY_HP_PYROMANCER);
     }
 
     @Override
     public final void effectGoodBoy(final WizardPlayer player) {
         player.addModifier(Constants.GOODBOY_DAMAGE_WIZARD);
-        player.addHPFromAngel(Constants.GOODBOY_HP_WIZARD);
+        player.addHp(Constants.GOODBOY_HP_WIZARD);
     }
 
     @Override
     public final void effectGoodBoy(final RoguePlayer player) {
         player.addModifier(Constants.GOODBOY_DAMAGE_ROGUE);
-        player.addHPFromAngel(Constants.GOODBOY_HP_ROGUE);
+        player.addHp(Constants.GOODBOY_HP_ROGUE);
     }
 
     @Override
@@ -121,46 +121,46 @@ public class AngelEffects implements AngelVisitor {
 
     @Override
     public final void effectLifeGiver(final KnightPlayer player) {
-        player.addHPFromAngel(Constants.LIFEGIVER_KNIGHT);
+        player.addHp(Constants.LIFEGIVER_KNIGHT);
     }
 
     @Override
     public final void effectLifeGiver(final PyromancerPlayer player) {
-        player.addHPFromAngel(Constants.LIFEGIVER_PYROMANCER);
+        player.addHp(Constants.LIFEGIVER_PYROMANCER);
     }
 
     @Override
     public final void effectLifeGiver(final WizardPlayer player) {
-        player.addHPFromAngel(Constants.LIFEGIVER_WIZARD);
+        player.addHp(Constants.LIFEGIVER_WIZARD);
     }
 
     @Override
     public final void effectLifeGiver(final RoguePlayer player) {
-        player.addHPFromAngel(Constants.LIFEGIVER_ROGUE);
+        player.addHp(Constants.LIFEGIVER_ROGUE);
     }
 
     @Override
     public final void effectSmallAngel(final KnightPlayer player) {
         player.addModifier(Constants.SMALL_ANGEL_DAMAGE_KNIGHT);
-        player.addHPFromAngel(Constants.SMALL_ANGEL_HP_KNIGHT);
+        player.addHp(Constants.SMALL_ANGEL_HP_KNIGHT);
     }
 
     @Override
     public final void effectSmallAngel(final PyromancerPlayer player) {
         player.addModifier(Constants.SMALL_ANGEL_DAMAGE_PYROMANCER);
-        player.addHPFromAngel(Constants.SMALL_ANGEL_HP_PYROMANCER);
+        player.addHp(Constants.SMALL_ANGEL_HP_PYROMANCER);
     }
 
     @Override
     public final void effectSmallAngel(final WizardPlayer player) {
         player.addModifier(Constants.SMALL_ANGEL_DAMAGE_WIZARD);
-        player.addHPFromAngel(Constants.SMALL_ANGEL_HP_WIZARD);
+        player.addHp(Constants.SMALL_ANGEL_HP_WIZARD);
     }
 
     @Override
     public final void effectSmallAngel(final RoguePlayer player) {
         player.addModifier(Constants.SMALL_ANGEL_DAMAGE_ROGUE);
-        player.addHPFromAngel(Constants.SMALL_ANGEL_HP_ROGUE);
+        player.addHp(Constants.SMALL_ANGEL_HP_ROGUE);
     }
 
     @Override

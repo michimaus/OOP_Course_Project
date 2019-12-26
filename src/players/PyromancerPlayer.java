@@ -1,8 +1,9 @@
 package players;
 
-import angels.AngelVisitor;
+import angelseffects.AngelVisitor;
 import common.Constants;
 import spells.PlayerVisitor;
+import strategy.PyromancerStrategy;
 
 /**
  * Class of the Pyromancer race.
@@ -108,6 +109,7 @@ public class PyromancerPlayer extends StandardPlayer {
         super(type, posR, posC, playerId);
         maxHp = Constants.PYROMANCE_HP;
         currentHp = maxHp;
+        strategy = PyromancerStrategy.getInstance();
     }
 
     @Override

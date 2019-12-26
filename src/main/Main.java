@@ -57,6 +57,7 @@ public final class Main {
                 if (player.getCurrentHp() <= 0) {
                     continue;
                 }
+                player.updateStrategy();
                 player.setHasAttacked(false);
                 player.updatePlayerNewRound(dataLoader.getMoves()[i][player.getId()]);
             }

@@ -1,4 +1,4 @@
-package angels;
+package angelseffects;
 
 import players.StandardPlayer;
 

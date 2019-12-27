@@ -62,12 +62,13 @@ public class Spells implements PlayerVisitor {
         float damage = Constants.IGNITE + caster.getLevel() * Constants.IGNITE_LEVEL_BONUS;
 
         if (caster.getPieceOfLand() == 'V') {
-
+            player.setStunedFor(0);
+            player.setHasDotFor(Constants.IGNITE_TIME);
 //            player.getDot(0, Constants.IGNITE_TIME,
 //                    (Constants.IGNITE_OVERTIME + caster.getLevel()
 //                            * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
             player.setBasicDotDamage((Constants.IGNITE_OVERTIME + caster.getLevel()
-                    * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
+                    * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS + 2);
 
             return damage * Constants.LAND_PYROMANCER_BONUS;
         }
@@ -297,25 +298,6 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void deflect(final KnightPlayer player, final WizardPlayer caster) {
-//        float damage = 0;
-//
-//        if (caster.getPieceOfLand() == 'L') {
-//            damage = (Constants.EXECUTE
-//                    + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())
-//                    * Constants.LAND_KNIGHT_BONUS;
-////            return (float) (Constants.EXECUTE
-////                    + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())
-////                    * Constants.LAND_KNIGHT_BONUS;
-//        } else {
-//            damage = (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel());
-////            return (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel());
-//        }
-//
-//
-//        damage = Math.round(damage);
-//        damage += baseSlam(caster, player);
-//        damage = Math.round(damage);
-
         float damage = baseSlam(caster, player);
         damage = Math.round(damage);
         damage += baseExecute(caster, player);

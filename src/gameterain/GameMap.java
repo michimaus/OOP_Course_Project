@@ -75,6 +75,10 @@ public final class GameMap {
     }
 
     public void putPlayerAtPosition(final int posX, final int posY, final StandardPlayer player) {
+        if (posX < 0 || posY < 0 || mapTerain.length <= posX || mapTerain[0].length <= posY) {
+            return;
+        }
+
         if (firstPlayerOnPos[posX][posY] == null) {
             firstPlayerOnPos[posX][posY] = player;
         } else {
@@ -91,7 +95,10 @@ public final class GameMap {
 
     public void updatePlayerPosition(final int oldX, final int oldY,
                                      final int newX, final int newY, final StandardPlayer player) {
-
+        if (oldX < 0 || oldY < 0 || mapTerain.length <= oldX || mapTerain[0].length <= oldY) {
+            putPlayerAtPosition(newX, newY, player);
+            return;
+        }
         if (firstPlayerOnPos[oldX][oldY] == player) {
             firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
             secondPlayerOnPos[oldX][oldY] = null;
@@ -115,6 +122,10 @@ public final class GameMap {
      */
 
     public void timeForFight(final int posR, final int posC) {
+        if (posR < 0 || posC < 0 || mapTerain.length <= posR || mapTerain[0].length <= posC) {
+            return;
+        }
+
         if (secondPlayerOnPos[posR][posC] != null) {
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];

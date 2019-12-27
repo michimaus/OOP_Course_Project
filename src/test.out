@@ -107,7 +107,10 @@ Angel GoodBoy was spawned at 15 6
 
 ~~ Round 12 ~~
 Player Rogue 32 was killed by Pyromancer 26
-Player Pyromancer 26 was killed by Rogue 32
+Pyromancer 26 reached level 1
+Pyromancer 26 reached level 2
+Pyromancer 26 reached level 3
+Pyromancer 26 reached level 4
 Angel SmallAngel was spawned at 2 0
 Angel DamageAngel was spawned at 2 7
 Angel Spawner was spawned at 15 5
@@ -134,6 +137,7 @@ Angel SmallAngel was spawned at 9 13
 Angel SmallAngel was spawned at 15 6
 
 ~~ Round 15 ~~
+Player Knight 4 was killed by Pyromancer 26
 Player Pyromancer 35 was killed by Knight 44
 Angel TheDoomer was spawned at 11 0
 Angel TheDoomer was spawned at 1 1
@@ -222,8 +226,6 @@ Angel DamageAngel was spawned at 9 13
 Angel GoodBoy was spawned at 15 6
 
 ~~ Round 23 ~~
-Player Knight 44 was killed by Knight 4
-Player Knight 4 was killed by Knight 44
 Player Wizard 8 was killed by Knight 19
 Knight 19 reached level 1
 Knight 19 reached level 2
@@ -270,8 +272,11 @@ Angel TheDoomer was spawned at 9 0
 
 ~~ Round 27 ~~
 Player Pyromancer 40 was killed by Knight 19
-Player Knight 30 was killed by Knight 28
 Player Knight 28 was killed by Knight 30
+Knight 30 reached level 1
+Knight 30 reached level 2
+Knight 30 reached level 3
+Knight 30 reached level 4
 Angel Spawner was spawned at 0 15
 Angel GoodBoy was spawned at 2 0
 Angel LevelUpAngel was spawned at 15 5
@@ -318,12 +323,12 @@ P 0 0 500 1 18
 P dead
 W dead
 R dead
-P dead
+P 4 440 306 3 1
 P 0 0 180 10 14
 K dead
 W 0 0 375 16 11
-K dead
-K 0 0 291 12 10
+K 4 400 1220 18 13
+K 0 0 77 12 10
 R dead
 W dead
 R dead
@@ -334,9 +339,9 @@ R 0 0 600 18 0
 K 1 250 980 3 13
 P dead
 W dead
-K 0 200 240 19 9
+K 0 200 300 19 9
 R dead
-K dead
+K 0 200 480 6 1
 R 0 0 120 2 11
 P dead
 W dead

@@ -83,6 +83,7 @@ public final class Main {
             }
             map.spawnAngels(angels);
             inputOutputStream.writeEmptyLine();
+//            inputOutputStream.writeEmptyLine();
         }
         inputOutputStream.writeFinalStandings(players);
         inputOutputStream.closeFiles();

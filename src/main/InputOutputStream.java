@@ -100,6 +100,8 @@ public final class InputOutputStream {
         try {
             fs.writeWord("~~ Results ~~\n");
             for (StandardPlayer player : players) {
+//                fs.writeInt(player.getId());
+//                fs.writeCharacter(' ');
                 fs.writeCharacter(player.getType().charAt(0));
                 fs.writeCharacter(' ');
 

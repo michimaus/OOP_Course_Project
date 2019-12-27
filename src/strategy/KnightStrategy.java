@@ -21,7 +21,8 @@ public final class KnightStrategy implements PlayerStrategy {
         if (player.getCurrentHp() < player.getMaxHp() / Constants.DEFENSIVE_KNIGHT) {
             player.addHp(player.getCurrentHp() / Constants.BONUS_HP_DEFENSIVE_KNIGHT);
             player.addModifier(Constants.MODIFIER_DEFENSIVE_KNIGHT * (-1));
-        } else if (player.getCurrentHp() < player.getMaxHp() / Constants.AGRESIVE_KNIGHT) {
+        } else if (player.getCurrentHp() < player.getMaxHp() / Constants.AGRESIVE_KNIGHT
+                && player.getCurrentHp() > player.getMaxHp() / Constants.DEFENSIVE_KNIGHT) {
             player.addHp((player.getCurrentHp() / Constants.BONUS_HP_AGRESIVE_KNIGHT) * (-1));
             player.addModifier(Constants.MODIFIER_AGRESIVE_KNIGHT);
         }

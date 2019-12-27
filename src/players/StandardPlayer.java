@@ -155,7 +155,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
         this.xp = 0;
         this.level = 0;
         this.hasDotFor = 0;
-        this.modifier = 0f;
+        this.modifier = 0;
     }
 
     /**

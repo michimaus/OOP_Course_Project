@@ -21,7 +21,8 @@ public final class PyromancerStrategy implements PlayerStrategy {
         if (player.getCurrentHp() < player.getMaxHp() / Constants.DEFENSIVE_PYROMANCER) {
             player.addHp(player.getCurrentHp() / Constants.BONUS_HP_DEFENSIVE_PYROMANCER);
             player.addModifier(Constants.MODIFIER_DEFENSIVE_PYROMANCER * (-1));
-        } else if (player.getCurrentHp() < player.getMaxHp() / Constants.AGRESIVE_PYROMANCER) {
+        } else if (player.getCurrentHp() < player.getMaxHp() / Constants.AGRESIVE_PYROMANCER
+                && player.getCurrentHp() > player.getMaxHp() / Constants.DEFENSIVE_PYROMANCER) {
             player.addHp((player.getCurrentHp() / Constants.BONUS_HP_AGRESIVE_PYROMANCER) * (-1));
             player.addModifier(Constants.MODIFIER_AGRESIVE_PYROMANCER);
         }

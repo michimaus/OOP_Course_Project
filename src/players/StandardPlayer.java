@@ -30,6 +30,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
     protected int incomingDamage;
     protected float modifier;
     protected PlayerStrategy strategy;
+    protected float basicDotDamage;
 
     /**
      * Signatures for the spells of the heroes, when they get hit.
@@ -118,10 +119,6 @@ public abstract class StandardPlayer implements PlayerVisitable {
         return dotDamage;
     }
 
-    public final void setDotDamage(final float dotDamage) {
-        this.dotDamage = dotDamage;
-    }
-
     public final int getXp() {
         return xp;
     }
@@ -132,6 +129,10 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     public final int getId() {
         return id;
+    }
+
+    public final float getBasicDotDamage() {
+        return basicDotDamage;
     }
 
     public final float getModifier() {
@@ -194,21 +195,38 @@ public abstract class StandardPlayer implements PlayerVisitable {
         if (hasDotFor != 0) {
             --hasDotFor;
             currentHp -= dotDamage;
+            checkLeaveMap();
         } else {
             dotDamage = 0;
         }
     }
 
-    public final void getDot(final int stunedForSeconds,
-                             final int hasDotForSeconds, final float dotDamageNow) {
+//    public final void getDot(final int stunedForSeconds,
+//                             final int hasDotForSeconds, final float dotDamageNow) {
+//        this.stunedFor = stunedForSeconds;
+//        this.hasDotFor = hasDotForSeconds;
+//        this.dotDamage = dotDamageNow;
+//    }
+    public final void setStunedFor(final int stunedForSeconds) {
         this.stunedFor = stunedForSeconds;
-        this.hasDotFor = hasDotForSeconds;
-        this.dotDamage = dotDamageNow;
+    }
+
+    public final void setHasDotFor(final int stunedForSeconds) {
+        this.hasDotFor = stunedForSeconds;
+    }
+
+    public final void setDotDamage(final float dotDamage) {
+        this.dotDamage = dotDamage;
+    }
+
+    public final void setBasicDotDamage(final float newBasicDotDamage) {
+        basicDotDamage = newBasicDotDamage;
     }
 
     public final void takeDamage() {
         currentHp -= incomingDamage;
         incomingDamage = 0;
+        checkLeaveMap();
     }
 
     /**
@@ -253,11 +271,12 @@ public abstract class StandardPlayer implements PlayerVisitable {
         if (currentHp > maxHp) {
             currentHp = maxHp;
         } else if (currentHp <= 0) {
+            map.takeOut(this);
             map.getPlayerObservers().updateAngelKillingPlayer(this);
         }
     }
 
-    public final void leaveMap() {
+    public final void checkLeaveMap() {
         if (currentHp <= 0) {
             map.takeOut(this);
         }
@@ -279,3 +298,4 @@ public abstract class StandardPlayer implements PlayerVisitable {
         checkLevelUp();
     }
 }
+

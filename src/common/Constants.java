@@ -4,6 +4,8 @@ public final class Constants {
     private Constants() {
     }
 
+    public static final float APPROXIMATION_ERROR = 0.0001f;
+
     public static final int KNIGHT_HP = 900;
     public static final int PYROMANCE_HP = 500;
     public static final int WIZARD_HP = 400;

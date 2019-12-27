@@ -4,11 +4,13 @@ import angelseffects.AngelEffects;
 import angels.StandardAngel;
 import observer.AngelMyObserver;
 import observer.PlayerMyObserver;
+import players.PlayerComparator;
 import spells.Spells;
 import players.StandardPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Map is a singletone.
@@ -24,7 +26,7 @@ public final class GameMap {
     private char[][] mapTerain;
     private StandardPlayer[][] firstPlayerOnPos;
     private StandardPlayer[][] secondPlayerOnPos;
-    private List<StandardPlayer>[][] deadPlayers;
+    private PriorityQueue<StandardPlayer>[][] deadPlayers;
     private AngelMyObserver angelObservers;
     private PlayerMyObserver playerObservers;
 
@@ -62,10 +64,10 @@ public final class GameMap {
 
     public void initLand(final int n, final int m, final char[][] mapTerainGet) {
         this.mapTerain = mapTerainGet;
-        deadPlayers = new List[n][m];
+        deadPlayers = new PriorityQueue[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                deadPlayers[i][j] = new ArrayList<>();
+                deadPlayers[i][j] = new PriorityQueue<>(10, new PlayerComparator());
             }
         }
         firstPlayerOnPos = new StandardPlayer[n][m];
@@ -117,8 +119,9 @@ public final class GameMap {
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
 
-            System.out.println(p1.getType() + p1.getCurrentHp());
-            System.out.println(p2.getType() + p2.getCurrentHp());
+            System.out.println(p1.getType() + " " + p1.getId() + " " + p1.getCurrentHp());
+            System.out.println(p2.getType() + " " + p2.getId() + " " + p2.getCurrentHp());
+            System.out.println();
 
             if (p1.getCurrentHp() <= 0 || p2.getCurrentHp() <= 0) {
                 return;
@@ -203,19 +206,31 @@ public final class GameMap {
                     angel.applyEffect(angelEffects, p2);
                 }
             }
-            boolean okRespawn = false;
-            for (StandardPlayer deadPlayer : deadPlayers[angel.getPosR()][angel.getPosC()]) {
+
+            while (!deadPlayers[angel.getPosR()][angel.getPosC()].isEmpty()) {
+                StandardPlayer deadPlayer = deadPlayers[angel.getPosR()][angel.getPosC()].peek();
                 if (angel.canInteract(deadPlayer)) {
-                    okRespawn = true;
+                    deadPlayers[angel.getPosR()][angel.getPosC()].poll();
                     angelObservers.updatePlayerInteraction(angel, deadPlayer);
                     angel.applyEffect(angelEffects, deadPlayer);
                 } else {
                     break;
                 }
             }
-            if (okRespawn) {
-                deadPlayers[angel.getPosR()][angel.getPosC()] = new ArrayList<>();
-            }
+
+//            boolean okRespawn = false;
+//            for (StandardPlayer deadPlayer : deadPlayers[angel.getPosR()][angel.getPosC()]) {
+//                if (angel.canInteract(deadPlayer)) {
+//                    okRespawn = true;
+//                    angelObservers.updatePlayerInteraction(angel, deadPlayer);
+//                    angel.applyEffect(angelEffects, deadPlayer);
+//                } else {
+//                    break;
+//                }
+//            }
+//            if (okRespawn) {
+//                deadPlayers[angel.getPosR()][angel.getPosC()] = new ArrayList<>();
+//            }
         }
     }
 }

@@ -62,14 +62,22 @@ public class Spells implements PlayerVisitor {
         float damage = Constants.IGNITE + caster.getLevel() * Constants.IGNITE_LEVEL_BONUS;
 
         if (caster.getPieceOfLand() == 'V') {
-            player.getDot(0, Constants.IGNITE_TIME,
-                    (Constants.IGNITE_OVERTIME + caster.getLevel()
-                            * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
+
+//            player.getDot(0, Constants.IGNITE_TIME,
+//                    (Constants.IGNITE_OVERTIME + caster.getLevel()
+//                            * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
+            player.setBasicDotDamage((Constants.IGNITE_OVERTIME + caster.getLevel()
+                    * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
 
             return damage * Constants.LAND_PYROMANCER_BONUS;
         }
-        player.getDot(0, Constants.IGNITE_TIME, (Constants.IGNITE_OVERTIME
+        player.setStunedFor(0);
+        player.setHasDotFor(Constants.IGNITE_TIME);
+        player.setBasicDotDamage((Constants.IGNITE_OVERTIME
                 + caster.getLevel() * Constants.IGNITE_OVERTIME_BONUS));
+
+//        player.getDot(0, Constants.IGNITE_TIME, (Constants.IGNITE_OVERTIME
+//                + caster.getLevel() * Constants.IGNITE_OVERTIME_BONUS));
         return damage;
     }
 
@@ -77,7 +85,7 @@ public class Spells implements PlayerVisitor {
     public final void ignite(final KnightPlayer player, final PyromancerPlayer caster) {
         int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_KNIGHT_BONUS
                 + caster.getModifier()));
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_KNIGHT_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_KNIGHT_BONUS
                 + caster.getModifier())));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
@@ -88,7 +96,8 @@ public class Spells implements PlayerVisitor {
                 * (Constants.IGNITE_PYROMANCER_BONUS
                 + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_PYROMANCER_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage()
+                * (Constants.IGNITE_PYROMANCER_BONUS
                 + caster.getModifier())));
     }
 
@@ -97,7 +106,7 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_ROGUE_BONUS
                 + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_ROGUE_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_ROGUE_BONUS
                 + caster.getModifier())));
 
     }
@@ -107,7 +116,7 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_WIZARD_BONUS
                 + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.IGNITE_WIZARD_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_WIZARD_BONUS
                 + caster.getModifier())));
 
     }
@@ -126,9 +135,11 @@ public class Spells implements PlayerVisitor {
             procent = Constants.MAX_EXECUTE_PROCENT;
         }
 
-        if ((float) player.getCurrentHp() / (float) player.getMaxHp() < procent) {
-            player.setIncomingDamage(player.getIncomingDamage() + player.getCurrentHp());
-            return 0;
+        if ((float) player.getCurrentHp() / (float) player.getMaxHp() < procent
+                && player.getCurrentHp()
+                > (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())) {
+//            player.setIncomingDamage(player.getIncomingDamage() + player.getCurrentHp());
+            return player.getCurrentHp();
         } else {
             if (caster.getPieceOfLand() == 'L') {
                 return (float) (Constants.EXECUTE
@@ -177,7 +188,10 @@ public class Spells implements PlayerVisitor {
 
     private float baseSlam(final StandardPlayer player, final KnightPlayer caster) {
         float damage = Constants.SLAM + caster.getLevel() * Constants.SLAM_LEVEL_BONUS;
-        player.getDot(1, 0, 0);
+//        player.getDot(1, 0, 0);
+        player.setStunedFor(1);
+        player.setHasDotFor(0);
+        player.setDotDamage(0);
         if (caster.getPieceOfLand() == 'L') {
             return damage * Constants.LAND_KNIGHT_BONUS;
         }
@@ -283,6 +297,25 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void deflect(final KnightPlayer player, final WizardPlayer caster) {
+//        float damage = 0;
+//
+//        if (caster.getPieceOfLand() == 'L') {
+//            damage = (Constants.EXECUTE
+//                    + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())
+//                    * Constants.LAND_KNIGHT_BONUS;
+////            return (float) (Constants.EXECUTE
+////                    + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())
+////                    * Constants.LAND_KNIGHT_BONUS;
+//        } else {
+//            damage = (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel());
+////            return (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel());
+//        }
+//
+//
+//        damage = Math.round(damage);
+//        damage += baseSlam(caster, player);
+//        damage = Math.round(damage);
+
         float damage = baseSlam(caster, player);
         damage = Math.round(damage);
         damage += baseExecute(caster, player);
@@ -395,13 +428,20 @@ public class Spells implements PlayerVisitor {
      */
 
     private float baseParalysis(final StandardPlayer player, final RoguePlayer caster) {
-        float damage = Constants.PARALYSIS + caster.getLevel() * Constants.PARALYSIS_LEVEL_BONUS;
+        float damage = Constants.PARALYSIS + caster.getLevel()
+                * Constants.PARALYSIS_LEVEL_BONUS - 0.0001f;
         if (caster.getPieceOfLand() == 'W') {
-            player.getDot(Constants.PARALYSIS_TIME_BONUS, Constants.PARALYSIS_TIME_BONUS,
-                    damage * Constants.LAND_ROGUE_BONUS);
+            player.setHasDotFor(Constants.PARALYSIS_TIME_BONUS);
+            player.setStunedFor(Constants.PARALYSIS_TIME_BONUS);
+            player.setBasicDotDamage(damage * Constants.LAND_ROGUE_BONUS);
+//            player.getDot(Constants.PARALYSIS_TIME_BONUS, Constants.PARALYSIS_TIME_BONUS,
+//                    damage * Constants.LAND_ROGUE_BONUS);
             return damage * Constants.LAND_ROGUE_BONUS;
         }
-        player.getDot(Constants.PARALYSIS_TIME, Constants.PARALYSIS_TIME, damage);
+//        player.getDot(Constants.PARALYSIS_TIME, Constants.PARALYSIS_TIME, damage);
+        player.setHasDotFor(Constants.PARALYSIS_TIME);
+        player.setStunedFor(Constants.PARALYSIS_TIME);
+        player.setBasicDotDamage(damage);
         return damage;
     }
 
@@ -410,7 +450,8 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseParalysis(player, caster)
                 * (Constants.PARALYSIS_KNIGHT_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_KNIGHT_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage()
+                * (Constants.PARALYSIS_KNIGHT_BONUS
                 + caster.getModifier())));
     }
 
@@ -419,7 +460,7 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseParalysis(player, caster)
                 * (Constants.PARALYSIS_PYROMANCER_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage()
+        player.setDotDamage(Math.round(player.getBasicDotDamage()
                 * (Constants.PARALYSIS_PYROMANCER_BONUS
                 + caster.getModifier())));
 
@@ -430,7 +471,8 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseParalysis(player, caster)
                 * (Constants.PARALYSIS_ROGUE_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_ROGUE_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage()
+                * (Constants.PARALYSIS_ROGUE_BONUS
                 + caster.getModifier())));
 
     }
@@ -440,7 +482,8 @@ public class Spells implements PlayerVisitor {
         int damage = Math.round(baseParalysis(player, caster)
                 * (Constants.PARALYSIS_WIZARD_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
-        player.setDotDamage(Math.round(player.getDotDamage() * (Constants.PARALYSIS_WIZARD_BONUS
+        player.setDotDamage(Math.round(player.getBasicDotDamage()
+                * (Constants.PARALYSIS_WIZARD_BONUS
                 + caster.getModifier())));
     }
 }

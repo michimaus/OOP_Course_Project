@@ -48,6 +48,8 @@ public final class Main {
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
             inputOutputStream.writeRound(i);
+            System.out.println();
+            System.out.println(i + 1);
 
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {
@@ -81,12 +83,6 @@ public final class Main {
             }
             map.spawnAngels(angels);
             inputOutputStream.writeEmptyLine();
-
-            for (StandardPlayer player : players) {
-                if (player.getCurrentHp() <= 0) {
-                    player.leaveMap();
-                }
-            }
         }
         inputOutputStream.writeFinalStandings(players);
         inputOutputStream.closeFiles();

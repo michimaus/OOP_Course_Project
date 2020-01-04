@@ -69,7 +69,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     public final void updateLevel(final int noLevels) {
         for (int i = 1; i <= noLevels; ++i) {
-            map.getPlayerObservers().updatePlayerLevel(this, level + i);
+            map.getObserver().updatePlayerLevel(this, level + i);
         }
         updateMaxHP(noLevels);
         level += noLevels;
@@ -201,12 +201,6 @@ public abstract class StandardPlayer implements PlayerVisitable {
         }
     }
 
-//    public final void getDot(final int stunedForSeconds,
-//                             final int hasDotForSeconds, final float dotDamageNow) {
-//        this.stunedFor = stunedForSeconds;
-//        this.hasDotFor = hasDotForSeconds;
-//        this.dotDamage = dotDamageNow;
-//    }
     public final void setStunedFor(final int stunedForSeconds) {
         this.stunedFor = stunedForSeconds;
     }
@@ -272,7 +266,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
             currentHp = maxHp;
         } else if (currentHp <= 0) {
             map.takeOut(this);
-            map.getPlayerObservers().updateAngelKillingPlayer(this);
+            map.getObserver().updateAngelKillingPlayer(this);
         }
     }
 
@@ -289,7 +283,7 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     public final void setCurrentHp(final int hp) {
         currentHp = hp;
-        map.getPlayerObservers().updatePlayerRespawned(this);
+        map.getObserver().updatePlayerRespawned(this);
         map.putPlayerAtPosition(posR, posC, this);
     }
 

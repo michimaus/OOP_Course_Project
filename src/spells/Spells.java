@@ -64,9 +64,7 @@ public class Spells implements PlayerVisitor {
         if (caster.getPieceOfLand() == 'V') {
             player.setStunedFor(0);
             player.setHasDotFor(Constants.IGNITE_TIME);
-//            player.getDot(0, Constants.IGNITE_TIME,
-//                    (Constants.IGNITE_OVERTIME + caster.getLevel()
-//                            * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
+
             player.setBasicDotDamage((Constants.IGNITE_OVERTIME + caster.getLevel()
                     * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS + 2);
 
@@ -76,9 +74,6 @@ public class Spells implements PlayerVisitor {
         player.setHasDotFor(Constants.IGNITE_TIME);
         player.setBasicDotDamage((Constants.IGNITE_OVERTIME
                 + caster.getLevel() * Constants.IGNITE_OVERTIME_BONUS));
-
-//        player.getDot(0, Constants.IGNITE_TIME, (Constants.IGNITE_OVERTIME
-//                + caster.getLevel() * Constants.IGNITE_OVERTIME_BONUS));
         return damage;
     }
 
@@ -109,7 +104,6 @@ public class Spells implements PlayerVisitor {
         player.setIncomingDamage(player.getIncomingDamage() + damage);
         player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_ROGUE_BONUS
                 + caster.getModifier())));
-
     }
 
     @Override
@@ -119,7 +113,6 @@ public class Spells implements PlayerVisitor {
         player.setIncomingDamage(player.getIncomingDamage() + damage);
         player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_WIZARD_BONUS
                 + caster.getModifier())));
-
     }
 
     /**
@@ -317,7 +310,6 @@ public class Spells implements PlayerVisitor {
         damage = Math.round(damage);
 
         float percent = baseDeflect(caster);
-
         player.setIncomingDamage(player.getIncomingDamage()
                 + Math.round(damage * percent * (Constants.DEFLECT_PYROMANCER_BONUS
                 + caster.getModifier())));

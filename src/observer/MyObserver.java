@@ -1,9 +1,13 @@
 package observer;
 
-import gameterain.GameMap;
-import main.InputOutputStream;
+import angels.StandardAngel;
+import players.StandardPlayer;
 
-public abstract class MyObserver {
-    protected GameMap subject;
-    protected InputOutputStream inputOutputStream;
+public interface MyObserver {
+    void updatePlayerKillingOther(StandardPlayer killer, StandardPlayer player);
+    void updatePlayerLevel(StandardPlayer player, int level);
+    void updateAngelKillingPlayer(StandardPlayer player);
+    void updatePlayerRespawned(StandardPlayer player);
+    void updateAngelSpawn(StandardAngel angel);
+    void updatePlayerInteraction(StandardAngel angel, StandardPlayer player);
 }

@@ -1,0 +1,28 @@
+1
+Pyromancer 0 500
+Wizard 1 400
+
+da baseIgnite -> 150.0
+total ignite dupa modificatori rasa si ingeri si strategie -> 158
+overtime baseignite * modificatori rasa si ingeri si strategie -> 50.0 * 1.05
+da baseFireBlast -> 350.0
+total fireblast dupa modificatori rasa si ingeri si strategie -> 367
+procentul de basedefelct -> 0.35
+damage dat adversar(basicDMG) * modificatori (fara procent deflect scris mai sus) -> 500.0 * 1.3
+da basicDrain-> 30.000002
+total drain dupa modificatori rasa si ingeri si strategie -> 27
+
+2
+Pyromancer 0 246
+Wizard 1 81
+
+da baseIgnite -> 150.0
+total ignite dupa modificatori rasa si ingeri si strategie -> 158
+overtime baseignite * modificatori rasa si ingeri si strategie -> 50.0 * 1.05
+da baseFireBlast -> 350.0
+total fireblast dupa modificatori rasa si ingeri si strategie -> 367
+procentul de basedefelct -> 0.35
+damage dat adversar(basicDMG) * modificatori (fara procent deflect scris mai sus) -> 500.0 * 1.0999999
+da basicDrain-> 30.000002
+total drain dupa modificatori rasa si ingeri si strategie -> 21
+

@@ -1,0 +1,102 @@
+1
+Rogue 0 600
+Wizard 1 400
+
+Wizard 2 400
+Wizard 3 400
+
+Wizard 4 400
+Wizard 5 400
+
+
+2
+Wizard 2 375
+Wizard 3 375
+
+Wizard 4 375
+Wizard 5 375
+
+
+3
+Wizard 2 330
+Wizard 3 330
+
+Wizard 4 350
+Wizard 5 350
+
+
+4
+Rogue 0 407
+Wizard 2 295
+
+Wizard 4 325
+Wizard 5 325
+
+
+5
+Wizard 6 400
+Wizard 5 300
+
+
+6
+Wizard 6 375
+Wizard 5 275
+
+
+7
+Wizard 6 350
+Wizard 5 250
+
+
+8
+Wizard 6 325
+Wizard 5 225
+
+
+9
+Wizard 6 300
+Wizard 5 200
+
+
+10
+Wizard 6 275
+Wizard 5 158
+
+
+11
+Wizard 6 235
+Knight 7 900
+
+procentul de defelct contra knight -> 0.35
+wizard da basicDrain pe knight -> 54.000004
+knight da basicExecute pe wizard -> 200.0
+knight da basicSlam pe wizard -> 100.0
+
+12
+Wizard 5 108
+Wizard 4 300
+
+
+13
+Wizard 5 102
+Wizard 4 232
+
+
+14
+Wizard 5 400
+Wizard 4 400
+
+
+15
+Wizard 5 430
+Wizard 4 430
+
+
+16
+Knight 7 648
+Wizard 5 391
+
+knight da basicExecute pe wizard -> 200.0
+knight da basicSlam pe wizard -> 100.0
+procentul de defelct contra knight -> 0.37
+wizard da basicDrain pe knight -> 67.5

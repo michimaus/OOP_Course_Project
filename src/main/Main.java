@@ -3,8 +3,7 @@ package main;
 import angels.AngelFactory;
 import angels.StandardAngel;
 import gameterain.GameMap;
-import observer.AngelMyObserver;
-import observer.PlayerMyObserver;
+import observer.GreatMage;
 import players.PlayerFactory;
 import players.StandardPlayer;
 
@@ -43,8 +42,8 @@ public final class Main {
         inputOutputStream.loadRoundsMoves();
         AngelFactory angelFactory = AngelFactory.getInstance();
 
-        AngelMyObserver angelMyObserver = new AngelMyObserver(map, inputOutputStream);
-        PlayerMyObserver playerMyObserver = new PlayerMyObserver(map, inputOutputStream);
+        GreatMage observer = GreatMage.getInstance();
+        observer.setObserver(map, inputOutputStream);
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
             inputOutputStream.writeRound(i);
@@ -75,15 +74,12 @@ public final class Main {
             inputOutputStream.loadNumAngelsRound();
             List<StandardAngel> angels = new ArrayList<>();
 
-//            System.out.println(dataLoader.getNumAngelsRound());
             for (int j = 0; j < dataLoader.getNumAngelsRound(); ++j) {
                 inputOutputStream.loadAngel();
                 angels.add(angelFactory.createAngel(dataLoader.getAngel()));
-//                System.out.println(dataLoader.getAngel().getType());
             }
             map.spawnAngels(angels);
             inputOutputStream.writeEmptyLine();
-//            inputOutputStream.writeEmptyLine();
         }
         inputOutputStream.writeFinalStandings(players);
         inputOutputStream.closeFiles();

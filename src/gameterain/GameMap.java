@@ -2,13 +2,11 @@ package gameterain;
 
 import angelseffects.AngelEffects;
 import angels.StandardAngel;
-import observer.AngelMyObserver;
-import observer.PlayerMyObserver;
+import observer.GreatMage;
 import players.PlayerComparator;
 import spells.Spells;
 import players.StandardPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -27,8 +25,7 @@ public final class GameMap {
     private StandardPlayer[][] firstPlayerOnPos;
     private StandardPlayer[][] secondPlayerOnPos;
     private PriorityQueue<StandardPlayer>[][] deadPlayers;
-    private AngelMyObserver angelObservers;
-    private PlayerMyObserver playerObservers;
+    private GreatMage observer;
 
     private GameMap() {
         heroSpells = new Spells();
@@ -46,20 +43,12 @@ public final class GameMap {
         }
     }
 
-    public void setPlayerObservers(final PlayerMyObserver obs) {
-        playerObservers = obs;
+    public void setObserver(final GreatMage obs) {
+        observer = obs;
     }
 
-    public void setAngelObservers(final AngelMyObserver obs) {
-        angelObservers = obs;
-    }
-
-    public AngelMyObserver getAngelObservers() {
-        return angelObservers;
-    }
-
-    public PlayerMyObserver getPlayerObservers() {
-        return playerObservers;
+    public GreatMage getObserver() {
+        return observer;
     }
 
     public void initLand(final int n, final int m, final char[][] mapTerainGet) {
@@ -107,10 +96,6 @@ public final class GameMap {
             secondPlayerOnPos[oldX][oldY] = null;
         }
 
-//        if (secondPlayerOnPos[oldX][oldY] != player) {
-//            firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
-//        }
-//        secondPlayerOnPos[oldX][oldY] = null;
         putPlayerAtPosition(newX, newY, player);
     }
 
@@ -150,18 +135,18 @@ public final class GameMap {
             p2.takeDamage();
 
             if (p1.getCurrentHp() <= 0 && p2.getCurrentHp() <= 0) {
-                playerObservers.updatePlayerKillingOther(p1, p2);
-                playerObservers.updatePlayerKillingOther(p2, p1);
+                observer.updatePlayerKillingOther(p1, p2);
+                observer.updatePlayerKillingOther(p2, p1);
                 return;
             }
 
             if (p2.getKillXp(p1)) {
-                playerObservers.updatePlayerKillingOther(p2, p1);
+                observer.updatePlayerKillingOther(p2, p1);
                 p2.checkLevelUp();
             }
 
             if (p1.getKillXp(p2)) {
-                playerObservers.updatePlayerKillingOther(p1, p2);
+                observer.updatePlayerKillingOther(p1, p2);
                 p1.checkLevelUp();
             }
         }
@@ -187,7 +172,7 @@ public final class GameMap {
 
     public void spawnAngels(final List<StandardAngel> angelsThisRound) {
         for (StandardAngel angel : angelsThisRound) {
-            angelObservers.updateAngelSpawn(angel);
+            observer.updateAngelSpawn(angel);
             StandardPlayer p1;
             StandardPlayer p2;
             if (firstPlayerOnPos[angel.getPosR()][angel.getPosC()] != null
@@ -207,13 +192,13 @@ public final class GameMap {
 
             if (p1 != null) {
                 if (angel.canInteract(p1)) {
-                    angelObservers.updatePlayerInteraction(angel, p1);
+                    observer.updatePlayerInteraction(angel, p1);
                     angel.applyEffect(angelEffects, p1);
                 }
             }
             if (p2 != null) {
                 if (angel.canInteract(p2)) {
-                    angelObservers.updatePlayerInteraction(angel, p2);
+                    observer.updatePlayerInteraction(angel, p2);
                     angel.applyEffect(angelEffects, p2);
                 }
             }
@@ -222,26 +207,12 @@ public final class GameMap {
                 StandardPlayer deadPlayer = deadPlayers[angel.getPosR()][angel.getPosC()].peek();
                 if (angel.canInteract(deadPlayer)) {
                     deadPlayers[angel.getPosR()][angel.getPosC()].poll();
-                    angelObservers.updatePlayerInteraction(angel, deadPlayer);
+                    observer.updatePlayerInteraction(angel, deadPlayer);
                     angel.applyEffect(angelEffects, deadPlayer);
                 } else {
                     break;
                 }
             }
-
-//            boolean okRespawn = false;
-//            for (StandardPlayer deadPlayer : deadPlayers[angel.getPosR()][angel.getPosC()]) {
-//                if (angel.canInteract(deadPlayer)) {
-//                    okRespawn = true;
-//                    angelObservers.updatePlayerInteraction(angel, deadPlayer);
-//                    angel.applyEffect(angelEffects, deadPlayer);
-//                } else {
-//                    break;
-//                }
-//            }
-//            if (okRespawn) {
-//                deadPlayers[angel.getPosR()][angel.getPosC()] = new ArrayList<>();
-//            }
         }
     }
 }

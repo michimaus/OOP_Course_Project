@@ -1,6 +1,6 @@
 Starting audit...
 [ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/gameterain/GameMap.java:11:8: Unused import - java.util.ArrayList. [UnusedImports]
 [ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/gameterain/GameMap.java:70:57: '10' is a magic number. [MagicNumber]
-[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/spells/Spells.java:432:53: '0.0001f' is a magic number. [MagicNumber]
+[ERROR] /home/mihnea/aicilucrezeu/TemePOO/tema2/src/spells/Spells.java:412:53: '0.0001f' is a magic number. [MagicNumber]
 Audit done.
 Checkstyle ends with 3 errors.

@@ -4,6 +4,13 @@ import angelseffects.AngelEffects;
 import angelseffects.AngelVisitable;
 import players.StandardPlayer;
 
+/**
+ * Main class that contains the common data for any angel.
+ * This class is extended by all the other classes belonging to a specific angel type,
+ * coming up with their specific implementation for the methods, depending on the effect that
+ * has to be applied.
+ */
+
 public abstract class StandardAngel implements AngelVisitable {
     private String type;
     private int posC;

@@ -2,6 +2,12 @@ package players;
 
 import main.DataLoader;
 
+/**
+ * Factory class where the heroes are created.
+ * The method "creatPlayer" is the one that return the new instance of a player,
+ * depending on his type.
+ */
+
 public final class PlayerFactory {
     private int playerId;
     private static PlayerFactory instance = null;

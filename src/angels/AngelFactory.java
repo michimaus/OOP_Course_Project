@@ -2,6 +2,12 @@ package angels;
 
 import main.DataLoader;
 
+/**
+ * Factory class where the angels are created.
+ * The method "createAngel" is the one that return the new instance of an angel,
+ * depending on its type.
+ */
+
 public final class AngelFactory {
     private static AngelFactory instance = null;
 

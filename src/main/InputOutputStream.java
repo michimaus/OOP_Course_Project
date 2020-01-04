@@ -8,8 +8,9 @@ import fileio.FileSystem;
 import players.StandardPlayer;
 
 /**
- * Structer for the calss that reads form files and writes into another one.
+ * Structure for the class that reads form a files and writes into another one.
  * Used the provided fileIO.jar.
+ * Separated all the methods for specific data reading and writing.
  */
 
 public final class InputOutputStream {

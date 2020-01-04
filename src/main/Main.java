@@ -15,6 +15,8 @@ import java.util.ArrayList;
  * First the data gets processed -getting the players and the map elements-
  * and then are implemented the game rules for every round -checking for DoT damage,
  * making the players move around the map, and then looking at the map if is the case for a fight.
+ * None the less, at the and of the round the angles are spawned and it is set up
+ * their interaction with the players.
  */
 
 public final class Main {
@@ -47,8 +49,6 @@ public final class Main {
 
         for (int i = 0; i < dataLoader.getRounds(); ++i) {
             inputOutputStream.writeRound(i);
-            System.out.println();
-            System.out.println(i + 1);
 
             for (StandardPlayer player : players) {
                 if (player.getCurrentHp() <= 0) {

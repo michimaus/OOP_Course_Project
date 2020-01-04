@@ -36,8 +36,6 @@ public abstract class StandardPlayer implements PlayerVisitable {
      * Signatures for the spells of the heroes, when they get hit.
      * @param heroSpell = the visitor that implements the logic of the spells
      * @param caster = the hero casting the spell
-     * Also "calculateStrike" is specific to every race
-     *             -the place where the attacker applies the hits.
      */
     abstract void getSlamed(PlayerVisitor heroSpell, KnightPlayer caster);
     abstract void getFireBlasted(PlayerVisitor heroSpell,  PyromancerPlayer caster);
@@ -48,6 +46,10 @@ public abstract class StandardPlayer implements PlayerVisitable {
     abstract void getBaskStabbed(PlayerVisitor heroSpell, RoguePlayer caster);
     abstract void getParalyzed(PlayerVisitor heroSpell, RoguePlayer caster);
 
+    /**
+     * Signatures for the cases when the hero gets visited by any type of angel.
+     * @param angel = the angel that is spawned at the same position with the hero.
+     */
     public abstract void visitedByDamageAngel(AngelVisitor angel);
     public abstract void visitedByDarkAngel(AngelVisitor angel);
     public abstract void visitedByDracula(AngelVisitor angel);
@@ -160,8 +162,8 @@ public abstract class StandardPlayer implements PlayerVisitable {
 
     /**
      * It is checked the result of the fight.
-     * @param other = hero that fought with this one
-     * @return true if this hero managed to kill the other
+     * @param other = hero that fought with this one.
+     * @return true if this hero managed to kill the other one.
      * In case of a positive result the mecahnism of the level up is implemented below,
      * in "checkLevelUp.
      */
@@ -187,8 +189,8 @@ public abstract class StandardPlayer implements PlayerVisitable {
     }
 
     /**
-     * Next three methods implement the logic of the player when taking damage.
-     * The effects are getting applied in different sports in the main game engine.
+     * Next methods implement the logic of the player when taking damage.
+     * The effects are getting applied in different spots in the main game engine.
      */
 
     public final void takeDotDamage() {

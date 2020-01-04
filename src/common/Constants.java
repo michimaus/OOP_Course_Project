@@ -4,8 +4,6 @@ public final class Constants {
     private Constants() {
     }
 
-    public static final float APPROXIMATION_ERROR = 0.0001f;
-
     public static final int KNIGHT_HP = 900;
     public static final int PYROMANCE_HP = 500;
     public static final int WIZARD_HP = 400;
@@ -22,6 +20,8 @@ public final class Constants {
     public static final int XP_INTERVAL = 40;
 
     public static final int NUMBER_SPLIT = 3;
+    public static final int MAX_DEAD_PLAYERS = 5;
+    public static final float APPROXIMATION_ERROR = 0.0001f;
 
     public static final float LAND_ROGUE_BONUS = 1.15f;
     public static final float LAND_KNIGHT_BONUS = 1.15f;

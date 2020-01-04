@@ -25,7 +25,7 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void fireBlast(final KnightPlayer player, final PyromancerPlayer caster) {
-        int damage = Math.round(baseFireBlast(caster)
+        int damage = Math.round(Math.round(baseFireBlast(caster))
                 * (Constants.FIREBLAST_KNIGHT_BONUS + caster.getModifier()));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
@@ -66,7 +66,7 @@ public class Spells implements PlayerVisitor {
             player.setHasDotFor(Constants.IGNITE_TIME);
 
             player.setBasicDotDamage((Constants.IGNITE_OVERTIME + caster.getLevel()
-                    * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS + 2);
+                    * Constants.IGNITE_OVERTIME_BONUS) * Constants.LAND_PYROMANCER_BONUS);
 
             return damage * Constants.LAND_PYROMANCER_BONUS;
         }
@@ -79,9 +79,11 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void ignite(final KnightPlayer player, final PyromancerPlayer caster) {
-        int damage = Math.round(baseIgnite(player, caster) * (Constants.IGNITE_KNIGHT_BONUS
+        int damage = Math.round(Math.round(baseIgnite(player, caster))
+                * (Constants.IGNITE_KNIGHT_BONUS
                 + caster.getModifier()));
-        player.setDotDamage(Math.round(player.getBasicDotDamage() * (Constants.IGNITE_KNIGHT_BONUS
+        player.setDotDamage(Math.round(Math.round(player.getBasicDotDamage())
+                * (Constants.IGNITE_KNIGHT_BONUS
                 + caster.getModifier())));
         player.setIncomingDamage(player.getIncomingDamage() + damage);
     }
@@ -118,7 +120,7 @@ public class Spells implements PlayerVisitor {
     /**
      * baseExecute.
      * @param player = needs to get that percent of the remaining life in order to apply effects.
-     * @param caster = Knight that is cansi=ting the spell
+     * @param caster = Knight that is casting the spell
      * @return  The base damage that the player is going to take.
      */
 
@@ -132,7 +134,6 @@ public class Spells implements PlayerVisitor {
         if ((float) player.getCurrentHp() / (float) player.getMaxHp() < procent
                 && player.getCurrentHp()
                 > (Constants.EXECUTE + Constants.EXECUTE_LEVEL_BONUS * caster.getLevel())) {
-//            player.setIncomingDamage(player.getIncomingDamage() + player.getCurrentHp());
             return player.getCurrentHp();
         } else {
             if (caster.getPieceOfLand() == 'L') {
@@ -175,14 +176,13 @@ public class Spells implements PlayerVisitor {
 
     /**
      * baseSlam.
-     * @param player = gets the effect of the Dot of the ability.
+     * @param player = gets the effect of the DoT of the ability.
      * @param caster = knight casting the spell
      * @return The base damage that the player is going to take.
      */
 
     private float baseSlam(final StandardPlayer player, final KnightPlayer caster) {
         float damage = Constants.SLAM + caster.getLevel() * Constants.SLAM_LEVEL_BONUS;
-//        player.getDot(1, 0, 0);
         player.setStunedFor(1);
         player.setHasDotFor(0);
         player.setDotDamage(0);
@@ -341,7 +341,6 @@ public class Spells implements PlayerVisitor {
 
     @Override
     public final void deflect(final WizardPlayer player, final WizardPlayer caster) {
-
     }
 
     /**
@@ -403,16 +402,13 @@ public class Spells implements PlayerVisitor {
 
     private float baseParalysis(final StandardPlayer player, final RoguePlayer caster) {
         float damage = Constants.PARALYSIS + caster.getLevel()
-                * Constants.PARALYSIS_LEVEL_BONUS - 0.0001f;
+                * Constants.PARALYSIS_LEVEL_BONUS - Constants.APPROXIMATION_ERROR;
         if (caster.getPieceOfLand() == 'W') {
             player.setHasDotFor(Constants.PARALYSIS_TIME_BONUS);
             player.setStunedFor(Constants.PARALYSIS_TIME_BONUS);
             player.setBasicDotDamage(damage * Constants.LAND_ROGUE_BONUS);
-//            player.getDot(Constants.PARALYSIS_TIME_BONUS, Constants.PARALYSIS_TIME_BONUS,
-//                    damage * Constants.LAND_ROGUE_BONUS);
             return damage * Constants.LAND_ROGUE_BONUS;
         }
-//        player.getDot(Constants.PARALYSIS_TIME, Constants.PARALYSIS_TIME, damage);
         player.setHasDotFor(Constants.PARALYSIS_TIME);
         player.setStunedFor(Constants.PARALYSIS_TIME);
         player.setBasicDotDamage(damage);

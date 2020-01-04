@@ -8,7 +8,7 @@ import strategy.KnightStrategy;
 /**
  * Class of the Knight race.
  * Here are implemented the calls for the spells the character is applying,
- * the specific HP status and the calls for the spells that hit this hero, with different efects.
+ * the specific HP status and the calls for the spells that hit this hero, with different effects.
  */
 
 public class KnightPlayer extends StandardPlayer {

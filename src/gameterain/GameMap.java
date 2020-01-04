@@ -2,6 +2,7 @@ package gameterain;
 
 import angelseffects.AngelEffects;
 import angels.StandardAngel;
+import common.Constants;
 import observer.GreatMage;
 import players.PlayerComparator;
 import spells.Spells;
@@ -11,9 +12,12 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Map is a singletone.
- * Cells of the map contains the terain deffinition and referances to the players that are found
+ * Map is a singleton.
+ * Cells of the map contains the terain definition and references to the players that are found
  * at the specific coordinates.
+ * As part of the game state visitor for the spells and for the effects of the angels have
+ * their instances in the calss of the map, as part of the game state.
+ * In addition to that, the map is the min observable, because everything is happening on it.
  */
 
 public final class GameMap {
@@ -36,8 +40,12 @@ public final class GameMap {
         deadPlayers = null;
     }
 
-    public void initPlayers(final List<StandardPlayer> players) {
+    /**
+     * Map cells retain referances to the players that can be found
+     * at that position.
+     */
 
+    public void initPlayers(final List<StandardPlayer> players) {
         for (StandardPlayer p : players) {
             putPlayerAtPosition(p.getPosR(), p.getPosC(), p);
         }
@@ -56,22 +64,22 @@ public final class GameMap {
         deadPlayers = new PriorityQueue[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                deadPlayers[i][j] = new PriorityQueue<>(10, new PlayerComparator());
+                deadPlayers[i][j] = new PriorityQueue<>(Constants.MAX_DEAD_PLAYERS,
+                        new PlayerComparator());
             }
         }
         firstPlayerOnPos = new StandardPlayer[n][m];
         secondPlayerOnPos = new StandardPlayer[n][m];
     }
 
-    public void putPlayerAtPosition(final int posX, final int posY, final StandardPlayer player) {
-        if (posX < 0 || posY < 0 || mapTerain.length <= posX || mapTerain[0].length <= posY) {
+    public void putPlayerAtPosition(final int posR, final int posC, final StandardPlayer player) {
+        if (posR < 0 || posC < 0 || mapTerain.length <= posR || mapTerain[0].length <= posC) {
             return;
         }
-
-        if (firstPlayerOnPos[posX][posY] == null) {
-            firstPlayerOnPos[posX][posY] = player;
+        if (firstPlayerOnPos[posR][posC] == null) {
+            firstPlayerOnPos[posR][posC] = player;
         } else {
-            secondPlayerOnPos[posX][posY] = player;
+            secondPlayerOnPos[posR][posC] = player;
         }
     }
 
@@ -82,21 +90,28 @@ public final class GameMap {
         return instance;
     }
 
-    public void updatePlayerPosition(final int oldX, final int oldY,
-                                     final int newX, final int newY, final StandardPlayer player) {
-        if (oldX < 0 || oldY < 0 || mapTerain.length <= oldX || mapTerain[0].length <= oldY) {
-            putPlayerAtPosition(newX, newY, player);
+    /**
+     * Player gets moved from his old to his new position, by deleting the old reference
+     * and adding a new one at the other cell.
+     * It is also checked for the players not the leave the bounds of the map,
+     * although this should not happen ... but it does.
+     */
+
+    public void updatePlayerPosition(final int oldR, final int oldC,
+                                     final int newR, final int newC, final StandardPlayer player) {
+        if (oldR < 0 || oldC < 0 || mapTerain.length <= oldR || mapTerain[0].length <= oldC) {
+            putPlayerAtPosition(newR, newC, player);
             return;
         }
-        if (firstPlayerOnPos[oldX][oldY] == player) {
-            firstPlayerOnPos[oldX][oldY] = secondPlayerOnPos[oldX][oldY];
-            secondPlayerOnPos[oldX][oldY] = null;
+        if (firstPlayerOnPos[oldR][oldC] == player) {
+            firstPlayerOnPos[oldR][oldC] = secondPlayerOnPos[oldR][oldC];
+            secondPlayerOnPos[oldR][oldC] = null;
         }
-        if (secondPlayerOnPos[oldX][oldY] == player) {
-            secondPlayerOnPos[oldX][oldY] = null;
+        if (secondPlayerOnPos[oldR][oldC] == player) {
+            secondPlayerOnPos[oldR][oldC] = null;
         }
 
-        putPlayerAtPosition(newX, newY, player);
+        putPlayerAtPosition(newR, newC, player);
     }
 
     /**
@@ -114,10 +129,6 @@ public final class GameMap {
         if (secondPlayerOnPos[posR][posC] != null) {
             StandardPlayer p1 = firstPlayerOnPos[posR][posC];
             StandardPlayer p2 = secondPlayerOnPos[posR][posC];
-
-            System.out.println(p1.getType() + " " + p1.getId() + " " + p1.getCurrentHp());
-            System.out.println(p2.getType() + " " + p2.getId() + " " + p2.getCurrentHp());
-            System.out.println();
 
             if (p1.getCurrentHp() <= 0 || p2.getCurrentHp() <= 0) {
                 return;
@@ -157,8 +168,9 @@ public final class GameMap {
     }
 
     /**
-     * Forgets the player position.
-     * @param p = player that is dead, no longer on the map.
+     * Player gets to be remembered that he died at his last known position.
+     * It gets placed in the que of the dead players, that can be found at each cell.
+     * @param p = dead player.
      */
 
     public void takeOut(final StandardPlayer p) {
@@ -169,6 +181,13 @@ public final class GameMap {
         secondPlayerOnPos[p.getPosR()][p.getPosC()] = null;
         deadPlayers[p.getPosR()][p.getPosC()].add(p);
     }
+
+    /**
+     * Angels are spawned at their positions and the observer gets notified.
+     * In the case they have to interact with heroes, the visitor will be called and the specific
+     * effect will be applied.
+     * @param angelsThisRound = list of angels that are spawned this round
+     */
 
     public void spawnAngels(final List<StandardAngel> angelsThisRound) {
         for (StandardAngel angel : angelsThisRound) {

@@ -5,6 +5,13 @@ import gameterain.GameMap;
 import main.InputOutputStream;
 import players.StandardPlayer;
 
+/**
+ * The main observer of the game in a singleton.
+ * It has implementation for all the observer methods.
+ * The observer gets linked with the game map, as that is the place where all the
+ * interactions and all the events are defined.
+ */
+
 public final class GreatMage implements MyObserver {
 
     private GameMap subject;

@@ -7,6 +7,12 @@ import players.RoguePlayer;
 import players.WizardPlayer;
 import players.StandardPlayer;
 
+/**
+ * This class implements the visitor and contains the code for the effect any type
+ * of angle applies on any type of hero.
+ * only the effect of the Doomer is the same for all the hero types.
+ */
+
 public class AngelEffects implements AngelVisitor {
 
     @Override

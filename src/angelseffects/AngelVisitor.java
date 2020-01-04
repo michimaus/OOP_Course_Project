@@ -6,6 +6,12 @@ import players.RoguePlayer;
 import players.WizardPlayer;
 import players.StandardPlayer;
 
+/**
+ * Signatures for the methods of all the effects.
+ * Particularly implementations for each case-interction between an angel and a hero.
+ */
+
+
 public interface AngelVisitor {
     void effectDamageAngel(KnightPlayer player);
     void effectDamageAngel(PyromancerPlayer player);

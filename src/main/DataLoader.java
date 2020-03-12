@@ -17,7 +17,7 @@ public final class DataLoader {
 
     public static DataLoader getInstance() {
         if (instance == null) {
-            return new DataLoader();
+            instance = new DataLoader();
         }
         return instance;
     }

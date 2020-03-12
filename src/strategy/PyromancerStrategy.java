@@ -11,7 +11,7 @@ public final class PyromancerStrategy implements PlayerStrategy {
 
     public static PyromancerStrategy getInstance() {
         if (instance == null) {
-            return new PyromancerStrategy();
+            instance = new PyromancerStrategy();
         }
         return instance;
     }

@@ -11,7 +11,7 @@ public final class RogueStrategy implements PlayerStrategy {
 
     public static RogueStrategy getInstance() {
         if (instance == null) {
-            return new RogueStrategy();
+            instance = new RogueStrategy();
         }
         return instance;
     }

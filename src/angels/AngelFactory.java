@@ -16,7 +16,7 @@ public final class AngelFactory {
 
     public static AngelFactory getInstance() {
         if (instance == null) {
-            return new AngelFactory();
+            instance = new AngelFactory();
         }
         return instance;
     }

@@ -11,7 +11,7 @@ public final class WizardStrategy implements PlayerStrategy {
 
     public static WizardStrategy getInstance() {
         if (instance == null) {
-            return new WizardStrategy();
+            instance = new WizardStrategy();
         }
         return instance;
     }

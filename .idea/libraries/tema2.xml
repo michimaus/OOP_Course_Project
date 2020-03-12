@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="tema2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/production/tema2/FileIO.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/tema2/checkstyle-8.26-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

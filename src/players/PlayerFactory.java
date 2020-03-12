@@ -18,7 +18,7 @@ public final class PlayerFactory {
 
     public static PlayerFactory getInstance() {
         if (instance == null) {
-            return new PlayerFactory();
+            instance = new  PlayerFactory();
         }
         return instance;
     }

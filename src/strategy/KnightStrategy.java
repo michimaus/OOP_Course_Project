@@ -11,7 +11,7 @@ public final class KnightStrategy implements PlayerStrategy {
 
     public static KnightStrategy getInstance() {
         if (instance == null) {
-            return new KnightStrategy();
+            instance = new KnightStrategy();
         }
         return instance;
     }

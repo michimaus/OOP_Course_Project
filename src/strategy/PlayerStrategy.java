@@ -10,6 +10,6 @@ import players.StandardPlayer;
  * Also those other classes will be singleton.
  */
 
-public interface PlayerStrategy {
+public interface PlayerStrategy extends CevaInt {
     void getStrategy(StandardPlayer player);
 }
